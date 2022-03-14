@@ -1,0 +1,32 @@
+
+.btn{
+    border-radius: 25px;
+    padding: 5px 14px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.btn:hover{
+    border-color: rgb(68, 220, 220);
+    background-color: black;
+    color: white
+
+}
+label{
+    font-size: 24px;
+    color: azure;
+}
+.form-control{
+    font-size: 16px;
+    border-radius: 18px;
+}
+.form-group i.fa-eye{
+    right: 30px;
+    bottom:33%;
+    position: absolute;
+    color: rgb(14, 13, 13);
+    cursor: pointer;
+
+}
+::placeholder{
+    font-size: 18px;
+}
