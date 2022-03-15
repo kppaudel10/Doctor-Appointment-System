@@ -9,8 +9,10 @@ import lombok.*;
 @Builder
 public class PatientDto {
     private Integer id;
+
     private String name;
     private String address;
     private String mobileNumber;
     private String email;
+    private String password;
 }

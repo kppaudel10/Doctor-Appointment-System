@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en"  xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fragment</title>
+</head>
+<body>
+<div th:fragment="loginNavBar">
+    <header class="header">
+        <a href="#" class="logo"><i class="fas fa-heartbeat">ODAS</i></a>
+        <nav class="navbar">
+            <a href="#home">Home</a>
+
+            <div class="login">
+                <a href="">Login</a>
+                <a href="">Register</a>
+            </div>
+        </nav>
+    </header>
+</div>
+
+<div th:fragment="loginNavBarCss">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;300&family=Orbitron:wght@400;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;1,100;1,200;1,300;1,400&family=Rubik+Beastly&family=Smooch+Sans:wght@100&display=swap');
+        :root{
+            --green: #16a085;
+            --black: #444;
+            --light-color: #777;
+            --box-shadow: .5rem .5rem 0 rgba(22,160,133,.2);
+            --box-shadow: .5rem .5rem 0 rgba(22,160,133,.2);
+            --text-shadow: .4rem .4rem 0 rgba(0,0,0.2);
+            --border: .2rem solid var(--green);
+        }
+
+        *{
+            font-family: 'Poppins', sans-serif;
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            outline: none;
+            border: none;
+            text-transform: capitalize;
+            transition: all .2s ease-out;
+            text-decoration: none;
+        }
+        body{
+            background: linear-gradient(135deg, #71b7e6,#9b59b6);
+            width: 100%;
+        }
+
+
+        html{
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-padding-top: 7rem;
+            scroll-behavior: smooth;
+        }
+        .header{
+            padding: 2rem 9%;
+            position: fixed;
+            top:0; right: 0; left:0;
+            z-index: 1000;
+            box-shadow: 0.5rem 1.5rem rgba(0,0,0,.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fff;
+            width: 100%;
+
+        }
+        .header .logo{
+            font-size:3rem ;
+            color: var(--black);
+            letter-spacing: 0.5rem;
+            margin-right: 3rem;
+        }
+        .header .logo i{
+            color: var(--green);
+            margin-right: 4rem;
+            border:3px solid #16a085;
+            padding: 8px 15px;
+            border-radius: 20px 60px;
+        }
+        .header .navbar a{
+            font-size: 1.7rem;
+            color: var(--black);
+            margin-right: 5rem;
+            font-weight: bold;
+        }
+
+        .header .navbar a:hover{
+            color: var(--green);
+        }
+        .header .navbar .login{
+            float: right;
+
+        }
+        .header .navbar .login a{
+            background-color: #a5e6d9;
+            margin-left: 20px;
+            padding: 7px 16px;
+            border-radius: 4px;
+
+        }
+        .header .navbar .login a:hover{
+            background-color: #16a085;
+            color: #444;
+        }
+    </style>
+</div>
+<div th:fragment="generic_link">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Custom Css Links-->
+<!--    <link rel="stylesheet" href="/CssFile/style.css" type="text/css">-->
+</div>
+</body>
+</html>

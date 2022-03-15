@@ -13,4 +13,5 @@ public class AdminDto {
     private String address;
     private String mobileNumber;
     private String email;
+    private String password;
 }

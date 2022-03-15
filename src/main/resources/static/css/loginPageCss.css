@@ -1,3 +1,14 @@
+*{
+    margin:0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+body{
+    background: linear-gradient(135deg, #71b7e6,#9b59b6);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: absolute;
+}
 
 .btn{
     border-radius: 25px;
@@ -6,7 +17,7 @@
     font-size: 20px;
 }
 .btn:hover{
-    border-color: rgb(68, 220, 220);
+    border-color:linear-gradient(to right, rgba(10, 205, 231, 0.6));
     background-color: black;
     color: white
 
@@ -21,7 +32,7 @@ label{
 }
 .form-group i.fa-eye{
     right: 30px;
-    bottom:33%;
+    bottom:31%;
     position: absolute;
     color: rgb(14, 13, 13);
     cursor: pointer;
