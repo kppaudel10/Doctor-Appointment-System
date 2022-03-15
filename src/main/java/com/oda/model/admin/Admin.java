@@ -1,5 +1,6 @@
 package com.oda.model.admin;
 
+import com.oda.model.hospital.Hospital;
 import lombok.*;
 
 import javax.persistence.*;
@@ -34,5 +35,9 @@ public class Admin {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "hospital_id")
+    private Hospital hospital;
 
 }
