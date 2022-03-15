@@ -31,4 +31,13 @@ public class Doctor {
 
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
+    private String specialization;
+
+    @Column(nullable = false)
+    private Double experience;
 }

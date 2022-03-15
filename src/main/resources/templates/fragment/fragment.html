@@ -12,11 +12,11 @@
     <header class="header">
         <a href="#" class="logo"><i class="fas fa-heartbeat">ODAS</i></a>
         <nav class="navbar">
-            <a href="#home">Home</a>
+            <a th:href="@{/home}">Home</a>
 
             <div class="login">
-                <a href="">Login</a>
-                <a href="">Register</a>
+                <a th:href="@{/login/home}">Login</a>
+                <a th:href="@{/registration/home}">Register</a>
             </div>
         </nav>
     </header>

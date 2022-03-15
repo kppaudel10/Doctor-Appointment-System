@@ -1,10 +1,12 @@
 package com.oda.service.Impl;
 
 import com.oda.dto.doctor.DoctorDto;
+import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,14 +18,32 @@ public class DoctorServiceImpl implements DoctorService {
         this.doctorRepo = doctorRepo;
     }
 
+
     @Override
-    public DoctorDto save(Integer integer) {
-        return null;
+    public DoctorDto save(DoctorDto doctorDto) {
+        Doctor doctor = Doctor.builder()
+                .id(doctorDto.getId())
+                .name(doctorDto.getName())
+                .address(doctorDto.getAddress())
+                .email(doctorDto.getEmail())
+                .mobileNumber(doctorDto.getMobileNumber())
+                .specialization(doctorDto.getSpecialization())
+                .experience(doctorDto.getExperience())
+                .password(doctorDto.getPassword()).build();
+        //save into database
+        Doctor doctor1 = doctorRepo.save(doctor);
+        return DoctorDto.builder().id(doctor1.getId()).build();
     }
 
     @Override
     public DoctorDto findById(Integer integer) {
-        return null;
+       Doctor doctor= doctorRepo.findById(integer).get();
+        return DoctorDto.builder()
+                .id(doctor.getId())
+                .name(doctor.getName())
+                .address(doctor.getAddress())
+                .mobileNumber(doctor.getMobileNumber())
+                .email(doctor.getEmail()).build();
     }
 
     @Override
@@ -33,12 +53,55 @@ public class DoctorServiceImpl implements DoctorService {
                     .id(doctor.getId())
                     .name(doctor.getName())
                     .mobileNumber(doctor.getMobileNumber())
-                    .email(doctor.getEmail()).build();
+                    .email(doctor.getEmail())
+                    .password(doctor.getPassword()).build();
         }).collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(Integer integer) {
 
+    }
+
+    public List<DoctorDto> findDoctorByAddress(String address){
+        List<Doctor> doctorList = doctorRepo.findAll();
+        List<DoctorDto> sortedDoctorList = new ArrayList<>();
+
+        for (Integer i =0;i<doctorList.size();i++){
+            if (doctorList.get(i).getAddress().equals(address)){
+                Doctor doctor = doctorList.get(i);
+                DoctorDto doctorDto = DoctorDto.builder()
+                        .id(doctor.getId())
+                        .name(doctor.getName())
+                        .address(doctor.getAddress())
+                        .email(doctor.getEmail())
+                        .mobileNumber(doctor.getMobileNumber())
+                        .specialization(doctor.getSpecialization())
+                        .experience(doctor.getExperience()).build();
+                sortedDoctorList.add(doctorDto);
+            }
+        }
+        return sortedDoctorList;
+    }
+
+    public List<DoctorDto> findDoctorsBySpecialization(String specialization){
+        List<Doctor> doctorList = doctorRepo.findAll();
+        List<DoctorDto> sortedDoctorList = new ArrayList<>();
+
+        for (Integer i =0;i<doctorList.size();i++){
+            if (doctorList.get(i).getSpecialization().equals(specialization)){
+                Doctor doctor = doctorList.get(i);
+                DoctorDto doctorDto = DoctorDto.builder()
+                        .id(doctor.getId())
+                        .name(doctor.getName())
+                        .address(doctor.getAddress())
+                        .email(doctor.getEmail())
+                        .mobileNumber(doctor.getMobileNumber())
+                        .specialization(doctor.getSpecialization())
+                        .experience(doctor.getExperience()).build();
+                sortedDoctorList.add(doctorDto);
+            }
+        }
+        return sortedDoctorList;
     }
 }

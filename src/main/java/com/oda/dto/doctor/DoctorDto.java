@@ -14,4 +14,6 @@ public class DoctorDto {
     private String mobileNumber;
     private String email;
     private String password;
+    private String specialization;
+    private Double experience;
 }
