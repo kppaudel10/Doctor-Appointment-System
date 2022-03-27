@@ -6,10 +6,10 @@
 }
 body{
 
-    background-image: url('doct1.jpg');
+    /*background-image: url('doct1.jpg');*/
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: relative;
+    /*background-position: relative;*/
 }
 
 .topnav {

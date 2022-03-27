@@ -1,0 +1,121 @@
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+<div th:fragment="loginHome">
+    <div class="bg ">
+        <div class=" topnav">
+            <a class="active" th:href="@{/}"><i class="fa fa-home" style="font-size:20px;padding: 3px 7px;"></i>Home</a>
+            <!--Additional links -->
+            <div class="login-container">
+                <a  class="register" th:href="@{/signup/home}">SignUp</a>
+                <a class="login" th:href="@{/login/home}">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:fragment="loginHomeLink">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</div>
+
+<div th:fragment="loginHomeCss">
+    <style>
+        *{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        /*body{*/
+
+        /*  !*background-image: url('doct1.jpg');*!*/
+        /*  background-repeat: no-repeat;*/
+        /*  background-size: cover;*/
+        /*  !*background-position: relative;*!*/
+        /*}*/
+
+        .topnav {
+            overflow: hidden;
+            background-color: #44dcdc;
+            /*position: -webkit-sticky; !* Safari *!*/
+            /*position: sticky;*/
+            height: 55px;
+            width: 100%;
+            position: fixed;
+            top: 0;
+        }
+
+        .topnav a {
+            float: left;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .topnav a.active {
+            background-color: #2196F3;
+            color: white;
+        }
+        .topnav .login-container {
+            float: right;
+        }
+        .topnav .login-container a {
+            float: right;
+            padding: 8px 17px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background-color: #555;
+            color: white;
+            font-size: 17px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+
+        }
+        .topnav .login-container .login{
+            border-radius: 25px;
+        }
+        .topnav .login-container a:hover {
+            background-color: green;
+        }
+
+        .topnav .login-container .register{
+            border-radius: 25px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav .login-container {
+                float: left;
+                text-align: center;
+
+            }
+            .topnav a, .topnav .login-container a {
+                float: left;
+                display: block;
+                text-align: center;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+
+        }
+    </style>
+</div>
+</body>
+</html>

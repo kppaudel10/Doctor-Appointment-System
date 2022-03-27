@@ -1,79 +1,196 @@
-
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--css desigm end link-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-win8.css">
-    <link th:href="@{/css/loginPageCss.css}" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>lOGIN || HOME </title>
     <link th:href="@{/css/displayError.css}" rel="stylesheet"/>
-
-    <title>Login Page</title>
-
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        *{
+            /*margin: 0;*/
+            margin-top: 10px;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        html,body{
+            display: flex;
+            height: 100%;
+            width: 100%;
+            place-items: center;
+            background: #ebf1f1;
+            position: absolute;
+            /* background: linear-gradient(-135deg, #c850c0, #4158d0); */
+        }
+        ::selection{
+            background: #4158d0;
+            color: #fff;
+        }
+        .wrapper{
+            width: 380px;
+            margin-left: 45%;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
+        }
+        .wrapper .title{
+            font-size: 35px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 100px;
+            color: #fff;
+            user-select: none;
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(-135deg, #c850c0, #4158d0);
+        }
+        .wrapper form{
+            padding: 10px 30px 50px 30px;
+        }
+        .wrapper form .field{
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+        }
+        .wrapper form .field input{
+            height: 100%;
+            width: 100%;
+            outline: none;
+            font-size: 17px;
+            padding-left: 20px;
+            border: 1px solid lightgrey;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        .wrapper form .field input:focus,
+        form .field input:valid{
+            border-color: #4158d0;
+        }
+        .wrapper form .field label{
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            color: #999999;
+            font-weight: 400;
+            font-size: 17px;
+            pointer-events: none;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
+        }
+        form .field input:focus ~ label,
+        form .field input:valid ~ label{
+            top: 0%;
+            font-size: 16px;
+            color: #4158d0;
+            background: #fff;
+            transform: translateY(-50%);
+        }
+        form .content{
+            display: flex;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            align-items: center;
+            justify-content: space-around;
+        }
+        form .content .checkbox{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        form .content input{
+            width: 15px;
+            height: 15px;
+            background: red;
+        }
+        form .content label{
+            color: #262626;
+            user-select: none;
+            padding-left: 5px;
+        }
+        form .content .pass-link{
+            /*color: "";*/
+        }
+        form .field input[type="submit"]{
+            color: #fff;
+            border: none;
+            padding-left: 0;
+            margin-top: -10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(-135deg, #c850c0, #4158d0);
+            transition: all 0.3s ease;
+        }
+        form .field input[type="submit"]:active{
+            transform: scale(0.95);
+        }
+        form .signup-link{
+            color: #262626;
+            margin-top: 20px;
+            text-align: center;
+        }
+        form .pass-link a,
+        form .signup-link a{
+            color: #4158d0;
+            text-decoration: none;
+        }
+        form .pass-link a:hover,
+        form .signup-link a:hover{
+            text-decoration: underline;
+        }
+        /*.main{*/
+        /*    margin-top: 50px;*/
+        /*    float: left;*/
+        /*}*/
+        .container{
+            margin-left: 0px;
+        }
+    </style>
 </head>
 <body>
+<!--<div class="container">-->
+<div th:replace="fragment/loginfragment :: loginHome"></div>
+<div th:replace="fragment/loginfragment :: loginHomeCss"></div>
+<div th:replace="fragment/loginfragment :: loginHomeLink"></div>
+<!--    <div class="main">-->
+<div class="wrapper">
+    <div class="title">
+        Login Here
+    </div>
+    <form th:action="@{/login/home}" th:method="post" th:object="${loginDto}">
+        <div class="field">
+            <input type="text" th:field="*{username}">
+            <label>Username</label>
+            <p class="display_msg" th:if="${#fields.hasErrors('username')}"
+               th:errors="*{username}"></p>
+        </div>
+        <br>
 
-<div>
-    <div th:replace="fragment/fragment ::loginNavBar"></div>
-    <div th:replace="fragment/fragment :: loginNavBarCss" ></div>
-    <div th:replace="fragment/fragment :: generic_link" ></div>
-    <main class="d-flex align-items-center" style="height: 100vh">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 offset-md-4 ">
-                    <div class="card  text-white" style="background: linear-gradient(135deg, #71b7e6,#9b59b6);">
-                        <div class="card-header text-white text-center" style="background: linear-gradient(135deg, #71b7e6,#9b59b6);"><br/>
-                            <span class="fa fa-user-plus fa-2x"></span>
-                            <p>Login here</p>
-                        </div>
-                        <div class="card-body">
-                            <form th:action="@{/login/home}" th:method="post" th:object="${loginDto}">
-                                <div class="form-group control-form ">
-                                    <label for="username"><i class="fa fa-user" style="padding: 3px 5px;"></i>Username</label>
-                                    <input type="text" class="form-control" id="username"
-                                           aria-describedby="emailHelp" placeholder="Enter username" th:field="*{username}">
-                                    <p class="display_msg" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username Error</p>
-                                </div>
-                                <div class="form-group">
-                                    <label id="">Password</label>
-
-                                    <input type="password" class="form-control" id="password" placeholder="Password" th:field="*{password}">
-                                    <p class="display_msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password Error</p>
-                                    <i class="fa fa-eye" id="eye"  onclick="toggle()"></i>
-                                    <br/>
-                                    <a class="text-left pt-2 ml-1 text-white" href="">Forgot password?</a>
-                                </div>
-
-
-                                <button type="submit" class="btn btn-secondary btn-sm btn-block">Login</button>
-                            </form>
-                            <p class="display_msg" th:text="*{message}"></p>
-                        </div>
-                        <!--div class="card-footer"></div>-->
-                    </div>
-                    <!--form design here crateded-->
-                </div>
+        <div class="field">
+            <input type="password" th:field="*{password}">
+            <label>Password</label>
+            <p class="display_msg" th:if="${#fields.hasErrors('password')}"
+               th:errors="*{password}"></p>
+        </div>
+        <div class="content">
+            <!--            <div class="checkbox">-->
+            <!--                <input type="checkbox" id="remember-me">-->
+            <!--                <label for="remember-me">Remember me</label>-->
+            <!--            </div>-->
+            <div class="pass-link">
+                <a href="#">Forgot password?</a>
             </div>
         </div>
-    </main>
+        <div class="field">
+            <input type="submit" value="Login">
+        </div>
+        <div class="signup-link">
+            Not a member? <a th:href="@{/signup/home}">Signup now</a>
+        </div>
+    </form>
+    <p class="invalidUsernamePassword" th:text="*{message}" style="color: red"></p>
 </div>
-<script type="text/javascript">
-    var state = false;
-    function toggle(){
-        if(state){
-            document.getElementById("password").setAttribute("type","password");
-            document.getElementById('eye').style.color = 'dark';
-            state=false;
-        }else{
-            document.getElementById("password").setAttribute("type","text");
-            document.getElementById('eye').innerHTML = "";
-            document.getElementById('eye').style.color = 'green';
-
-            state=true;
-        }
-    }
-
-</script>
+<!--    </div>-->
+<!--</div>-->
 </body>
 </html>
