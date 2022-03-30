@@ -13,7 +13,7 @@ import java.util.UUID;
 public class PatientFileStorageComponent {
     public static ResponseDto storeFile(MultipartFile multipartFile) throws IOException {
         String fileDirectory =System.getProperty("user.name")+
-                File.separator+"ODA"+File.separator+"admin";
+                File.separator+"ODA"+File.separator+"patient";
 
         File directoryPath = new File(fileDirectory);
         if (!directoryPath.exists()){
