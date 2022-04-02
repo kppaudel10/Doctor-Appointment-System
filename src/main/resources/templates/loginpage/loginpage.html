@@ -158,20 +158,16 @@
     <div class="title">
         Login Here
     </div>
-    <form th:action="@{/login/home}" th:method="post" th:object="${loginDto}">
+    <form th:action="@{/login}" th:method="post">
         <div class="field">
-            <input type="text" th:field="*{username}">
-            <label>Username</label>
-            <p class="display_msg" th:if="${#fields.hasErrors('username')}"
-               th:errors="*{username}"></p>
+            <input type="text" id="username">
+            <label for="username">Username</label>
         </div>
         <br>
 
         <div class="field">
-            <input type="password" th:field="*{password}">
-            <label>Password</label>
-            <p class="display_msg" th:if="${#fields.hasErrors('password')}"
-               th:errors="*{password}"></p>
+            <input type="password" id="password">
+            <label for="password">Password</label>
         </div>
         <div class="content">
             <!--            <div class="checkbox">-->
@@ -189,7 +185,14 @@
             Not a member? <a th:href="@{/signup/home}">Signup now</a>
         </div>
     </form>
-    <p class="invalidUsernamePassword" th:text="*{message}" style="color: red"></p>
+<!--    <p class="invalidUsernamePassword" th:text="*{InvalidMessage}"></p>&ndash;&gt;-->
+    <div th:if="${param.error}">
+        <div class="alert alert-danger">Invalid username or
+            password.</div>
+    </div>
+    <div th:if="${param.logout}">
+        <div class="alert alert-info">You have been logged out.</div>
+    </div>
 </div>
 <!--    </div>-->
 <!--</div>-->

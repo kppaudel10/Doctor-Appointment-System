@@ -33,9 +33,6 @@ public class Admin {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;

@@ -1,6 +1,8 @@
 package com.oda.service.Impl;
 
 import com.oda.dto.doctor.DoctorDto;
+import com.oda.enums.UserStatus;
+import com.oda.model.User;
 import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
@@ -13,9 +15,12 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
+    private final UserServiceImpl userService;
 
-    public DoctorServiceImpl(DoctorRepo doctorRepo) {
+    public DoctorServiceImpl(DoctorRepo doctorRepo, UserServiceImpl userService) {
         this.doctorRepo = doctorRepo;
+
+        this.userService = userService;
     }
 
 
@@ -28,10 +33,17 @@ public class DoctorServiceImpl implements DoctorService {
                 .email(doctorDto.getEmail())
                 .mobileNumber(doctorDto.getMobileNumber())
                 .specialization(doctorDto.getSpecialization())
-                .experience(doctorDto.getExperience())
-                .password(doctorDto.getPassword()).build();
+                .experience(doctorDto.getExperience()).build();
         //save into database
         Doctor doctor1 = doctorRepo.save(doctor);
+
+        //save into user table
+        User user = new User();
+        user.setEmail(doctorDto.getEmail());
+        user.setPassword(doctorDto.getPassword());
+        user.setUserStatus(UserStatus.DOCTOR);
+        userService.save(user);
+
         return DoctorDto.builder().id(doctor1.getId()).build();
     }
 
@@ -53,8 +65,7 @@ public class DoctorServiceImpl implements DoctorService {
                     .id(doctor.getId())
                     .name(doctor.getName())
                     .mobileNumber(doctor.getMobileNumber())
-                    .email(doctor.getEmail())
-                    .password(doctor.getPassword()).build();
+                    .email(doctor.getEmail()).build();
         }).collect(Collectors.toList());
     }
 

@@ -33,9 +33,4 @@ public class Patient {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String password;
-
-//    @Column(nullable = false)
-//    private LoginStatus loginStatus;
 }

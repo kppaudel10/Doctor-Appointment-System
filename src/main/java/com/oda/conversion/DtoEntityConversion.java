@@ -14,8 +14,7 @@ public class DtoEntityConversion {
                 .name(patientDto.getName())
                 .address(patientDto.getAddress())
                 .email(patientDto.getEmail())
-                .mobileNumber(patientDto.getMobileNumber())
-                .password(patientDto.getPassword()).build();
+                .mobileNumber(patientDto.getMobileNumber()).build();
     }
 
     public Doctor getDoctor(DoctorDto doctorDto){
