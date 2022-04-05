@@ -1,5 +1,6 @@
 package com.oda.dto.admin;
 
+import com.oda.model.hospital.Hospital;
 import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,4 +30,6 @@ public class AdminDto {
 
     @NotEmpty(message = "password must not be empty")
     private String reEnterPassword;
+
+    private Hospital hospital;
 }

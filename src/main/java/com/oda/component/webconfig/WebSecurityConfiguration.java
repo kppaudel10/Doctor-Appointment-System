@@ -48,9 +48,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/home",
                         "/login",
                         "/signup**",
-                        "/signup/verify",
-                        "/signup/reset/password",
-                        "/signup/reset/verify",
+                        "/signup/who",
+                        "/signup/doctor",
+                        "/signup/patient",
+                        "/signup/admin",
                         "/signup/update/password",
                         "/js**",
                         "/image/odaHome.jpg").permitAll()

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PATIENT || SIGNUP</title>
+    <style>
+        .home{
+            margin-left: 5%;
+            margin-top: 56px;
+            margin-right: 1%;
+            position:absolute;
+        }
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+
+        .grid-wrapper{
+            --auto-grid-min-size: 16rem;
+            display: grid;
+            grid-gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+
+        }
+        .grid-wrapper li{
+            background-color: #618094;
+            color: #ffffff;
+            font-size: 24px;
+            list-style-type: none;
+            padding: 2rem;
+            text-align: center;
+            /*text-transform: capitalize;*/
+            font-weight: 600;
+            border-radius: 5px;
+        }
+        .main-container{
+            margin-right: auto;
+            margin-left: 11%;
+            margin-top: 150px;
+            max-width: 1170px;
+            padding:2rem 1rem;
+            /*position: absolute;*/
+        }
+        section{
+            margin: 30px auto;
+            width: 75%;
+            border: 1px solid coral;
+        }
+        section button{
+            font-size: 20px;
+            width: 30%;
+            padding: 10px;
+            background-color: aqua;
+            border: 1px solid rgb(34, 31, 31);
+            border-radius: 25px;
+            margin-left: 20rem;
+            margin-bottom: 10px;
+            cursor: pointer; ;
+        }
+        .main-container .grid-wrapper li img{
+            width: 30px;
+            height: 40px;
+            border: 1px solid blue;
+
+
+        }
+        .main-container .grid-wrapper .header h3{
+            text-align: center;
+            color:#263037
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragment/loginfragment :: loginHome"></div>
+<div th:replace="fragment/loginfragment :: loginHomeCss"></div>
+<div th:replace="fragment/loginfragment :: loginHomeLink"></div>
+<!--<div class="home">-->
+<!--    <section>-->
+
+        <div class="main-container">
+
+            <ul class="grid-wrapper">
+                <div class="header">
+                    <h3>Admin</h3>
+                   <a th:href="@{/signup/admin}">
+                       <li>
+                           <!--                        <img src="photo.jpg" alt="Photo">-->
+                           <p>Join as a admin</p>
+                       </li>
+                   </a>
+                </div>
+                <div class="header">
+                    <h3>Doctor</h3>
+                    <a th:href="@{/signup/doctor}">
+                        <li>
+                            <!--                        <img src="photo.jpg" alt="Photo">-->
+                            <p>Join as a doctor</p>
+                        </li>
+                    </a>
+                </div>
+                <div class="header">
+                    <h3>Patient</h3>
+                    <a th:href="@{/signup/patient}">
+                        <li>
+                            <!--                        <img src="photo.jpg" alt="Photo">-->
+                            <p>Join as a patient</p>
+                        </li>
+                    </a>
+                </div>
+            </ul>
+        </div>
+<!--        <button type="submit">create an account</button>-->
+<!--    </section>-->
+<!--</div>-->
+</body>
+</html>

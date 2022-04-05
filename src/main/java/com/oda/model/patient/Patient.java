@@ -1,5 +1,6 @@
 package com.oda.model.patient;
 
+import com.oda.enums.GenderStatus;
 import com.oda.enums.LoginStatus;
 import lombok.*;
 
@@ -32,5 +33,8 @@ public class Patient {
 
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private GenderStatus genderStatus;
 
 }

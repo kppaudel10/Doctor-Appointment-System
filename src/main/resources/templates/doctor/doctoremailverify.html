@@ -1,0 +1,89 @@
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>VERIFICATION || USER</title>
+    <!--    <link th:href="@{/css/formCss.css}" rel="stylesheet"/>-->
+    <style>
+        select{
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        *{margin: 0; padding: 0;}
+        body{background:  #d3eeee; font-family: sans-serif;}
+
+        .form-wrap {
+            width: 350px;
+            background: #a0e7e7;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            position: absolute;
+            margin-top: 104px;
+            margin-left: 30%;
+        }
+        /*transform: translate(-50%, -50%);}*/
+        h1{text-align: center;
+            color: rgba(17, 17, 24, 0.94); font-weight: normal; margin-bottom: 20px;}
+
+        input{width: auto;
+            background: rgb(255, 255, 255); border: 1px solid rgba(17, 17, 24, 0.94);
+            border-radius: 3px; padding: 6px 15px; box-sizing: border-box;
+            margin-bottom: 20px; font-size: 16px; color: rgba(9, 9, 16, 0.94);}
+
+        input[type="submit"]{
+            background: blue;
+            width: 80px;
+            height: 30px;
+        }
+        input[type="reset"]{
+            background: red;
+            width: 70px;
+            height: 30px;
+        }
+
+        ::placeholder{
+            color: #1e1e1e;
+        }
+        .verify-head{
+            color: #04AA6D;
+            margin-left: 32%;
+            position: absolute;
+            margin-top: 70px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragment/loginfragment :: loginHome"></div>
+<div th:replace="fragment/loginfragment :: loginHomeCss"></div>
+<div th:replace="fragment/loginfragment :: loginHomeLink"></div>
+<div class="main">
+    <button>
+        <a  th:href="@{/signup}">Add</a>
+    </button>
+    <h3 class="verify-head">Verify Your Email</h3>
+    <div class="form-wrap">
+        <form th:action="@{/signup/doctor/verify}" th:method="post" th:object="${doctorDto}">
+            <input type="hidden" th:field="*{id}">
+            <input type="hidden" th:field="*{name}">
+            <input type="hidden" th:field="*{password}">
+            <input type="hidden" th:field="*{mobileNumber}">
+            <input type="hidden" th:field="*{email}">
+            <input type="hidden" th:field="*{specialization}">
+            <input type="hidden" th:field="*{experience}">
+            <input type="hidden" th:field="*{address}">
+            <input type="hidden" th:field="*{correctPinCode}">
+
+            <label for="pincode">Pin Code:</label>
+            <br>
+            <input type="text" placeholder="Enter pin code" id="pincode" th:field="*{userPinCode}">
+            <br>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+        <h6 style="color: red" th:text="*{message}"></h6>
+    </div>
+</div>
+</body>
+</html>

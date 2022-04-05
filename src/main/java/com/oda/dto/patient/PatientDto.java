@@ -1,6 +1,8 @@
 package com.oda.dto.patient;
 
+import com.oda.enums.GenderStatus;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -29,4 +31,11 @@ public class PatientDto {
 
     @NotEmpty(message = "password must not be empty")
     private String reEnterPassword;
+
+    @NotEmpty(message = "birthDate must not be empty")
+    private String birthDate;
+
+    private MultipartFile multipartFilePP;
+
+    private GenderStatus genderStatus;
 }
