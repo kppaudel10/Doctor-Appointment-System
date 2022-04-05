@@ -4,6 +4,7 @@ import com.oda.enums.GenderStatus;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Valid
 public class PatientDto {
     private Integer id;
 
@@ -38,4 +40,8 @@ public class PatientDto {
     private MultipartFile multipartFilePP;
 
     private GenderStatus genderStatus;
+
+    private Integer correctPinCode ;
+
+    private Integer userPinCode;
 }

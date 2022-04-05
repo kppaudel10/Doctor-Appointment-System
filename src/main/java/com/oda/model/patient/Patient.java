@@ -5,6 +5,7 @@ import com.oda.enums.LoginStatus;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -36,5 +37,9 @@ public class Patient {
 
     @Column(nullable = false)
     private GenderStatus genderStatus;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date birthDate;
 
 }

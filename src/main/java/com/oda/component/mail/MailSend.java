@@ -25,9 +25,9 @@ public class MailSend {
         email1.setSmtpPort(465);
         email1.setAuthentication(username,password);
         email1.setSSLOnConnect(true);
-        email1.setFrom(username);
+        email1.setFrom("onlineassistance400@gmail.com");
         email1.setSubject("Verification");
-        email1.setMsg("Hey"+mailSendDto.getUserName()+",\n"+mailSendDto.getMessage()+"\nPinCode: "+pinCode);
+        email1.setMsg("Hey "+mailSendDto.getUserName()+",\n"+mailSendDto.getMessage()+"\nPinCode: "+pinCode);
         email1.addTo(mailSendDto.getEmail());
         email1.send();
         System.out.println("Mail send successfully");

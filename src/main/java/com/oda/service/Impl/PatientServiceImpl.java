@@ -6,8 +6,11 @@ import com.oda.model.User;
 import com.oda.model.patient.Patient;
 import com.oda.repo.patient.PatientRepo;
 import com.oda.service.patient.PatientService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,20 +18,24 @@ import java.util.stream.Collectors;
 public class PatientServiceImpl implements PatientService {
     private final PatientRepo patientRepo;
     private final UserServiceImpl userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public PatientServiceImpl(PatientRepo patientRepo, UserServiceImpl userService) {
+    public PatientServiceImpl(PatientRepo patientRepo, UserServiceImpl userService, BCryptPasswordEncoder passwordEncoder) {
         this.patientRepo = patientRepo;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
     @Override
-    public PatientDto save(PatientDto patientDto) {
+    public PatientDto save(PatientDto patientDto) throws ParseException {
        Patient patient = Patient.builder()
                .id(patientDto.getId())
                .name(patientDto.getName())
                .address(patientDto.getAddress())
                .mobileNumber(patientDto.getMobileNumber())
+               .genderStatus(patientDto.getGenderStatus())
+               .birthDate(new SimpleDateFormat("yyyy-MM-dd").parse(patientDto.getBirthDate()))
                .email(patientDto.getEmail()).build();
        //save into database
        Patient patient1 = patientRepo.save(patient);
@@ -36,7 +43,7 @@ public class PatientServiceImpl implements PatientService {
        //save into database
         User user = new User();
         user.setEmail(patient.getEmail());
-        user.setPassword(patientDto.getPassword());
+        user.setPassword(passwordEncoder.encode(patientDto.getPassword()));
         user.setUserStatus(UserStatus.PATIENT);
 
         userService.save(user);

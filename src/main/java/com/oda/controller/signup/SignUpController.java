@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 
 @Controller
 @RequestMapping("/signup")
@@ -60,12 +61,43 @@ public class SignUpController {
     }
 
     @PostMapping("/patient")
-    public String savePatient(@ModelAttribute("patientDto")PatientDto patientDto,
-                              BindingResult bindingResult){
+    public String savePatient(@Valid @ModelAttribute("patientDto")PatientDto patientDto,
+                              BindingResult bindingResult,Model model) throws EmailException {
         if (!bindingResult.hasErrors()){
-            return null;
+            if(patientDto.getPassword().equals(patientDto.getReEnterPassword())){
+                //send pin verification code
+                MailSendDto mailSendDto = new MailSendDto(patientDto.getName(),patientDto.getEmail(),"Use This pin code for verification.");
+
+                Integer pinCode = new MailSend().sendMail(mailSendDto);
+
+                patientDto.setCorrectPinCode(pinCode);
+                //go to verification page
+                model.addAttribute("patientDto",patientDto);
+                return "patient/emailverification";
+            }else {
+                model.addAttribute("passwordMatchMsg","password does not match");
+            }
+
         }
-        return null;
+        model.addAttribute("patientDto",patientDto);
+        return "patient/patientregisterpage";
+    }
+    @PostMapping("/patient/verify")
+    public String verifiyPatientPage(@ModelAttribute("patientDto")PatientDto patientDto,Model model) throws ParseException {
+        if (patientDto.getCorrectPinCode().equals(patientDto.getUserPinCode())){
+            //then save into database
+           PatientDto patientDto1 = patientService.save(patientDto);
+           if(patientDto1 !=null){
+               model.addAttribute("message","Your account created successfully");
+           }else {
+               model.addAttribute("message","Unable to create your account");
+           }
+        }else {
+            model.addAttribute("message","invalid pin code");
+            return "patient/emailverification";
+        }
+        model.addAttribute("patientDto",patientDto);
+        return "patient/patientregisterpage";
     }
 
     @PostMapping("/doctor")

@@ -13,7 +13,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "tbl_user",uniqueConstraints = {@UniqueConstraint(name = "user_email",columnNames = "email")})
+@Table(name = "tbl_user")
+//,uniqueConstraints = {@UniqueConstraint(name = "user_email",columnNames = "email")}
 public class User {
     @Id
     @GeneratedValue(generator = "user_sequence" ,strategy = GenerationType.SEQUENCE)

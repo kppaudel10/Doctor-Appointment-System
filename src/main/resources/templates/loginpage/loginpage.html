@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>lOGIN || HOME </title>
-    <link th:href="@{/css/displayError.css}" rel="stylesheet"/>
+<!--    <link th:href="@{/css/displayError.css}" rel="stylesheet"/>-->
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
         *{
@@ -160,13 +160,13 @@
     </div>
     <form th:action="@{/login}" th:method="post">
         <div class="field">
-            <input type="text" id="username">
+            <input type="text" id="username" name="username">
             <label for="username">Username</label>
         </div>
         <br>
 
         <div class="field">
-            <input type="password" id="password">
+            <input type="password" id="password" name="password">
             <label for="password">Password</label>
         </div>
         <div class="content">

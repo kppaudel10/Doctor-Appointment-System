@@ -44,13 +44,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/user/userhomepage",
+                .antMatchers("patient/patienthomepage",
                         "/home",
                         "/login",
                         "/signup**",
                         "/signup/who",
                         "/signup/doctor",
                         "/signup/patient",
+                        "/signup/patient/verify",
                         "/signup/admin",
                         "/signup/update/password",
                         "/js**",

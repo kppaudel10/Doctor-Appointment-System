@@ -113,6 +113,10 @@
             color: red;
             font-size: 15px;
         }
+        .last-msg{
+            color: #04AA6D;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -145,24 +149,24 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Address *" th:field="*{address}"  value="" />
+                                        <input type="text" class="form-control" placeholder="Address *" th:field="*{address}" value="" />
                                         <p class="display_msg" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Mobile Number *" th:field="*{mobileNumber}" value="" />
+                                        <input type="number" class="form-control" placeholder="Mobile Number *" th:field="*{mobileNumber}" value="" />
                                         <p class="display_msg" th:if="${#fields.hasErrors('mobileNumber')}" th:errors="*{mobileNumber}"></p>
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="password" class="form-control"  placeholder="Email *" th:field="*{email}" value="" />
+                                        <input type="email" class="form-control"  placeholder="Email *" th:field="*{email}" value="" />
                                         <p class="display_msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                                     </div>
 
                                     <div class="form-group">
                                         <div class="maxl">
                                             <label class="radio inline">
-                                                <input type="radio" name="gender" value="MALE" checked th:field="*{genderStatus}">
+                                                <input type="radio" name="gender" value="MALE"  th:field="*{genderStatus}" required checked>
                                                 <span> Male </span>
                                             </label>
                                             <label class="radio inline">
@@ -179,13 +183,13 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Password *" th:field="*{password}"  value="" />
+                                        <input type="password" class="form-control" placeholder="Password *" th:field="*{password}"  value="" />
                                         <p class="display_msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 
                                     </div>
 
                                     <div class="form-group">
-                                        <input type="text" name="txtEmpPhone" class="form-control" th:field="*{reEnterPassword}"  placeholder="Confirm Password *" value="" />
+                                        <input type="password" name="txtEmpPhone" class="form-control" th:field="*{reEnterPassword}"  placeholder="Confirm Password *" value="" />
                                         <p class="display_msg" th:if="${#fields.hasErrors('reEnterPassword')}" th:errors="*{reEnterPassword}"></p>
 
                                     </div>
@@ -195,15 +199,16 @@
                                         <p class="display_msg" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"></p>
                                     </div>
 
-                                    <div class="form-group">
-                                        <input type="file" class="form-control" th:field="*{multipartFilePP}"  placeholder="pp *" value="" />
-                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <input type="file" class="form-control" th:field="*{multipartFilePP}"  placeholder="pp *" value="" />-->
+<!--                                    </div>-->
 
                                     <input type="submit" class="btnRegister"  value="Register"/>
                                 </div>
                             </div>
                         </form>
-
+                        <p th:text="*{passwordMatchMsg}" class="display_msg"></p>
+                        <h4 th:text="*{message}" class="last-msg"></h4>
                             </div>
                     </div>
                 </div>

@@ -62,14 +62,18 @@
     </button>
     <h3 class="verify-head">Verify Your Email</h3>
     <div class="form-wrap">
-        <form th:action="@{/signup/verify}" th:method="post" th:object="${userDto}">
+        <form th:action="@{/signup/patient/verify}" th:method="post" th:object="${patientDto}" enctype="multipart/form-data">
             <input type="hidden" th:field="*{id}">
             <input type="hidden" th:field="*{name}">
             <input type="hidden" th:field="*{password}">
-            <input type="hidden" th:field="*{contact}">
+            <input type="hidden" th:field="*{mobileNumber}">
             <input type="hidden" th:field="*{email}">
             <input type="hidden" th:field="*{address}">
             <input type="hidden" th:field="*{correctPinCode}">
+            <input type="hidden" th:field="*{birthDate}">
+            <input type="hidden" th:field="*{genderStatus}">
+<!--            <input type="hidden" th:field="*{multipartFilePP}">-->
+            <input type="hidden" th:field="*{reEnterPassword}">
 
             <label for="pincode">Pin Code:</label>
             <br>
@@ -79,6 +83,7 @@
             <input type="submit" value="Submit">
         </form>
 <!--        <h6 style="color: red" th:text="*{message}"></h6>-->
+        <p style="color: red" th:text="*{message}"></p>
     </div>
 </div>
 </body>

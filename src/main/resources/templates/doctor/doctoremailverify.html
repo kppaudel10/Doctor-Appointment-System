@@ -52,6 +52,11 @@
             position: absolute;
             margin-top: 70px;
         }
+        .display_msg{
+            margin-top: 0px;
+            color: red;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -82,7 +87,7 @@
             <br>
             <input type="submit" value="Submit">
         </form>
-        <h6 style="color: red" th:text="*{message}"></h6>
+        <p class="display_msg" th:text="*{message}"></p>
     </div>
 </div>
 </body>
