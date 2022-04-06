@@ -6,6 +6,7 @@ import com.oda.model.User;
 import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,11 +17,13 @@ import java.util.stream.Collectors;
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
     private final UserServiceImpl userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public DoctorServiceImpl(DoctorRepo doctorRepo, UserServiceImpl userService) {
+    public DoctorServiceImpl(DoctorRepo doctorRepo, UserServiceImpl userService, BCryptPasswordEncoder passwordEncoder) {
         this.doctorRepo = doctorRepo;
 
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -40,7 +43,7 @@ public class DoctorServiceImpl implements DoctorService {
         //save into user table
         User user = new User();
         user.setEmail(doctorDto.getEmail());
-        user.setPassword(doctorDto.getPassword());
+        user.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
         user.setUserStatus(UserStatus.DOCTOR);
         userService.save(user);
 
@@ -114,5 +117,9 @@ public class DoctorServiceImpl implements DoctorService {
             }
         }
         return sortedDoctorList;
+    }
+
+    public Doctor findDoctorByEmail(String email){
+        return doctorRepo.findPatientByEmail(email);
     }
 }

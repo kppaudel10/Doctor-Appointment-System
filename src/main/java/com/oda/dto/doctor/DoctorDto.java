@@ -33,12 +33,10 @@ public class DoctorDto {
 
 
     @NotEmpty(message = "password must not be empty")
-    @Size(min = 8,message = "Password must of minimum 8 character")
-    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",message = "Password must consist of one uppercase , lowercase ,special character and number")
+//    @Size(min = 8,message = "Password must of minimum 8 character")
+//    @Pattern(regexp = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$",
+//    message = "Password must consist of one uppercase , lowercase ,special character and number")
     private String password;
-
-    @NotEmpty(message = "password must not be empty")
-    private String reTypePassword;
 
     @NotEmpty(message = "password must not be empty")
     private String reEnterPassword;
@@ -55,7 +53,9 @@ public class DoctorDto {
 
     private Integer userPinCode;
 
+    @NotNull(message = "File must be choose")
     private MultipartFile multipartFilePhoto;
 
+    @NotNull(message = "File must be choose")
     private MultipartFile multipartFileDocument;
 }

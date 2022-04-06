@@ -113,6 +113,14 @@
             color: red;
             font-size: 15px;
         }
+        .password-msg{
+            color: red;
+            text-align: center;
+        }
+        .final-msg{
+            color: #04AA6D;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -136,7 +144,7 @@
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <h3 class="register-heading">Apply as a Doctor</h3>
-                    <form th:action="@{/signup/doctor}" th:method="post" th:object="${doctorDto}">
+                    <form th:action="@{/signup/doctor}" th:method="post" th:object="${doctorDto}" enctype="multipart/form-data">
                         <div class="row register-form">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -172,11 +180,11 @@
                                 <div class="form-group">
                                     <div class="maxl">
                                         <label class="radio inline">
-                                            <input type="radio" name="gender" value="male" checked th:field="*{genderStatus}">
+                                            <input type="radio" name="gender" value="MALE" checked th:field="*{genderStatus}">
                                             <span> Male </span>
                                         </label>
                                         <label class="radio inline">
-                                            <input type="radio" name="gender" value="female" th:field="*{genderStatus}">
+                                            <input type="radio" name="gender" value="FEMALE" th:field="*{genderStatus}">
                                             <span>Female </span>
                                         </label>
                                         <label class="radio inline">
@@ -212,7 +220,8 @@
                             </div>
                         </div>
                     </form>
-                    <h4 th:text="*{message}" style="color: #04AA6D"></h4>
+                    <h4 th:text="*{message}" class="final-msg"></h4>
+                    <h4 th:text="*{messagePassword}" class="password-msg"></h4>
                 </div>
             </div>
         </div>

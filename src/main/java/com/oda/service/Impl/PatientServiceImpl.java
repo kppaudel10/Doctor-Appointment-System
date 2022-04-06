@@ -77,4 +77,8 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void deleteById(Integer integer) {
     }
+
+    public Patient findPatientByEmail(String email){
+        return patientRepo.findPatientByEmail(email);
+    }
 }

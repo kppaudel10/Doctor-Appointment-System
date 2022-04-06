@@ -104,20 +104,23 @@ public class SignUpController {
     public String saveDoctor(@Valid @ModelAttribute("doctorDto")DoctorDto doctorDto,
                              BindingResult bindingResult,Model model) throws EmailException {
         if (!bindingResult.hasErrors()){
-            //if no error then send email and verify that
-            MailSendDto mailSendDto = new MailSendDto(doctorDto.getName(),doctorDto.getEmail(),"Use this pin code for verification");
-          Integer pinCode = new MailSend().sendMail(mailSendDto);
+          if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())){
+              //if no error then send email and verify that
+              MailSendDto mailSendDto = new MailSendDto(doctorDto.getName(),doctorDto.getEmail(),"Use this pin code for verification");
 
-          doctorDto.setCorrectPinCode(pinCode);
-          model.addAttribute("doctorDto",doctorDto);
+              Integer pinCode = new MailSend().sendMail(mailSendDto);
 
-            return "doctor/doctoremailverify";
+              doctorDto.setCorrectPinCode(pinCode);
+              model.addAttribute("doctorDto",doctorDto);
 
-        }else {
+              return "doctor/doctoremailverify";
+          }else {
+              model.addAttribute("messagePassword","Password must match.");
+          }
+
+        }
             model.addAttribute("doctorDto",doctorDto);
             return "doctor/doctorregisterpage";
-        }
-
     }
 
     @PostMapping("/doctor/verify")
