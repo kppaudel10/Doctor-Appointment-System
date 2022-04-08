@@ -6,6 +6,7 @@ import com.oda.model.User;
 import com.oda.model.admin.Admin;
 import com.oda.repo.admin.AdminRepo;
 import com.oda.service.admin.AdminService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.stream.Collectors;
 public class AdminServiceImpl implements AdminService {
     private final AdminRepo adminRepo;
     private final UserServiceImpl userService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public AdminServiceImpl(AdminRepo adminRepo, UserServiceImpl userService) {
+    public AdminServiceImpl(AdminRepo adminRepo, UserServiceImpl userService, BCryptPasswordEncoder passwordEncoder) {
         this.adminRepo = adminRepo;
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -28,6 +31,7 @@ public class AdminServiceImpl implements AdminService {
                 .id(adminDto.getId())
                 .name(adminDto.getName())
                 .address(adminDto.getAddress())
+                .hospital(adminDto.getHospital())
                 .mobileNumber(adminDto.getMobileNumber())
                 .email(adminDto.getEmail()).build();
 
@@ -37,7 +41,7 @@ public class AdminServiceImpl implements AdminService {
        //also save into userTable
         User user = new User();
         user.setEmail(admin.getEmail());
-        user.setPassword(adminDto.getPassword());
+        user.setPassword(passwordEncoder.encode(adminDto.getPassword()));
         user.setUserStatus(UserStatus.ADMIN);
         userService.save(user);
 
@@ -70,5 +74,9 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public void deleteById(Integer integer) {
 
+    }
+
+    public Admin findAdminByEmail(String email){
+        return adminRepo.findPatientByEmail(email);
     }
 }

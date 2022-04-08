@@ -69,7 +69,7 @@
     </button>
     <h3 class="verify-head">Verify Your Email</h3>
     <div class="form-wrap">
-        <form th:action="@{/signup/doctor/verify}" th:method="post" th:object="${doctorDto}">
+        <form th:action="@{/signup/doctor/verify}" th:method="post" th:object="${doctorDto}" autocomplete="off">
             <input type="hidden" th:field="*{id}">
             <input type="hidden" th:field="*{name}">
             <input type="hidden" th:field="*{password}">

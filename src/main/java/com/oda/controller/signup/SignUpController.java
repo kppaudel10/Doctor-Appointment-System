@@ -47,13 +47,6 @@ public class SignUpController {
         return "doctor/doctorregisterpage";
     }
 
-    @GetMapping("/admin")
-    public String getAdminSignUpPage(Model model){
-        model.addAttribute("adminDto",new AdminDto());
-        model.addAttribute("hospitalList",hospitalService.findALl());
-        return "admin/adminregisterpage";
-    }
-
     @GetMapping("/patient")
     public String getPatientSignUpPage(Model model){
         model.addAttribute("patientDto", new PatientDto());
@@ -140,6 +133,59 @@ public class SignUpController {
             model.addAttribute("message","Invalid pin code");
             model.addAttribute("doctorDto",doctorDto);
             return "doctor/doctoremailverify";
+        }
+    }
+    @GetMapping("/admin")
+    public String getAdminSignUpPage(Model model){
+        model.addAttribute("adminDto",new AdminDto());
+        model.addAttribute("hospitalList",hospitalService.findALl());
+        return "admin/adminregisterpage";
+    }
+
+
+    @PostMapping("/admin")
+    public String saveAdmin(@Valid @ModelAttribute("adminDto")AdminDto adminDto,
+                            BindingResult bindingResult,Model model) throws EmailException {
+        if (!bindingResult.hasErrors()){
+            if (adminDto.getPassword().equals(adminDto.getReEnterPassword())){
+                //if no error then send email and verify that
+                MailSendDto mailSendDto = new MailSendDto(adminDto.getName(),adminDto.getEmail(),"Use this pin code for verification");
+
+                Integer pinCode = new MailSend().sendMail(mailSendDto);
+
+                adminDto.setCorrectPincode(pinCode);
+
+                model.addAttribute("adminDto",adminDto);
+
+                return "admin/emailverification";
+            }else {
+                model.addAttribute("passwordMsg","Password must match.");
+            }
+
+        }
+        model.addAttribute("admindto",adminDto);
+        model.addAttribute("hospitalList",hospitalService.findALl());
+        return "admin/adminregisterpage";
+
+    }
+
+    @PostMapping("/admin/verify")
+    public String adminVerifiy(@Valid @ModelAttribute("adminDto")AdminDto adminDto,Model model) throws EmailException {
+        if (adminDto.getCorrectPincode().equals(adminDto.getUserPinCode())){
+            //then save into database
+           AdminDto adminDto1 = adminService.save(adminDto);
+            if (adminDto1 !=null){
+                model.addAttribute("message","Your account created successfully.");
+            }else {
+                model.addAttribute("message","Failed to create account.");
+            }
+            model.addAttribute("adminDto",adminDto);
+            return "admin/adminregisterpage";
+
+        }else {
+            model.addAttribute("message","Invalid pin code");
+            model.addAttribute("adminDto",adminDto);
+            return "admin/emailverification";
         }
     }
 

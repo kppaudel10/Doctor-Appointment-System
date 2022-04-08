@@ -27,7 +27,7 @@ public class CustomUserDetails implements UserDetails {
             Doctor doctor = new Doctor();
             doctor.setEmail(user.getEmail());
             AuthorizedUser.setDoctor(doctor);
-        }else {
+        }else if (user.getUserStatus().ordinal() == 2){
             Patient patient = new Patient();
             patient.setEmail(user.getEmail());
             AuthorizedUser.setPatient(patient);

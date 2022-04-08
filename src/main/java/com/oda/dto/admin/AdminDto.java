@@ -32,4 +32,8 @@ public class AdminDto {
     private String reEnterPassword;
 
     private Hospital hospital;
+
+    private Integer correctPincode;
+
+    private Integer userPinCode;
 }

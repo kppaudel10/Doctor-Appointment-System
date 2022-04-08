@@ -44,7 +44,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("homePage",
+                .antMatchers("admin/adminhomepage",
                         "patient/patienthomepage",
                         "doctor/doctorhomepage",
                         "/home",
@@ -56,6 +56,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/signup/patient",
                         "/signup/patient/verify",
                         "/signup/admin",
+                        "/signup/admin/verify",
                         "/signup/update/password",
                         "/js**",
                         "/image/odaHome.jpg").permitAll()
@@ -63,7 +64,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
+                .loginPage("/login").usernameParameter("username").passwordParameter("password")
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
