@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ERROR</title>
+    <style>
+        .error{
+            text-align: center;
+            /*position: absolute;*/
+            margin-top: 80px;
+        }
+        .head{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragment/loginfragment :: loginHome"></div>
+<div th:replace="fragment/loginfragment :: loginHomeCss"></div>
+<div th:replace="fragment/loginfragment :: loginHomeLink"></div>
+
+<div class="error">
+    <h2 class="head">Something's went Wrong !!</h2>
+    <!--    <p>It seem to you are not authorized user</p>-->
+    <!--    <p>Please login first</p>-->
+</div>
+</body>
+</html>
