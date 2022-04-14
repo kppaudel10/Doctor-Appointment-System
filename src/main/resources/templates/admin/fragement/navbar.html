@@ -19,12 +19,27 @@
 <!--                <a href="#home">home</a>-->
 <!--                <a href="#services">services</a>-->
 <!--                <a href="#about">About</a>-->
-                <a href="#doctors">Doctor</a>
-                <a href="#doctors">Patient</a>
+<!--                <a href="#doctors">Doctor</a>-->
+<!--                <a href="#doctors">Patient</a>-->
+                <div class="dropdown1">
+                    <a class="a1" href="#doctors">Doctors</a>
+                    <div class="dropdown-content1">
+                        <a href="#">Request</a>
+                        <a href="#">History</a>
+                    </div>
+                </div>
+
+                <div class="dropdown1">
+                    <a class="a1" href="#doctors">Patients</a>
+                    <div class="dropdown-content1">
+                        <a href="#">Request</a>
+                        <a href="#">History</a>
+                    </div>
+                </div>
             </ul>
         </nav>
         <div class="dropdown">
-            <img class="dropbtn" src="image/adminpp.jpg" alt="">
+            <img class="dropbtn" th:src="@{image/adminpp.jpg}" alt="">
             <div class="dropdown-content">
                 <a href="#">Views</a>
                 <a th:href="@{/logout}">Log out</a>
@@ -127,10 +142,10 @@
 
         }
         .header .navbar ul{
-            margin-left: 50rem;
+            margin-left: 70rem;
 
         }
-        .header .navbar a{
+        .header .navbar .a1{
             font-size: 1.8rem;
             color: var(--light-color);
             margin-right: 5rem;
@@ -140,7 +155,7 @@
         }
 
 
-        .header .navbar a:hover{
+        .header .navbar .a1:hover{
 
             background-color: var(--green);
             border-radius: 7px;
@@ -185,7 +200,7 @@
             font-size: 16px;
             border: none;
             outline: none;
-            color: #ffffff;
+            color: white;
             padding: 14px 16px;
             background-color: inherit;
             font-family: inherit;
@@ -199,6 +214,7 @@
             min-width: 120px;
             z-index: 1;
             border-radius: 8px;
+
         }
 
         .dropdown-content a {
@@ -224,10 +240,60 @@
             font-size: 10px;
         }
 
+        /* Dropdown-1 */
+        .dropdown1 {
+            float: left;
+            overflow: hidden;
+        }
+        .dropdown1 .dropbtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 6px;
+
+        }
+
+        .dropdown-content1 {
+            display: none;
+            position: absolute;
+            /* background-color: rgb(255, 251, 251); */
+            min-width: 120px;
+            z-index: 1;
+            border-radius: 8px;
+
+            margin-top: 3.5rem;
+
+        }
+
+        .dropdown-content1 a {
+            text-align: left;
+            color: rgb(39, 43, 41);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+
+        }
+        .dropdown-content1 a:hover {
+            background-color: rgb(230, 233, 235);
+            background-color: var(--green);
+            border-radius: 7px;
+        }
+
+        .dropdown1:hover .dropdown-content1 {
+            display: block;
+        }
+
+        .dropdown1  fa-caret-down{
+            font-size: 10px;
+        }
 
 
-
-
+        /* Dropdown-1 end */
 
         /* media queries  */
         @media (max-width:991px){
@@ -267,7 +333,7 @@
             }
 
 
-            .header .navbar a{
+            .header .navbar .a1{
                 font-size: 2rem;
                 display: block;
                 margin:2.5rem;
@@ -282,7 +348,6 @@
             }
 
         }
-
     </style>
 </div>
 
