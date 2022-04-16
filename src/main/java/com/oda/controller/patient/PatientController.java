@@ -17,4 +17,19 @@ public class PatientController {
     public String getPatientHomePage(){
         return "patient/patienthomepage";
     }
+
+    @GetMapping("/feedback")
+    public String getFeedbackForm(){
+        return "patient/feedback";
+    }
+
+    @GetMapping("/view/status")
+    public String getViewStatusPage(){
+        return "patient/viewstatuspage";
+    }
+
+    @GetMapping("/request")
+    public String getRequestPage(){
+        return "admin/patientrequest";
+    }
 }

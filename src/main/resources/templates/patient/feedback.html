@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>FEEDBACK</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .wrapper {
+        position: relative;
+        display: block;
+        border: none;
+        font-size: 16px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .wrapper input {
+        border: 0;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        position: absolute !important;
+        clip: rect(1px 1px 1px 1px);
+        clip: rect(1px, 1px, 1px, 1px);
+        opacity: 0;
+    }
+
+    .wrapper label {
+        color: #C8C8C8;
+    }
+
+    .wrapper label:before {
+        margin: 5px;
+        content: "\f005";
+        font-family: FontAwesome;
+        display: inline-block;
+        font-size: 1.5em;
+        color: #ccc;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+    }
+
+    .wrapper input:checked ~ label:before {
+        color: #FFC107;
+    }
+
+    .wrapper label:hover ~ label:before {
+        color: #ffdb70;
+    }
+
+    .wrapper label:hover:before {
+        color: #FFC107;
+    }
+    .wrapper li{
+        list-style-type: none;
+    }
+    span{
+        color: black;
+        font-size: 20px;
+    }
+    .form-head{
+        margin-top: 30px;
+    }
+    .card-header{
+        background-color: aqua;
+    }
+    .doctor-name,label{
+        font-size: 20px;
+    }
+    .doctor-name,input{
+        height: auto;
+        width: auto;
+        border: #1e1e1e;
+    }
+    .doctor-name-display{
+        color: #0062cc;
+        font-weight: bolder;
+     text-align: center;
+    }
+    .list-choose-head{
+        color: red;
+    }
+</style>
+</head>
+<body>
+<div th:replace="patient/fragement/navbar :: patientNabarLink"></div>
+<div th:replace="patient/fragement/navbar :: patientNavbarCss"></div>
+<div th:replace="patient/fragement/navbar :: patientNavbarJs"></div>
+<div th:replace="patient/fragement/navbar :: patientNavbarHome"></div>
+<div class="home">
+<!--    <main class="d-flex align-items-center" style="height: 100vh;">-->
+        <div class="form-head">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 offset-md-4">
+                        <div class="card">
+                            <div class="card-header text-center">
+                                <h3>Feedback to Doctors</h3>
+                            </div>
+                            <div class="card-body">
+                                <form class="">
+                                       <div class="doctor-name">
+                                           <h2>Your Current Doctor Name: </h2>
+                                           <h2 class="doctor-name-display"><i>Dr.Ramesh Kumar Mandal</i></h2>
+                                         <br>
+                                           <h2 class="list-choose-head"><u><i>Rate You Doctor in following criteria:</i></u></h2>
+                                       </div>
+                                    <div class="rates">
+                                        <div class="wrapper">
+                                            <li>
+                                                <input type="checkbox" id="st1" value="1" />
+                                                <label for="st1"><span>Knowledge and Honorable</span></label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="st2" value="2" />
+                                                <label for="st2"><span>Knowledge</span></label>
+                                            </li>
+                                            <li>
+                                                <input type="checkbox" id="st3" value="3" />
+                                                <label for="st3"><span>Knowledge</span></label>
+                                            </li>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group">
+                                        <label class="Comments" style="font-size:20px">Comment:</label>
+                                        <textarea class="form-control" rows="3" placeholder="Write Your feedback here"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+<!--    </main>-->
+</div>
+</body>
+</html>

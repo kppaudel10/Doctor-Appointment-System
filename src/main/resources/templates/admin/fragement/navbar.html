@@ -16,7 +16,6 @@
 
         <nav class="navbar">
             <ul>
-<!--                <a href="#home">home</a>-->
 <!--                <a href="#services">services</a>-->
 <!--                <a href="#about">About</a>-->
 <!--                <a href="#doctors">Doctor</a>-->
@@ -32,10 +31,13 @@
                 <div class="dropdown1">
                     <a class="a1" href="#doctors">Patients</a>
                     <div class="dropdown-content1">
-                        <a href="#">Request</a>
+                        <a th:href="@{/patient/request}">Request</a>
                         <a href="#">History</a>
                     </div>
                 </div>
+<!--               <div>-->
+<!--&lt;!&ndash;                   <a href="#home">Home</a>&ndash;&gt;-->
+<!--               </div>-->
             </ul>
         </nav>
         <div class="dropdown">
@@ -142,7 +144,7 @@
 
         }
         .header .navbar ul{
-            margin-left: 70rem;
+            margin-left: 98rem;
 
         }
         .header .navbar .a1{

@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>lOGIN || HOME </title>
-<!--    <link th:href="@{/css/displayError.css}" rel="stylesheet"/>-->
+    <link th:href="@{/css/displayError.css}" rel="stylesheet"/>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
         *{
@@ -158,15 +158,15 @@
     <div class="title">
         Login Here
     </div>
-    <form th:action="@{/login}" th:method="post">
+    <form th:action="@{/login/verify}" th:method="post" th:object="${loginDto}">
         <div class="field">
-            <input type="text" id="username" name="username">
+            <input type="text" id="username" name="username" th:field="*{username}">
             <label for="username">Username</label>
         </div>
         <br>
 
         <div class="field">
-            <input type="password" id="password" name="password">
+            <input type="password" id="password" name="password" th:field="*{password}">
             <label for="password">Password</label>
         </div>
         <div class="content">
@@ -185,14 +185,17 @@
             Not a member? <a th:href="@{/signup/who}">Signup now</a>
         </div>
     </form>
-<!--    <p class="invalidUsernamePassword" th:text="*{InvalidMessage}"></p>&ndash;&gt;-->
-    <div th:if="${param.error}">
-        <div class="alert alert-danger">Invalid username or
-            password.</div>
-    </div>
-    <div th:if="${param.logout}">
-        <div class="alert alert-info">You have been logged out.</div>
-    </div>
+    <p class="invalidUsernamePassword" th:text="*{invalidPassword}"></p>-->
+
+<!--    <div th:if="${param.error}">-->
+<!--        <div class="alert alert-danger">Invalid username or-->
+<!--            password.</div>-->
+<!--    </div>-->
+<!--    <div th:if="${param.logout}">-->
+<!--        <div class="alert alert-info">You have been logged out.</div>-->
+<!--    </div>-->
+
+
 </div>
 <!--    </div>-->
 <!--</div>-->

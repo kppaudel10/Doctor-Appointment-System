@@ -37,4 +37,7 @@ public class Doctor {
 
     @Column(nullable = false)
     private Double experience;
+
+    @Column(nullable = false)
+    private String password;
 }

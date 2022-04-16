@@ -1,12 +1,9 @@
 package com.oda.service.Impl;
 
 import com.oda.dto.doctor.DoctorDto;
-import com.oda.enums.UserStatus;
-import com.oda.model.User;
 import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,14 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
-    private final UserServiceImpl userService;
-    private final BCryptPasswordEncoder passwordEncoder;
 
-    public DoctorServiceImpl(DoctorRepo doctorRepo, UserServiceImpl userService, BCryptPasswordEncoder passwordEncoder) {
+    public DoctorServiceImpl(DoctorRepo doctorRepo) {
         this.doctorRepo = doctorRepo;
-
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -36,23 +28,24 @@ public class DoctorServiceImpl implements DoctorService {
                 .email(doctorDto.getEmail())
                 .mobileNumber(doctorDto.getMobileNumber())
                 .specialization(doctorDto.getSpecialization())
-                .experience(doctorDto.getExperience()).build();
+                .experience(doctorDto.getExperience()).
+                password(doctorDto.getPassword()).build();
         //save into database
         Doctor doctor1 = doctorRepo.save(doctor);
 
         //save into user table
-        User user = new User();
-        user.setEmail(doctorDto.getEmail());
-        user.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
-        user.setUserStatus(UserStatus.DOCTOR);
-        userService.save(user);
+//        User user = new User();
+//        user.setEmail(doctorDto.getEmail());
+//        user.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
+//        user.setUserStatus(UserStatus.DOCTOR);
+//        userService.save(user);
 
         return DoctorDto.builder().id(doctor1.getId()).build();
     }
 
     @Override
     public DoctorDto findById(Integer integer) {
-       Doctor doctor= doctorRepo.findById(integer).get();
+        Doctor doctor = doctorRepo.findById(integer).get();
         return DoctorDto.builder()
                 .id(doctor.getId())
                 .name(doctor.getName())
@@ -77,12 +70,12 @@ public class DoctorServiceImpl implements DoctorService {
 
     }
 
-    public List<DoctorDto> findDoctorByAddress(String address){
+    public List<DoctorDto> findDoctorByAddress(String address) {
         List<Doctor> doctorList = doctorRepo.findAll();
         List<DoctorDto> sortedDoctorList = new ArrayList<>();
 
-        for (Integer i =0;i<doctorList.size();i++){
-            if (doctorList.get(i).getAddress().equals(address)){
+        for (Integer i = 0; i < doctorList.size(); i++) {
+            if (doctorList.get(i).getAddress().equals(address)) {
                 Doctor doctor = doctorList.get(i);
                 DoctorDto doctorDto = DoctorDto.builder()
                         .id(doctor.getId())
@@ -98,12 +91,12 @@ public class DoctorServiceImpl implements DoctorService {
         return sortedDoctorList;
     }
 
-    public List<DoctorDto> findDoctorsBySpecialization(String specialization){
+    public List<DoctorDto> findDoctorsBySpecialization(String specialization) {
         List<Doctor> doctorList = doctorRepo.findAll();
         List<DoctorDto> sortedDoctorList = new ArrayList<>();
 
-        for (Integer i =0;i<doctorList.size();i++){
-            if (doctorList.get(i).getSpecialization().equals(specialization)){
+        for (Integer i = 0; i < doctorList.size(); i++) {
+            if (doctorList.get(i).getSpecialization().equals(specialization)) {
                 Doctor doctor = doctorList.get(i);
                 DoctorDto doctorDto = DoctorDto.builder()
                         .id(doctor.getId())
@@ -119,7 +112,11 @@ public class DoctorServiceImpl implements DoctorService {
         return sortedDoctorList;
     }
 
-    public Doctor findDoctorByEmail(String email){
-        return doctorRepo.findPatientByEmail(email);
+    public Doctor findDoctorByEmail(String email) {
+        return doctorRepo.findDoctorByEmail(email);
+    }
+
+    public Doctor findByUserName(String userName) {
+        return doctorRepo.findByUserName(userName);
     }
 }

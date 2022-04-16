@@ -42,4 +42,8 @@ public class Patient {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
+    @Column(nullable = false)
+    private String password;
+
+
 }

@@ -37,4 +37,7 @@ public class Admin {
     @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
+    @Column(nullable = false)
+    private String password;
+
 }

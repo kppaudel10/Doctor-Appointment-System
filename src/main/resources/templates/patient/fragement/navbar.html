@@ -16,10 +16,10 @@
 
         <nav class="navbar">
             <ul>
-                <a href="#home">home</a>
-                <a href="#services">services</a>
-                <a href="#about">about</a>
-                <a href="#doctors">doctors</a>
+<!--              <a href="#home">Home</a>-->
+                <a th:href="@{/patient/feedback}">Feedback</a>
+                <a th:href="@{/patient/view/status}">View Status</a>
+                <a th:href="@{/}">Home</a>
             </ul>
         </nav>
         <div class="dropdown">
@@ -126,7 +126,7 @@
 
         }
         .header .navbar ul{
-            margin-left: 50rem;
+            margin-left: 85rem;
 
         }
         .header .navbar a{
@@ -162,7 +162,7 @@
         .home{
 
             padding: 7rem;
-            margin-top: 3rem;
+            margin-top: 40px;
 
         }
         .header .dropdown img{
