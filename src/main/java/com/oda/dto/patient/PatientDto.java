@@ -39,6 +39,8 @@ public class PatientDto {
 
     private MultipartFile multipartFilePP;
 
+    private  String profilePhotoPath;
+
     private GenderStatus genderStatus;
 
     private Integer correctPinCode ;

@@ -1,10 +1,13 @@
 package com.oda.service.Impl;
 
+import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * @author kulPaudel
@@ -23,12 +26,12 @@ public class LoginServiceImpl {
         this.doctorService = doctorService;
     }
 
-    public UserStatus getLogin(String userName, String password){
+    public UserStatus getLogin(String userName, String password) throws IOException {
         UserStatus userStatus = null;
         //first check in database patient
         for (Integer i = 0 ;i<3;i++){
             if (i == 0){
-               Patient patient =  patientService.findByUserName(userName);
+               PatientDto patient =  patientService.findByUserName(userName);
                if(patient !=null){
                    if (patient.getPassword().equals(password)){
                        userStatus = UserStatus.PATIENT;

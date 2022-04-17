@@ -1,7 +1,9 @@
 package com.oda.controller;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.conversion.DtoEntityConversion;
 import com.oda.dto.login.LoginDto;
+import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
@@ -16,6 +18,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.util.function.DoubleToIntFunction;
 
 @Controller
 @RequestMapping("/")
@@ -70,7 +76,7 @@ public class MainController {
     }
 
     @PostMapping("/login/verify")
-    public String getVerify(@ModelAttribute("loginDto")LoginDto loginDto,Model model){
+    public String getVerify(@ModelAttribute("loginDto")LoginDto loginDto,Model model) throws IOException, ParseException {
         //get check valid user or not
        UserStatus userStatus = loginService.getLogin(loginDto.getUsername(),loginDto.getPassword());
        if (userStatus != null){
@@ -86,13 +92,24 @@ public class MainController {
 
            }
            else {
-               Patient patient = patientService.findByUserName(loginDto.getUsername());
-               AuthorizedUser.setPatient(patient);
+               PatientDto patient = patientService.findByUserName(loginDto.getUsername());
+               AuthorizedUser.setPatient(new DtoEntityConversion().getPatient(patient));
                return "redirect:/patient/home";
            }
        }
-       model.addAttribute("invalidPassword","Invalid username and password.");
+       model.addAttribute("message","Invalid username and password.");
         return "loginpage/loginpage";
+    }
+
+    @GetMapping("/logout")
+    public String logOut(Model model){
+        //set Authorized user null
+        AuthorizedUser.setUserStatus(null);
+        AuthorizedUser.setPatient(null);
+        AuthorizedUser.setDoctor(null);
+        AuthorizedUser.setAdmin(null);
+        model.addAttribute("message","Successfully logout.");
+     return "loginpage/loginpage";
     }
 
 }

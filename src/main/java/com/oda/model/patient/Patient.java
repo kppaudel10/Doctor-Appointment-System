@@ -45,5 +45,7 @@ public class Patient {
     @Column(nullable = false)
     private String password;
 
+    private String profilePhotoPath;
+
 
 }

@@ -1,11 +1,13 @@
 package com.oda.service.Impl;
 
+import com.oda.component.FileStorageComponent;
 import com.oda.dto.patient.PatientDto;
 import com.oda.model.patient.Patient;
 import com.oda.repo.patient.PatientRepo;
 import com.oda.service.patient.PatientService;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -14,9 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class PatientServiceImpl implements PatientService {
     private final PatientRepo patientRepo;
+    private final FileStorageComponent fileStorageComponent;
 
-    public PatientServiceImpl(PatientRepo patientRepo) {
+    public PatientServiceImpl(PatientRepo patientRepo, FileStorageComponent fileStorageComponent) {
         this.patientRepo = patientRepo;
+        this.fileStorageComponent = fileStorageComponent;
     }
 
 
@@ -30,6 +34,7 @@ public class PatientServiceImpl implements PatientService {
                 .genderStatus(patientDto.getGenderStatus())
                 .birthDate(new SimpleDateFormat("yyyy-MM-dd").parse(patientDto.getBirthDate()))
                 .email(patientDto.getEmail())
+                .profilePhotoPath(patientDto.getProfilePhotoPath())
                 .password(patientDto.getPassword()).build();
         //save into database
         Patient patient1 = patientRepo.save(patient);
@@ -76,7 +81,26 @@ public class PatientServiceImpl implements PatientService {
         return patientRepo.findPatientByEmail(email);
     }
 
-    public Patient findByUserName(String username) {
-        return patientRepo.findByUserName(username);
+    public PatientDto findByUserName(String username) throws IOException {
+
+        Patient patient = patientRepo.findByUserName(username);
+        PatientDto patientDto = null;
+        try {
+            patientDto = PatientDto.builder()
+                    .id(patient.getId())
+                    .address(patient.getAddress())
+                    .email(patient.getEmail())
+                    .mobileNumber(patient.getMobileNumber())
+                    .genderStatus(patient.getGenderStatus())
+                    .name(patient.getName())
+                    .password(patient.getPassword())
+                    .birthDate(patient.getBirthDate().toString())
+                    .profilePhotoPath(fileStorageComponent.base64Encoded(patient.getProfilePhotoPath())).build();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return patientDto;
     }
 }

@@ -7,13 +7,19 @@ import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class DtoEntityConversion {
-    public Patient getPatient(PatientDto patientDto){
+    public Patient getPatient(PatientDto patientDto) throws ParseException {
         return Patient.builder().
         id(patientDto.getId())
                 .name(patientDto.getName())
                 .address(patientDto.getAddress())
                 .email(patientDto.getEmail())
+                .genderStatus(patientDto.getGenderStatus())
+                .profilePhotoPath(patientDto.getProfilePhotoPath())
+                .birthDate(new SimpleDateFormat("yyyy-MM-dd").parse(patientDto.getBirthDate()))
                 .mobileNumber(patientDto.getMobileNumber()).build();
     }
 

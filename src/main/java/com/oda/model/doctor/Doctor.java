@@ -1,8 +1,11 @@
 package com.oda.model.doctor;
 
+import com.oda.dto.patient.FeedbackDto;
+import com.oda.model.patient.Feedback;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,4 +43,10 @@ public class Doctor {
 
     @Column(nullable = false)
     private String password;
+
+    private Double rating;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "doctor_id")
+    private List<Feedback> feedbackList;
 }
