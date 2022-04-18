@@ -113,7 +113,7 @@ public class SignUpController {
 
     @PostMapping("/doctor")
     public String saveDoctor(@Valid @ModelAttribute("doctorDto")DoctorDto doctorDto,
-                             BindingResult bindingResult,Model model) throws EmailException {
+                             BindingResult bindingResult,Model model) throws EmailException, IOException {
         if (!bindingResult.hasErrors()){
           if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())){
               //if no error then send email and verify that
@@ -122,6 +122,10 @@ public class SignUpController {
               Integer pinCode = new MailSend().sendMail(mailSendDto);
 
               doctorDto.setCorrectPinCode(pinCode);
+              ResponseDto responseDto =   FileStorageComponent.storeFile(doctorDto.getMultipartFilePhoto());
+
+              doctorDto.setProfilePhotoPath(responseDto.getMessage());
+
               model.addAttribute("doctorDto",doctorDto);
 
               return "doctor/doctoremailverify";
@@ -137,6 +141,7 @@ public class SignUpController {
     @PostMapping("/doctor/verify")
     public String doctorEmailVerify(@ModelAttribute("doctorDto")DoctorDto doctorDto, Model model){
         if (doctorDto.getCorrectPinCode().equals(doctorDto.getUserPinCode())){
+
             //then save into database
            DoctorDto doctorDto1 = doctorService.save(doctorDto);
            if (doctorDto1 !=null){

@@ -1,6 +1,7 @@
 package com.oda.model.doctor;
 
 import com.oda.dto.patient.FeedbackDto;
+import com.oda.enums.GenderStatus;
 import com.oda.model.patient.Feedback;
 import lombok.*;
 
@@ -43,6 +44,12 @@ public class Doctor {
 
     @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
+    private String profilePhotoPath;
+
+    @Column(nullable = false)
+    private GenderStatus genderStatus;
 
    @OneToMany(mappedBy = "doctor",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Feedback> feedbackList;

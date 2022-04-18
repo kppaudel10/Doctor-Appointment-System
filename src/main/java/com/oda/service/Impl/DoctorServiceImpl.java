@@ -1,11 +1,14 @@
 package com.oda.service.Impl;
 
+import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.component.FileStorageComponent;
 import com.oda.dto.doctor.DoctorDto;
 import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,9 +16,11 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
+    private final FileStorageComponent fileStorageComponent;
 
-    public DoctorServiceImpl(DoctorRepo doctorRepo) {
+    public DoctorServiceImpl(DoctorRepo doctorRepo, FileStorageComponent fileStorageComponent) {
         this.doctorRepo = doctorRepo;
+        this.fileStorageComponent = fileStorageComponent;
     }
 
 
@@ -24,10 +29,12 @@ public class DoctorServiceImpl implements DoctorService {
         Doctor doctor = Doctor.builder()
                 .id(doctorDto.getId())
                 .name(doctorDto.getName())
-                .address(doctorDto.getAddress())
+                .address(doctorDto.getAddress().toLowerCase())
                 .email(doctorDto.getEmail())
+                .genderStatus(doctorDto.getGenderStatus())
+                .profilePhotoPath(doctorDto.getProfilePhotoPath())
                 .mobileNumber(doctorDto.getMobileNumber())
-                .specialization(doctorDto.getSpecialization())
+                .specialization(doctorDto.getSpecialization().toLowerCase())
                 .experience(doctorDto.getExperience()).
                 password(doctorDto.getPassword()).build();
         //save into database
@@ -122,5 +129,27 @@ public class DoctorServiceImpl implements DoctorService {
 
     public Doctor findByUserName(String userName) {
         return doctorRepo.findByUserName(userName);
+    }
+
+    public List<DoctorDto> finDoctorByAddressByDefault(){
+        String address = AuthorizedUser.getPatient().getAddress().toLowerCase();
+
+       return doctorRepo.findDoctorByAddress(address).stream().map(doctor -> {
+           try {
+               return DoctorDto.builder()
+                       .id(doctor.getId())
+                       .name(doctor.getName())
+                       .address(doctor.getAddress())
+                       .email(doctor.getEmail())
+                       .experience(doctor.getExperience())
+                       .rating(doctor.getRating())
+                       .specialization(doctor.getSpecialization())
+                       .genderStatus(doctor.getGenderStatus())
+                       .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
+           } catch (IOException e) {
+               e.printStackTrace();
+               return null;
+           }
+       }).collect(Collectors.toList());
     }
 }

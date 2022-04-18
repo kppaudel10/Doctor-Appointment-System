@@ -1,0 +1,23 @@
+package com.oda.component;
+
+import java.lang.reflect.Array;
+
+/**
+ * @author kulPaudel
+ * @project OnlineDoctorAppointMent
+ * @Date 4/18/22
+ */
+public class GetRating {
+    public static Integer getRating(Integer valueOne,Integer valueTwo,
+                                    Integer valueThree,Integer valueFour
+    ,Integer valueFive){
+        Integer rating = 0;
+        Integer[] array = new Integer[]{valueOne,valueTwo,valueThree,valueFour,valueFive};
+        for(Integer i : array){
+            if (i !=null){
+                rating +=1;
+            }
+        }
+        return rating;
+    }
+}

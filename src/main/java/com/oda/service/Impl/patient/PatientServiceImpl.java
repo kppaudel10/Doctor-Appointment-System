@@ -29,7 +29,7 @@ public class PatientServiceImpl implements PatientService {
         Patient patient = Patient.builder()
                 .id(patientDto.getId())
                 .name(patientDto.getName())
-                .address(patientDto.getAddress())
+                .address(patientDto.getAddress().toLowerCase())
                 .mobileNumber(patientDto.getMobileNumber())
                 .genderStatus(patientDto.getGenderStatus())
                 .birthDate(new SimpleDateFormat("yyyy-MM-dd").parse(patientDto.getBirthDate()))

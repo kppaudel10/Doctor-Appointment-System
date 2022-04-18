@@ -1,14 +1,18 @@
 package com.oda.controller.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.component.GetRating;
 import com.oda.dto.patient.FeedbackDto;
-import org.springframework.boot.Banner;
+import com.oda.service.Impl.DoctorServiceImpl;
+import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.text.ParseException;
 
 /**
  * @author kulPaudel
@@ -18,22 +22,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/patient")
 public class PatientController {
+    private final FeedbackServiceImpl feedbackService;
+    private final DoctorServiceImpl doctorService;
+
+    public PatientController(FeedbackServiceImpl feedbackService, DoctorServiceImpl doctorService) {
+        this.feedbackService = feedbackService;
+        this.doctorService = doctorService;
+    }
 
     @GetMapping("/home")
     public String getPatientHomePage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+       model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
         return "patient/patienthomepage";
     }
 
     @GetMapping("/feedback")
     public String getFeedbackForm(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+       model.addAttribute("feedbackDto",new FeedbackDto());
         return "patient/feedback";
     }
 
     @PostMapping("/feedback")
-    public String getStoreFeedback(@ModelAttribute("feedbackDto")FeedbackDto feedbackDto){
-        return null;
+    public String getStoreFeedback(@ModelAttribute("feedbackDto")FeedbackDto feedbackDto,
+                                   Model model) throws ParseException {
+       //calculate rating
+       Integer rating = GetRating.getRating(feedbackDto.getStar_one(),feedbackDto.getStar_two(),
+               feedbackDto.getStar_three(),feedbackDto.getStar_four(),feedbackDto.getStar_five());
+
+       //set rating
+        feedbackDto.setRating(Double.valueOf(rating));
+        //save feedback data
+        FeedbackDto feedbackDto1= feedbackService.save(feedbackDto);
+        if (feedbackDto1 !=null){
+            model.addAttribute("message","Feedback submitted successfully");
+        }else {
+            model.addAttribute("message","Unable to submit your feedback.");
+        }
+
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        return "patient/feedback";
     }
 
     @GetMapping("/view/status")

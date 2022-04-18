@@ -4,6 +4,8 @@ import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
 import lombok.*;
 
+import java.sql.Date;
+
 /**
  * @author kulPaudel
  * @project OnlineDoctorAppointMent
@@ -20,4 +22,11 @@ public class FeedbackDto {
     private Double rating;
     private Doctor doctor;
     private Patient patient;
+    private Integer star_one;
+    private Integer star_two;
+    private Integer star_three;
+    private Integer star_four;
+    private Integer star_five;
+    private Date feedbackDate;
+
 }

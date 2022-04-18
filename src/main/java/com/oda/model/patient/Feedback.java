@@ -4,6 +4,7 @@ import com.oda.model.doctor.Doctor;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,6 +29,9 @@ public class Feedback {
 
     @Column(nullable = false)
     private Double rating;
+
+    @Temporal(TemporalType.DATE)
+    private Date feedbackDate;
 
     @OneToOne()
     @JoinColumn(name = "patient_id")

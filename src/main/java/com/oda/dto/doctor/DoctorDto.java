@@ -56,6 +56,8 @@ public class DoctorDto {
     @NotNull(message = "File must be choose")
     private MultipartFile multipartFilePhoto;
 
+    private String profilePhotoPath;
+
     @NotNull(message = "File must be choose")
     private MultipartFile multipartFileDocument;
 

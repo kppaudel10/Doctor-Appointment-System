@@ -38,7 +38,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getLandingPage() {
-        return "patient/viewstatuspage";
+        return "homePage";
     }
 
     @GetMapping("/login")
