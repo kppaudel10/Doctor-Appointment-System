@@ -38,35 +38,9 @@ public class MainController {
 
     @GetMapping("/")
     public String getLandingPage() {
-        return "homePage";
+        return "patient/viewstatuspage";
     }
-//
-//    @GetMapping("/")
-//    public String getHomePage(){
-//        if (AuthorizedUser.getUserStatus().ordinal() == 2){
-//            Patient patient = patientService.findPatientByEmail(AuthorizedUser.getPatient().getEmail());
-//            //make patient null
-//            AuthorizedUser.setPatient(null);
-//            //asign again
-//            AuthorizedUser.setPatient(patient);
-//
-////            return "patient/patienthomepage";
-//            return "redirect:/patient/home";
-//        }else if (AuthorizedUser.getUserStatus().ordinal() == 1){
-//            Doctor doctor = doctorService.findDoctorByEmail(AuthorizedUser.getDoctor().getEmail());
-//            AuthorizedUser.setDoctor(null);
-//            AuthorizedUser.setDoctor(doctor);
-//            return "doctor/doctorhomepage";
-//        }else if(AuthorizedUser.getUserStatus().ordinal() == 0){
-//           Admin admin= adminService.findAdminByEmail(AuthorizedUser.getAdmin().getEmail());
-//           AuthorizedUser.setAdmin(null);
-//           AuthorizedUser.setAdmin(admin);
-//            return "admin/adminhomepage";
-//        }else {
-//          return null;
-//        }
-//    }
-//
+
     @GetMapping("/login")
     public String getLoginPage(Model model) {
         model.addAttribute("loginDto", new LoginDto());

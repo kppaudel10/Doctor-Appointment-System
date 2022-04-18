@@ -3,6 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>VIEW || STATUS</title>
+<!--    <link th:href="@{/css/patientTable.css}" rel="stylesheet"/>-->
+    <style>
+        #members td, #members th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #members tr:nth-child(even){background-color: #f2f2f2;}
+
+        #members tr:hover {background-color: #ddd;}
+
+        #members th {
+            padding-top: 10px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+            font-size: 23px;
+        }
+        #members td{
+            font-size: 22px;
+            color: black;
+            text-align: left;
+        }
+        table{
+            position: absolute;
+            margin-top: 40px;
+            margin-right: 60px;
+            margin-left: 60px;
+            width: 80%;
+        }
+        .head_caption{
+            color: #1e1e1e;
+            font-size: 30px;
+            text-align: center;
+        }
+        .button1{
+            padding: 5px;
+            width:40px;
+            background-color: #040faa;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button1:hover{
+            background-color: darkgray;
+            color: white;
+        }
+        .button2{
+            padding: 5px;
+            width:40px;
+            background-color: hsl(0, 95%, 34%);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button2:hover{
+            background-color: darkgray;
+            color: white;
+        }
+        .button3{
+            padding: 5px;
+            width:40px;
+            background-color: hsl(180, 68%, 56%);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button3:hover{
+            background-color: darkgray;
+            color: white;
+        }
+
+    </style>
 </head>
 <body>
 <!--<div th:replace="patient/fragement/navbar :: patientNavbarHome"></div>-->
@@ -35,7 +109,49 @@
     </header>
 </div>
 <div class="home">
-    <h2>This is status view page</h2>
+   <div class="container">
+       <h2 class="head_caption"><u><i>Your Online Appointment Details</i></u></h2>
+       <table id="members">
+           <thead>
+           <tr>
+               <th>S.N</th>
+               <th>Hospital Name</th>
+               <th>Doctor Name</th>
+               <th>Date</th>
+               <th>Time</th>
+               <th>Status</th>
+           </tr>
+           </thead>
+           <tbody>
+           <tr>
+               <td>1</td>
+               <td>OM Hospital</td>
+               <td>Dr.Ramesh kumar mandal</td>
+               <td>2022/10/5</td>
+               <td>12:30 AM</td>
+               <td>Pending</td>
+           </tr>
+           <tr>
+               <td>1</td>
+               <td>OM Hospital</td>
+               <td>Dr.Ramesh kumar mandal</td>
+               <td>2022/10/5</td>
+               <td>12:30 AM</td>
+               <td>Pending</td>
+           </tr>
+
+           <!--        <tr th:each="i,loop:  ${expensesList}">-->
+           <!--            <td th:text="${loop.count}"></td>-->
+           <!--            <td th:text="${i.expensesSource}"></td>-->
+           <!--            <td  th:text="${i.expensesAmount}"></td>-->
+           <!--            <td  th:text="${i.paidDate}"></td>-->
+           <!--            <td>-->
+           <!--                <a class="button1" th:href="@{/expenses/view/{id}(id =${i.id})}">View</a>-->
+           <!--            </td>-->
+           <!--        </tr>-->
+           </tbody>
+       </table>
+   </div>
     </div>
 </body>
 </html>
