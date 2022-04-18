@@ -1,4 +1,4 @@
-package com.oda.service.Impl;
+package com.oda.service.Impl.patient;
 
 import com.oda.component.FileStorageComponent;
 import com.oda.dto.patient.PatientDto;

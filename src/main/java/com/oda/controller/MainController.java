@@ -7,11 +7,10 @@ import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
-import com.oda.model.patient.Patient;
 import com.oda.service.Impl.AdminServiceImpl;
 import com.oda.service.Impl.DoctorServiceImpl;
 import com.oda.service.Impl.LoginServiceImpl;
-import com.oda.service.Impl.PatientServiceImpl;
+import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.function.DoubleToIntFunction;
 
 @Controller
 @RequestMapping("/")

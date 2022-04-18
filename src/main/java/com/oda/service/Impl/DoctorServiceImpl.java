@@ -51,6 +51,10 @@ public class DoctorServiceImpl implements DoctorService {
                 .name(doctor.getName())
                 .address(doctor.getAddress())
                 .mobileNumber(doctor.getMobileNumber())
+                .specialization(doctor.getSpecialization())
+                .experience(doctor.getExperience())
+                .rating(doctor.getRating())
+                .numberOfFeedback(doctor.getNumberOfFeedback())
                 .email(doctor.getEmail()).build();
     }
 

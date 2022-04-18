@@ -1,10 +1,13 @@
 package com.oda.controller.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.dto.patient.FeedbackDto;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -26,6 +29,11 @@ public class PatientController {
     public String getFeedbackForm(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         return "patient/feedback";
+    }
+
+    @PostMapping("/feedback")
+    public String getStoreFeedback(@ModelAttribute("feedbackDto")FeedbackDto feedbackDto){
+        return null;
     }
 
     @GetMapping("/view/status")

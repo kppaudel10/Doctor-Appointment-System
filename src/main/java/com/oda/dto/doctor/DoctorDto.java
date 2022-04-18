@@ -58,4 +58,8 @@ public class DoctorDto {
 
     @NotNull(message = "File must be choose")
     private MultipartFile multipartFileDocument;
+
+    private Double rating;
+
+    private Integer numberOfFeedback;
 }

@@ -10,7 +10,7 @@ import com.oda.dto.response.ResponseDto;
 import com.oda.service.Impl.AdminServiceImpl;
 import com.oda.service.Impl.DoctorServiceImpl;
 import com.oda.service.Impl.HospitalServiceImpl;
-import com.oda.service.Impl.PatientServiceImpl;
+import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

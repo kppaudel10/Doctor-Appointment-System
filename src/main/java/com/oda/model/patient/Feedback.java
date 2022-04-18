@@ -20,13 +20,20 @@ import java.util.List;
 @Table(name = "oda_feedback")
 public class Feedback {
     @Id
+    @GeneratedValue(generator = "feedback_sequence",strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "feedback_sequence",sequenceName = "feedback_sequence")
     private Integer id;
 
     private String comment;
 
+    @Column(nullable = false)
     private Double rating;
 
     @OneToOne()
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id",nullable = false)
+    private Doctor doctor;
 }

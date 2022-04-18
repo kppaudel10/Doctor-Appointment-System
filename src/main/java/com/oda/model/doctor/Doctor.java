@@ -44,9 +44,11 @@ public class Doctor {
     @Column(nullable = false)
     private String password;
 
-    private Double rating;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "doctor_id")
+   @OneToMany(mappedBy = "doctor",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<Feedback> feedbackList;
+
+   private Double rating;
+
+   private Integer numberOfFeedback;
+
 }

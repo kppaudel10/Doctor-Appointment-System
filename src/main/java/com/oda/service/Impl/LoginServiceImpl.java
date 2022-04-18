@@ -4,7 +4,7 @@ import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
-import com.oda.model.patient.Patient;
+import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
