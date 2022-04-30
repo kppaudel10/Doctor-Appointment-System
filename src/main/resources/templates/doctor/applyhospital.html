@@ -166,7 +166,7 @@ input{
         <h1> Apply for Hospitals</h1>
         <fieldset>
           <label for="job">Choose Hospital</label>
-          <select id="job" name="user_job" th:field="*{hospitalId}" required>
+          <select id="job" name="user_job" th:field="*{hospital}" required>
             <th:block th:each="loop : ${hospitalList}">
               <option th:value="${loop.id}" th:text="${loop.name}"></option>
             </th:block>

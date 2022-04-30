@@ -26,21 +26,24 @@ public class ApplyAppointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Date date;
+    @Temporal(TemporalType.DATE)
+    private Date applyDate;
 
-    private Time time;
+    private String fromTime;
+
+    private String toTime;
 
     private ApplyStatus applyStatus;
 
-    @OneToOne(fetch =FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
 
-    @OneToOne(fetch =FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "hosipital_id")
     private Hospital hospital;
 
-    @OneToOne(fetch =FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
 }

@@ -51,7 +51,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public DoctorDto findById(Integer integer) {
+    public DoctorDto findById(Integer integer) throws IOException {
         Doctor doctor = doctorRepo.findById(integer).get();
         return DoctorDto.builder()
                 .id(doctor.getId())
@@ -61,6 +61,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .specialization(doctor.getSpecialization())
                 .experience(doctor.getExperience())
                 .rating(doctor.getRating())
+                .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath()))
                 .numberOfFeedback(doctor.getNumberOfFeedback())
                 .email(doctor.getEmail()).build();
     }

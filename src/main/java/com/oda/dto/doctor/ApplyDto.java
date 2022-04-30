@@ -24,7 +24,7 @@ public class ApplyDto {
     private int id;
     private Doctor doctor;
 
-    private Integer hospitalId;
+    private Hospital hospital;
 
     private String formTime;
 

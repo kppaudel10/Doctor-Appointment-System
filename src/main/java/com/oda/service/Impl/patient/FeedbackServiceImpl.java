@@ -9,6 +9,7 @@ import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.patient.FeedbackService;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
     @Override
-    public FeedbackDto save(FeedbackDto feedbackDto) throws ParseException {
+    public FeedbackDto save(FeedbackDto feedbackDto) throws ParseException, IOException {
         Feedback feedback = new Feedback();
 
         feedback.setId(feedbackDto.getId());

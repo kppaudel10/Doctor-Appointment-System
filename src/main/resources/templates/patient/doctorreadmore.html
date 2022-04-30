@@ -124,18 +124,19 @@
 <div class="home">
     <main class="card-head">
         <div class="card-img">
-            <img th:src="${ppPath}" alt="Photo">
+            <img th:src="${doctor.getProfilePhotoPath()}" alt="Photo">
 
         </div>
 
         <span class="dr-details">
-<h2>Address:</h2>
-<h2>Specialist:</h2>
-<h2>Experience:</h2>
-<h2>Specialized form:</h2>
+<h2 th:text="'Address: '+${doctor.address}"></h2>
+<h2 th:text="'Contact: '+${doctor.mobileNumber}"></h2>
+<h2 th:text="'Email:' +${doctor.email}"></h2>
+<h2 th:text="'Specialization: '+${doctor.specialization}"></h2>
+ <h2 th:text="'Experience: '+${doctor.experience}"></h2>
 </span>
         <span class="dr-name">
-  <h1 class="dname">Dr. Deepak Sharma Paudel</h1>
+  <h1 class="dname" th:text="'Dr.' +${doctor.name}"></h1>
   </span>
         <div class="tables">
             <table id="customers">
@@ -143,14 +144,22 @@
                 <tr>
                     <th>S.N</th>
                     <th>Hospital Name</th>
-                    <th>Work Time</th>
+                    <th>Work From</th>
+                    <th>Work To</th>
                     <th>Action</th>
                 </tr>
-               <tr>
-                <td>1</td>
-                <td>OM Hospital</td>
-                <td>3:20 pm to 4:30 pm</td>
-                <td><button>Apply</button></td>
+               <tr th:each="loop,i : ${workingHospitalList}">
+                <td th:text="${i.index}"></td>
+                <td th:text="${loop.getHospital().name}">OM Hospital</td>
+                <td th:text="${loop.fromTime}"></td>
+                   <td th:text="${loop.toTime}"></td>
+                <td>
+                    <a th:href="@{/patient/hospital-appointment/}+${loop.id}">
+                        <button>
+                            Apply
+                        </button>
+                    </a>
+                </td>
                 </tr>
             </table>
         </div>

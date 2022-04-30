@@ -32,7 +32,7 @@ public class ApplyHospitalServiceImpl implements ApplyService {
     public ApplyDto save(ApplyDto applyDto) throws ParseException {
         Apply apply = Apply.builder()
                 .id(applyDto.getId())
-                .hospital(hospitalService.findById(applyDto.getHospitalId()))
+                .hospital(applyDto.getHospital())
                 .doctor(AuthorizedUser.getDoctor())
                 .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
                 .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime())).build();
@@ -42,7 +42,14 @@ public class ApplyHospitalServiceImpl implements ApplyService {
 
     @Override
     public ApplyDto findById(Integer integer) {
-        return null;
+        Apply apply = applyRepo.findById(integer).get();
+        return ApplyDto.builder()
+                .id(apply.getId())
+                .hospital(apply.getHospital())
+                .doctor(apply.getDoctor())
+                .formTime(apply.getFromTime())
+                .toTime(apply.getToTime())
+                .build();
     }
 
     @Override
@@ -53,5 +60,9 @@ public class ApplyHospitalServiceImpl implements ApplyService {
     @Override
     public void deleteById(Integer integer) {
 
+    }
+
+    public List<Apply> findApplyDetailsOfDoctor(Integer doctorId){
+        return applyRepo.findApplyByDoctorId(doctorId);
     }
 }

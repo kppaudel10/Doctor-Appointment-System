@@ -4,15 +4,16 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.GetRating;
 import com.oda.dto.patient.FeedbackDto;
 import com.oda.dto.patient.SearchDto;
+import com.oda.model.patient.ApplyAppointment;
+import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
+import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 /**
@@ -25,10 +26,14 @@ import java.text.ParseException;
 public class PatientController {
     private final FeedbackServiceImpl feedbackService;
     private final DoctorServiceImpl doctorService;
+    private final ApplyHospitalServiceImpl applyHospitalService;
+    private final ApplyAppointmentServiceImpl applyAppointmentService;
 
-    public PatientController(FeedbackServiceImpl feedbackService, DoctorServiceImpl doctorService) {
+    public PatientController(FeedbackServiceImpl feedbackService, DoctorServiceImpl doctorService, ApplyHospitalServiceImpl applyHospitalService, ApplyAppointmentServiceImpl applyAppointmentService) {
         this.feedbackService = feedbackService;
         this.doctorService = doctorService;
+        this.applyHospitalService = applyHospitalService;
+        this.applyAppointmentService = applyAppointmentService;
     }
 
     @GetMapping("/home")
@@ -48,7 +53,7 @@ public class PatientController {
 
     @PostMapping("/feedback")
     public String getStoreFeedback(@ModelAttribute("feedbackDto")FeedbackDto feedbackDto,
-                                   Model model) throws ParseException {
+                                   Model model) throws ParseException, IOException {
        //calculate rating
        Integer rating = GetRating.getRating(feedbackDto.getStar_one(),feedbackDto.getStar_two(),
                feedbackDto.getStar_three(),feedbackDto.getStar_four(),feedbackDto.getStar_five());
@@ -84,8 +89,10 @@ public class PatientController {
         return "patient/profileview";
     }
 
-    @GetMapping("/readmore")
-    public String getDoctorViewPage(Model model){
+    @GetMapping("/doctor-readmore/{id}")
+    public String getDoctorViewPage(@PathVariable("id") Integer id, Model model) throws IOException {
+        model.addAttribute("doctor",doctorService.findById(id));
+        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(id));
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         return "patient/doctorreadmore";
     }
@@ -96,5 +103,14 @@ public class PatientController {
         model.addAttribute("doctorList",doctorService.findDoctorByANS(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
         return "patient/patienthomepage";
+    }
+
+
+    @GetMapping("/hospital-appointment/{id}")
+    public String getApplyForAppointMnt(@PathVariable("id") Integer id){
+        //save log
+       ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospitalService.findById(id));
+//        return "redirect:/patient/doctor-readmore/"+applyAppointment.getDoctor().getId();
+        return "redirect:/patient/home";
     }
 }
