@@ -5,7 +5,7 @@ import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.FeedbackDto;
 import com.oda.model.patient.Feedback;
 import com.oda.repo.patient.FeedbackRepo;
-import com.oda.service.Impl.DoctorServiceImpl;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.patient.FeedbackService;
 import org.springframework.stereotype.Service;
 

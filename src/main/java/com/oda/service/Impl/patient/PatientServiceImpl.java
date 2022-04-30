@@ -85,22 +85,23 @@ public class PatientServiceImpl implements PatientService {
 
         Patient patient = patientRepo.findByUserName(username);
         PatientDto patientDto = null;
-        try {
-            patientDto = PatientDto.builder()
-                    .id(patient.getId())
-                    .address(patient.getAddress())
-                    .email(patient.getEmail())
-                    .mobileNumber(patient.getMobileNumber())
-                    .genderStatus(patient.getGenderStatus())
-                    .name(patient.getName())
-                    .password(patient.getPassword())
-                    .birthDate(patient.getBirthDate().toString())
-                    .profilePhotoPath(fileStorageComponent.base64Encoded(patient.getProfilePhotoPath())).build();
+       if(patient !=null){
+           try {
+               patientDto = PatientDto.builder()
+                       .id(patient.getId())
+                       .address(patient.getAddress())
+                       .email(patient.getEmail())
+                       .mobileNumber(patient.getMobileNumber())
+                       .genderStatus(patient.getGenderStatus())
+                       .name(patient.getName())
+                       .password(patient.getPassword())
+                       .birthDate(patient.getBirthDate().toString())
+                       .profilePhotoPath(fileStorageComponent.base64Encoded(patient.getProfilePhotoPath())).build();
 
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
+           }catch (Exception e){
+               e.printStackTrace();
+           }
+       }
         return patientDto;
     }
 }

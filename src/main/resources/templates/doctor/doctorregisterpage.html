@@ -5,17 +5,18 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <title>PATIENT || SIGNUP</title>
+    <title>DOCTOR || SIGNUP</title>
     <style>
+
         .register{
-            background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-            margin-top: 4%;
-            padding: 3%;
+            background: -webkit-linear-gradient(left, #5c977c, #00c6ff);
+            margin-top: 0%;
+            padding: 8%;
         }
         .register-left{
             text-align: center;
             color: #fff;
-            margin-top: 4%;
+            margin-top: 5%;
         }
         .register-left input{
             border: none;
@@ -25,18 +26,18 @@
             background: #f8f9fa;
             font-weight: bold;
             color: #383d41;
-            margin-top: 30%;
+            margin-top: 10%;
             margin-bottom: 3%;
             cursor: pointer;
         }
         .register-right{
             background: #f8f9fa;
-            border-top-left-radius: 10% 50%;
-            border-bottom-left-radius: 10% 50%;
+            /*border-top-left-radius: 10% 50%;*/
+            /*border-bottom-left-radius: 10% 50%;*/
+            border-radius: 8px;
         }
         .register-left img{
-            margin-top: 15%;
-            margin-bottom: 5%;
+            margin-top: 10%;
             width: 25%;
             -webkit-animation: mover 2s infinite  alternate;
             animation: mover 1s infinite  alternate;
@@ -51,8 +52,9 @@
         }
         .register-left p{
             font-weight: lighter;
-            padding: 12%;
+            padding: 5%;
             margin-top: -9%;
+            font-size: 1rem;
         }
         .register .register-form{
             padding: 10%;
@@ -100,7 +102,8 @@
             text-align: center;
             margin-top: 8%;
             margin-bottom: -15%;
-            color: #495057;
+            color: #2f9767;
+            font-weight: bold;
         }
         .home{
             margin-left: 5%;
@@ -113,14 +116,23 @@
             color: red;
             font-size: 15px;
         }
+        .final-msg{
+            color: #04AA6D;
+            text-align: center;
+        }
         .password-msg{
             color: red;
             text-align: center;
         }
-        .final-msg{
-            color: #04AA6D;
-            text-align: center;
-            margin-bottom: 200px;
+        .register select {
+            padding: 7px;
+            font-size: 19px;
+            outline: none;
+        }
+        .register option{
+            padding: 5px;
+            font-size: 19px;
+            outline: none;
         }
     </style>
 </head>
@@ -131,7 +143,7 @@
 <!--<div class="home">-->
 <div class="register">
     <div class="row">
-        <div class="col-md-3 register-left">
+        <div class="col-md-4 register-left">
             <!--            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>-->
             <h3>Welcome</h3>
             <p>to online doctor appointment system!<br>Show your skills and experience to make world healthy.</p>
@@ -139,7 +151,7 @@
                 <input type="submit" name="" value="Login"/><br/>
             </a>
         </div>
-        <div class="col-md-9 register-right">
+        <div class="col-md-8 register-right">
             <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -166,16 +178,9 @@
                                     <input type="email" class="form-control"  placeholder="Email *" th:field="*{email}" value="" />
                                     <p class="display_msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
                                 </div>
-
                                 <div class="form-group">
-                                    <input type="password" class="form-control" placeholder="Password *" th:field="*{password}" value="" />
-                                    <p class="display_msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-                                </div>
-
-                                <div class="form-group">
-                                    <input type="password" name="txtEmpPhone" class="form-control" placeholder="ConFirm Password *" th:field="*{reEnterPassword}" value="" />
-                                    <p class="display_msg" th:if="${#fields.hasErrors('reEnterPassword')}" th:errors="*{reEnterPassword}"></p>
-
+                                    <input type="text" class="form-control" placeholder="Specialization *" th:field="*{specialization}" value="" />
+                                    <p class="display_msg" th:if="${#fields.hasErrors('specialization')}" th:errors="*{specialization}"></p>
                                 </div>
 
                                 <div class="form-group">
@@ -197,19 +202,26 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="Specialization *" th:field="*{specialization}" value="" />
-                                    <p class="display_msg" th:if="${#fields.hasErrors('specialization')}" th:errors="*{specialization}"></p>
+                                    <input type="password" class="form-control" placeholder="Password *" th:field="*{password}" value="" />
+                                    <p class="display_msg" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
                                 </div>
+
+                                <div class="form-group">
+                                    <input type="password" name="txtEmpPhone" class="form-control" placeholder="ConFirm Password *" th:field="*{reEnterPassword}" value="" />
+                                    <p class="display_msg" th:if="${#fields.hasErrors('reEnterPassword')}" th:errors="*{reEnterPassword}"></p>
+
+                                </div>
+
                                 <div class="form-group">
                                     <input type="number" name="txtEmpPhone" class="form-control" placeholder="Experience(years) *" th:field="*{experience}" value="" />
                                     <p class="display_msg" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></p>
                                 </div>
 
-                                <div class="form-group">
-                                    <label>Document file *</label>
-                                    <input type="file" class="form-control" placeholder="document file *" th:field="*{multipartFileDocument}" value="" />
-                                    <p class="display_msg" th:if="${#fields.hasErrors('multipartFileDocument')}" th:errors="*{multipartFileDocument}"></p>
-                                </div>
+<!--                                <div class="form-group">-->
+<!--                                    <label>Document file *</label>-->
+<!--                                    <input type="file" class="form-control" placeholder="document file *" th:field="*{multipartFileDocument}" value="" />-->
+<!--                                    <p class="display_msg" th:if="${#fields.hasErrors('multipartFileDocument')}" th:errors="*{multipartFileDocument}"></p>-->
+<!--                                </div>-->
 
                                 <div class="form-group">
                                     <label>Photo(pp size) *</label>

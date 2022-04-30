@@ -1,4 +1,4 @@
-package com.oda.service.Impl;
+package com.oda.service.Impl.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.FileStorageComponent;
@@ -127,8 +127,23 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepo.findDoctorByEmail(email);
     }
 
-    public Doctor findByUserName(String userName) {
-        return doctorRepo.findByUserName(userName);
+    public DoctorDto findByUserName(String userName) throws IOException {
+        Doctor doctor = doctorRepo.findByUserName(userName);
+        DoctorDto doctorDto = null;
+               if(doctor !=null){
+                   doctorDto = DoctorDto.builder()
+                           .id(doctor.getId())
+                           .name(doctor.getName())
+                           .email(doctor.getEmail())
+                           .address(doctor.getAddress())
+                           .experience(doctor.getExperience())
+                           .genderStatus(doctor.getGenderStatus())
+                           .mobileNumber(doctor.getMobileNumber())
+                           .numberOfFeedback(doctor.getNumberOfFeedback())
+                           .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath()))
+                           .password(doctor.getPassword()).build();
+               }
+               return doctorDto;
     }
 
     public List<DoctorDto> finDoctorByAddressByDefault(){
@@ -151,5 +166,25 @@ public class DoctorServiceImpl implements DoctorService {
                return null;
            }
        }).collect(Collectors.toList());
+    }
+    public List<DoctorDto> findDoctorByANS(String userInput){
+       return doctorRepo.
+               findDoctorByNameAndAddressAndSpecialization(userInput).stream().map(doctor -> {
+                   try {
+                       return DoctorDto.builder()
+                               .id(doctor.getId())
+                               .name(doctor.getName())
+                               .address(doctor.getAddress())
+                               .email(doctor.getEmail())
+                               .experience(doctor.getExperience())
+                               .rating(doctor.getRating())
+                               .specialization(doctor.getSpecialization())
+                               .genderStatus(doctor.getGenderStatus())
+                               .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                       return null;
+                   }
+               }).collect(Collectors.toList());
     }
 }

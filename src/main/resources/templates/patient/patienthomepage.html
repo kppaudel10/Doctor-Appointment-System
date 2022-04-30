@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctors Cards</title>
+    <title>DOCTORS || DETAILS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <style>
         body{
@@ -108,7 +108,7 @@
             border-radius: 6px;
             margin-top: 60px;
             margin-right: 25px;
-            margin-left: 25px;
+            margin-left: 30px;
             margin-right: 25px;
             box-shadow: 2px 2px 7px rgb(61, 52, 52);
             text-align: center;
@@ -133,16 +133,15 @@
 
         .btn {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
             width: 100%;
         }
 
-        .btn button {
+        .btn .btnlinks {
             margin-top: 4px;
             margin-bottom: 4px;
             width: auto;
             height: auto;
-            background-color: wheat;
             padding: 12px;
             border: 1px solid black;
             border-radius: 6px;
@@ -150,9 +149,9 @@
             margin-right: 5px;
         }
 
-        .btn button:hover {
+        .btn .btnlinks:hover {
             background-color: black;
-            color: white;
+            color: whitesmoke;
             cursor: pointer;
             transition: .5s;
         }
@@ -212,8 +211,10 @@
 
     <div class="box">
         <div class="container-4">
-            <input type="search" id="search" placeholder="Search Doctors..." />
-            <button class="icon"><i class="fa fa-search"></i></button>
+            <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
+                <input type="search" id="search" placeholder="Search Doctors..." th:field="*{userInput}"/>
+                <input type="submit" class="icon"><i class="fa fa-search"></i></input>
+            </form>
         </div>
     </div>
 
@@ -233,8 +234,9 @@
                     <p style="font-size: 18px" th:text="${loop.getSpecialization()}"></p>
                 </div>
                 <div class="btn">
-                    <button>Book now</button>
-                    <button>Read more</button>
+                    <button class="btnlinks">
+                        <a th:href="@{/patient/readmore}">Read more</a>
+                    </button>
                 </div>
             </div>
                <!-- cards end -->

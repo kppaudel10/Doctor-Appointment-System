@@ -16,7 +16,7 @@
 
         <nav class="navbar">
             <ul>
-                <a href="#about">Feedback</a>
+                <a th:href="@{/doctor/feedback}">Feedback</a>
                 <a href="#services">Booking Request</a>
                 <a href="#home">Home</a>
 <!--                <a href="#doctors">doctors</a>-->
@@ -42,7 +42,7 @@
         :root{
             --green:#16a085;
             --black:#444;
-            --light-color:#777;
+            --light-color: #ebf1f0;
             --box-shadow:.5rem .5rem 0 rgba(22, 160, 133, .2);
             --text-shadow:.4rem .4rem 0 rgba(0, 0, 0, .2);
             --border:.2rem solid var(--green);
@@ -63,6 +63,9 @@
             overflow-x: hidden;
             scroll-padding-top: 7rem;
             scroll-behavior: smooth;
+        }
+        body{
+            background-color: var(--box-shadow);
         }
 
         .btn{
@@ -107,7 +110,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgb(228, 222, 222);
+            background: #fff;
         }
 
         .header .logo{
@@ -131,7 +134,7 @@
         }
         .header .navbar a{
             font-size: 1.8rem;
-            color: var(--light-color);
+            color: black;
             margin-right: 5rem;
             padding: 6px 12px;
             margin-right: 3rem;
@@ -170,7 +173,7 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            border: 1px solid rgb(4, 33, 202);
+            border: 1px #16a085 solid;
             padding: 1px;
 
         }

@@ -2,13 +2,13 @@ package com.oda.controller;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.conversion.DtoEntityConversion;
+import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.login.LoginDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
-import com.oda.model.doctor.Doctor;
 import com.oda.service.Impl.AdminServiceImpl;
-import com.oda.service.Impl.DoctorServiceImpl;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.LoginServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -58,8 +58,8 @@ public class MainController {
                return "redirect:/admin/home";
 
            }else if(userStatus.equals(UserStatus.DOCTOR)){
-               Doctor doctor = doctorService.findByUserName(loginDto.getUsername());
-               AuthorizedUser.setDoctor(doctor);
+               DoctorDto doctor = doctorService.findByUserName(loginDto.getUsername());
+               AuthorizedUser.setDoctor(new DtoEntityConversion().getDoctor(doctor));
                return "redirect:/doctor/home";
 
            }
@@ -76,11 +76,16 @@ public class MainController {
     @GetMapping("/logout")
     public String logOut(Model model){
         //set Authorized user null
-        AuthorizedUser.setUserStatus(null);
-        AuthorizedUser.setPatient(null);
-        AuthorizedUser.setDoctor(null);
-        AuthorizedUser.setAdmin(null);
+       UserStatus userStatus = AuthorizedUser.getUserStatus();
+//       if (userStatus.equals(UserStatus.ADMIN)){
+           AuthorizedUser.setAdmin(null);
+//       }else if(userStatus.equals(UserStatus.DOCTOR)){
+           AuthorizedUser.setDoctor(null);
+//       }else if(userStatus.equals(UserStatus.PATIENT)) {
+           AuthorizedUser.setPatient(null);
+//       }
         model.addAttribute("message","Successfully logout.");
+       model.addAttribute("loginDto",new LoginDto());
      return "loginpage/loginpage";
     }
 

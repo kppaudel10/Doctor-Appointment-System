@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PATIENT || SIGNUP</title>
     <style>
+        *{text-decoration: none}
         .home{
             margin-left: 5%;
             margin-top: 56px;
             margin-right: 1%;
             position:absolute;
         }
+
         @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
 
         .grid-wrapper{
@@ -19,64 +21,52 @@
             display: grid;
             grid-gap: 2rem;
             grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-            margin: 0;
+            margin: 10px;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
 
         }
         .grid-wrapper li{
-            background-color: #618094;
+            background-color: #2f9767;
             color: #ffffff;
             font-size: 24px;
             list-style-type: none;
             padding: 2rem;
             text-align: center;
-            /*text-transform: capitalize;*/
+           text-decoration: none;
             font-weight: 600;
             border-radius: 5px;
         }
         .main-container{
             margin-right: auto;
-            margin-left: 11%;
+            margin-left: 12%;
+            text-align: center;
             margin-top: 150px;
             max-width: 1170px;
             padding:2rem 1rem;
             /*position: absolute;*/
         }
         section{
-            margin: 30px auto;
+            margin: 20px auto;
             width: 75%;
             border: 1px solid coral;
         }
-        section button{
-            font-size: 20px;
-            width: 30%;
-            padding: 10px;
-            background-color: aqua;
-            border: 1px solid rgb(34, 31, 31);
-            border-radius: 25px;
-            margin-left: 20rem;
-            margin-bottom: 10px;
-            cursor: pointer; ;
-        }
-        .main-container .grid-wrapper li img{
-            width: 30px;
-            height: 40px;
-            border: 1px solid blue;
 
-
-        }
         .main-container .grid-wrapper .header h3{
             text-align: center;
-            color:#263037
+            color: #249c64
         }
         a{
             text-decoration: none;
         }
+       li,p{
+            font-size: 30px;
+            text-decoration: none;
+        }
     </style>
 </head>
-<body>
+<body style="background-color: #fff">
 <div th:replace="fragment/loginfragment :: loginHome"></div>
 <div th:replace="fragment/loginfragment :: loginHomeCss"></div>
 <div th:replace="fragment/loginfragment :: loginHomeLink"></div>
@@ -91,7 +81,7 @@
                    <a th:href="@{/signup/admin}">
                        <li>
                            <!--                        <img src="photo.jpg" alt="Photo">-->
-                           <p>Join as a admin</p>
+                           <p><b>Join as a admin</b></p>
                        </li>
                    </a>
                 </div>
@@ -100,7 +90,7 @@
                     <a th:href="@{/signup/doctor}">
                         <li>
                             <!--                        <img src="photo.jpg" alt="Photo">-->
-                            <p>Join as a doctor</p>
+                            <p><b>Join as a doctor</b></p>
                         </li>
                     </a>
                 </div>
@@ -109,7 +99,7 @@
                     <a th:href="@{/signup/patient}">
                         <li>
                             <!--                        <img src="photo.jpg" alt="Photo">-->
-                            <p>Join as a patient</p>
+                            <p><b>Join as a patient</b></p>
                         </li>
                     </a>
                 </div>

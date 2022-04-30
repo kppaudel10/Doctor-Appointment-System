@@ -4,14 +4,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-</head>
-<body>
+    head>
+<body style="background-color: whitesmoke">
 <div th:fragment="loginHome">
-    <div class="bg ">
-        <div class=" topnav">
-            <a class="active" th:href="@{/home}"><i class="fa fa-home" style="font-size:20px;padding: 3px 7px;"></i>Home</a>
-            <!--Additional links -->
+        <div class="  topnav">
+<!--            <div class="oda">-->
+<!--                <a href="#odda">ODAS</a>-->
+<!--            </div>-->
+            <a class="active" th:href="@{/}"><i class="fa fa-home" style="font-size:30px;padding: 3px 7px;"></i>Home</a>
+
+                <!--Additional links -->
             <div class="login-container">
                 <a  class="register" th:href="@{/signup/who}">SignUp</a>
                 <a class="login" th:href="@{/login}">Login</a>
@@ -31,73 +36,96 @@
 
 <div th:fragment="loginHomeCss">
     <style>
+        :root{
+            --green:#1EAFF3 ;
+            --black:#444;
+            --light-color:#777;
+            --box-shadow:.5rem .5rem 0 rgba(22, 160, 133, .2);
+            --text-shadow:.4rem .4rem 0 rgba(0, 0, 0, .2);
+            --border:.2rem solid var(--green);
+        }
         *{
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: Arial, Helvetica, sans-serif;
+            text-decoration: none;
         }
-        /*body{*/
 
-        /*  !*background-image: url('doct1.jpg');*!*/
-        /*  background-repeat: no-repeat;*/
-        /*  background-size: cover;*/
-        /*  !*background-position: relative;*!*/
-        /*}*/
 
         .topnav {
             overflow: hidden;
-            background-color: #44dcdc;
+            background-color: #249c64;
+            text-decoration: none;
             /*position: -webkit-sticky; !* Safari *!*/
             /*position: sticky;*/
-            height: 55px;
+            height: 75px;
             width: 100%;
             position: fixed;
             top: 0;
         }
+        /*.topnav .oda {*/
+        /*    margin-left: 6rem;*/
+        /*    float: left;*/
+        /*    color: var(--black);*/
+        /*    text-align: center;*/
+        /*    padding: 6px;*/
+        /*    text-decoration: none;*/
+        /*    font-size: 2rem;*/
+        /*    font-weight: bold;*/
+        /*    color: white;*/
+        /*    background-color: #249c64;*/
+        /*    border-radius: 10px 30px;*/
+        /*    border: var(--border);*/
+        /*}*/
 
-        .topnav a {
+        .topnav .active {
             float: left;
-            color: black;
+            color: var(--black);
             text-align: center;
-            padding: 14px 16px;
+            padding: 10px;
             text-decoration: none;
-            font-size: 17px;
-        }
-        .topnav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-        .topnav a.active {
-            background-color: #2196F3;
+            font-size: 2rem;
+            font-weight: bold;
             color: white;
+            background-color: #249c64;
         }
+        .topnav .active:hover{
+            background-color: #16a085;
+            color: whitesmoke;
+            text-decoration: none;
+        }
+
         .topnav .login-container {
             float: right;
         }
         .topnav .login-container a {
             float: right;
-            padding: 8px 17px;
-            margin-top: 8px;
+            padding: 6px 16px;
+            margin-top: 19px;
             margin-right: 16px;
             background-color: #555;
             color: white;
-            font-size: 17px;
+            font-size: 18px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
+            text-decoration: none;
 
         }
         .topnav .login-container .login{
             border-radius: 25px;
         }
         .topnav .login-container a:hover {
-            background-color: green;
+            background-color: #f1f6f5;
+            color: black;
+            text-decoration: none;
         }
 
         .topnav .login-container .register{
             border-radius: 25px;
+            text-decoration: none;
         }
 
         @media screen and (max-width: 600px) {

@@ -1,34 +1,40 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>lOGIN || HOME </title>
+    <title>LOGIN || HOME </title>
     <link th:href="@{/css/displayError.css}" rel="stylesheet"/>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap');
+        :root{
+            --green: #12c675;
+            --black:#444;
+            --light-color:#777;
+            --box-shadow:.5rem .5rem 0 rgba(22, 160, 133, .2);
+            --text-shadow:.4rem .4rem 0 rgba(0, 0, 0, .2);
+            --border:.2rem solid var(--green);
+        }
         *{
             /*margin: 0;*/
-            margin-top: 10px;
+            margin:0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            text-decoration: none;
         }
         html,body{
             display: flex;
-            height: 100%;
+            height: 95%;
             width: 100%;
             /*background-image: url("static/image/odaHome.jpg");*/
             /*background-repeat: no-repeat;*/
             place-items: center;
             position: absolute;
-            /* background: linear-gradient(-135deg, #c850c0, #4158d0); */
+             background-color: var(--box-shadow)
         }
-        ::selection{
-            background: #4158d0;
-            color: #fff;
-        }
+
         .wrapper{
-            width: 380px;
-            margin-left: 45%;
+            width: 500px;
+            margin-left: 35%;
             background: #fff;
             border-radius: 15px;
             box-shadow: 0px 15px 20px rgba(0,0,0,0.1);
@@ -41,13 +47,15 @@
             color: #fff;
             user-select: none;
             border-radius: 15px 15px 0 0;
-            background: linear-gradient(-135deg, #c850c0, #4158d0);
+            background-color: #679f86;
+            /*background: linear-gradient(-135deg, #c850c0, #4158d0);*/
         }
         .wrapper form{
             padding: 10px 30px 50px 30px;
+
         }
         .wrapper form .field{
-            height: 50px;
+            height: 45px;
             width: 100%;
             margin-top: 20px;
             position: relative;
@@ -64,15 +72,15 @@
         }
         .wrapper form .field input:focus,
         form .field input:valid{
-            border-color: #4158d0;
+            border-color: #2f9767;
         }
         .wrapper form .field label{
             position: absolute;
             top: 50%;
             left: 20px;
-            color: #999999;
+            color: #2f9767;
             font-weight: 400;
-            font-size: 17px;
+            font-size: 20px;
             pointer-events: none;
             transform: translateY(-50%);
             transition: all 0.3s ease;
@@ -81,7 +89,7 @@
         form .field input:valid ~ label{
             top: 0%;
             font-size: 16px;
-            color: #4158d0;
+            color: #40a591;
             background: #fff;
             transform: translateY(-50%);
         }
@@ -92,68 +100,60 @@
             font-size: 16px;
             align-items: center;
             justify-content: space-around;
+            text-decoration: none;
         }
-        form .content .checkbox{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        form .content input{
-            width: 15px;
-            height: 15px;
-            background: red;
-        }
-        form .content label{
-            color: #262626;
-            user-select: none;
-            padding-left: 5px;
-        }
-        form .content .pass-link{
-            /*color: "";*/
-        }
+
+
         form .field input[type="submit"]{
             color: #fff;
             border: none;
             padding-left: 0;
             margin-top: -10px;
-            font-size: 20px;
+            font-size: 25px;
             font-weight: 500;
             cursor: pointer;
-            background: linear-gradient(-135deg, #c850c0, #4158d0);
+            background-color: #679f86;
             transition: all 0.3s ease;
         }
-        form .field input[type="submit"]:active{
-            transform: scale(0.95);
-        }
+        /*form .field input[type="submit"]:hover{*/
+        /*    transform: scale(0.95);*/
+        /*    background-color: #2b9866;*/
+        /*    color: whitesmoke;*/
+        /*}*/
         form .signup-link{
             color: #262626;
             margin-top: 20px;
             text-align: center;
+            text-decoration: none;
         }
         form .pass-link a,
         form .signup-link a{
-            color: #4158d0;
+            color: var(--green);
             text-decoration: none;
         }
         form .pass-link a:hover,
         form .signup-link a:hover{
-            text-decoration: underline;
+
         }
         /*.main{*/
+        /*    height: 100%;*/
+        /*    width: 100%;*/
         /*    margin-top: 50px;*/
-        /*    float: left;*/
+        /*    margin-left: 50%;*/
+        /*    background-color: red;*/
         /*}*/
         .container{
             margin-left: 0px;
         }
     </style>
 </head>
-<body>
+<body style="background-color: #ebf1f0">
 <!--<div class="container">-->
 <div th:replace="fragment/loginfragment :: loginHome"></div>
 <div th:replace="fragment/loginfragment :: loginHomeCss"></div>
 <div th:replace="fragment/loginfragment :: loginHomeLink"></div>
 <!--    <div class="main">-->
+
 <div class="wrapper">
     <div class="title">
         Login Here

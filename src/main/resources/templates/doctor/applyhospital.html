@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>DOCTOR || HOME</title>
+<style>
+  *, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    color: #384047;
+  }
+
+  form {
+    max-width: 300px;
+    margin: 5px auto;
+    padding: 4rem;
+    background: #f4f7f8;
+    border-radius: 8px;
+  }
+
+  h1 {
+    margin: 0 0 30px 0;
+    text-align: center;
+    color: #2f9767;
+    font-size: 3rem;
+  }
+
+  input[type="file"],
+  /*input[type="password"],*/
+  /*input[type="date"],*/
+  input[type="datetime-local"],
+  /*input[type="email"],*/
+  /*input[type="number"],*/
+  /*input[type="search"],*/
+  /*input[type="tel"],*/
+  /*input[type="time"],*/
+  /*input[type="url"],*/
+  /*textarea,*/
+  select {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    font-size: 19px;
+    outline: 0;
+    padding: 8px;
+    width: 100%;
+    background-color: #e8eeef;
+    color: #8a97a0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
+    margin-bottom: 20px;
+  }
+input{
+  border-radius: 5px;
+}
+
+  select {
+    padding: 8px;
+    border-radius: 4px;
+  }
+
+  button {
+    padding: 8px 16px;
+    color: #FFF;
+    background-color: #4bc970;
+    font-size: 20px;
+    text-align: center;
+    font-style: normal;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid #3ac162;
+    border-width: 1px 1px 3px;
+    box-shadow: 0 -1px 0 rgba(255,255,255,0.1) inset;
+    margin-bottom: 10px;
+  }
+  button:hover {
+    color: #FFF;
+    background-color: #0f0f0f;
+  }
+  fieldset {
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+  }
+  fieldset .wrap{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px;
+  }
+
+  label {
+    display: block;
+   color: #2f9767;
+    font-size: 2.5rem;
+    padding: 8px;
+
+  }
+  label.light {
+    font-weight: 300;
+    display: inline;
+  }
+
+  .number {
+    background-color: #5fcf80;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    display: inline-block;
+    font-size: 0.8em;
+    margin-right: 4px;
+    line-height: 30px;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.2);
+    border-radius: 100%;
+  }
+
+  @media screen and (min-width: 480px) {
+
+    form {
+      max-width: 480px;
+    }
+
+  }
+
+</style>
+</head>
+<body>
+<div th:replace="doctor/fragement/navbar :: doctorNabarLink"></div>
+<div th:replace="doctor/fragement/navbar :: doctorNavbarCss"></div>
+<div th:replace="doctor/fragement/navbar :: doctorNavbarJs"></div>
+<!--<div th:replace="doctor/fragement/navbar :: doctorNavbarHome"></div>-->
+<header class="header">
+
+  <a href="#" class="logo"> <i class="fas fa-heartbeat"></i>ODAS </a>
+
+  <nav class="navbar">
+    <ul>
+      <a th:href="@{/doctor-hospital/apply}">Apply</a>
+      <a th:href="@{/doctor/feedback}">Feedback</a>
+      <a th:href="@{/doctor/booking/request}">Home</a>
+<!--      <a th:href="@{/doctor/home}">Home</a>-->
+      <!--                <a href="#doctors">doctors</a>-->
+    </ul>
+  </nav>
+  <div class="dropdown">
+    <img class="dropbtn" th:src="${ppPath}" alt="">
+    <div class="dropdown-content">
+      <a th:href="@{/doctor/view}">Views</a>
+      <a th:href="@{/logout}">Log out</a>
+
+    </div>
+  </div>
+
+  <div id="menu-btn" class="fas fa-bars"></div>
+
+</header>
+<div class="home">
+
+  <div class="row">
+    <div class="col-md-12">
+      <form th:action="@{/doctor-hospital/apply}" method="post" th:object="${applyDto}">
+        <h1> Apply for Hospitals</h1>
+        <fieldset>
+          <label for="job">Choose Hospital</label>
+          <select id="job" name="user_job" th:field="*{hospitalId}" required>
+            <th:block th:each="loop : ${hospitalList}">
+              <option th:value="${loop.id}" th:text="${loop.name}"></option>
+            </th:block>
+          </select>
+        </fieldset>
+        <fieldset>
+          <label class="work-time">Working Time</label>
+          <div class="wrap">
+          <label>From:</label>
+          <input type="time" name="user_name" th:field="*{formTime}" required>
+            <label> To:</label>
+            <input type="time"  name="user_name" th:field="*{toTime}" required>
+
+          </div>
+          <label>Upload Documents:</label>
+          <input type="file" id="mail" name="user_email">
+        </fieldset>
+        <button type="submit">Submit</button>
+      </form>
+      <h2 th:text="${message}" style="color: #04AA6D"></h2>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -58,8 +58,8 @@ public class DoctorDto {
 
     private String profilePhotoPath;
 
-    @NotNull(message = "File must be choose")
-    private MultipartFile multipartFileDocument;
+//    @NotNull(message = "File must be choose")
+//    private MultipartFile multipartFileDocument;
 
     private Double rating;
 

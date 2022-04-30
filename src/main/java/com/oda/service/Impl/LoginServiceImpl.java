@@ -1,9 +1,10 @@
 package com.oda.service.Impl;
 
+import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
-import com.oda.model.doctor.Doctor;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class LoginServiceImpl {
             }
 
            if(i == 1){
-                Doctor doctor = doctorService.findByUserName(userName);
+                DoctorDto doctor = doctorService.findByUserName(userName);
                 if (doctor !=null){
                     if (doctor.getPassword().equals(password)){
                         userStatus = UserStatus.DOCTOR;

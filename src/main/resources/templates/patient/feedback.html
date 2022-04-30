@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Feedback Form</title>
+    <title>FEEDBACK TO DOCTOR</title>
    <style>
        *{
            padding: 0;
@@ -15,17 +15,16 @@
        }
        .main-header{
            width: 45%;
-           height: 400px;
-           margin: 1px auto;
+          margin:0px auto;
        }
        .main-header .feedbackhome{
-           background-color: rgb(179, 218, 218);
+           background-color: rgb(43, 152, 102);
            padding: 15px;
+           border-radius: 8px;
        }
 
        .title h3{
-           color: rgba(217, 100, 118, 0.94);
-
+           color: rgb(190, 198, 197);
            text-align: center;
            padding: 15px;
            font-size: 3rem;
@@ -39,6 +38,7 @@
            left: 60%;
            transform: translateX(-50%);
            padding: 10px;
+           margin-left: 50px;
        }
 
        .wrapper input {
@@ -50,6 +50,7 @@
            clip: rect(1px 1px 1px 1px);
            clip: rect(1px, 1px, 1px, 1px);
            opacity: 0;
+           text-align: center;
 
        }
 
@@ -63,43 +64,37 @@
            font-family: FontAwesome;
            display: inline-block;
            font-size: 1.5em;
-           color: white;
+           color: #ccc;
            -webkit-user-select: none;
            -moz-user-select: none;
            user-select: none;
        }
 
        .wrapper input:checked ~ label:before {
-           color: #076aff;
+           color: #FFC107;
        }
 
        .wrapper label:hover ~ label:before {
-           color: #de2695;
+           color: #ffdb70;
        }
 
        .wrapper label:hover:before {
-           color: #ff07de;
+           color: #FFC107;
        }
-       .wrapper li{
-           list-style-type: none;
-       }
-       span{
-           color: black;
-           font-size: 2.5rem;
-           margin-left: 4px;
 
-       }
+
        /* star desig end */
 
        .Comments{
            font-size: 2.5rem;
            margin-left: 3rem;
-           color: rgba(31, 32, 38, 0.94);
+           color: rgb(190, 198, 197);
        }
        .main-header .feedbackhome textarea{
            font-size: 18px;
            margin-left: 3rem;
            width: 75%;
+           border-radius: 6px;
        }
        .main-header .feedbackhome textarea:hover{
            border: 3px solid rgb(58, 210, 216);
@@ -110,14 +105,15 @@
            padding: 3px;
        }
        .main-header .feedbackhome button{
-           font-size: 1.5rem;
+           font-size: 2rem;
            padding: 8px 16px;
            background-color: #ccc;
            outline: none;
            color: rgb(23, 28, 28);
-           margin-left: 3rem;
+           margin-left: 5rem;
            border: none;
            border-radius: 6px;
+           font-weight: bold;
        }
        .main-header .feedbackhome button:hover{
            color: whitesmoke;
@@ -128,16 +124,16 @@
        }
        .doctor-details{
            font-size: 22px;
-           margin-left: 75px;
-       }.title{
-           background-color: white;
+           margin-left: 65px;
+       }
+       .title{
            width: 100%;
            height: 100%;
                }
         .doctor-name{
             font-size: 20px;
-            margin-left: 130px;
-            color: blue;
+            margin-left:70px;
+            color: #ebf1f0;
         }
 </style>
 </head>
@@ -171,54 +167,45 @@
         <div id="menu-btn" class="fas fa-bars"></div>
     </header>
 </div>
+
 <div class="home">
-    <main class="main-header">
+    <main class="main-header" style="height: 70vh">
         <div class="feedbackhome">
-
-
             <div class="title">
                 <h3>Give feedback to your doctor</h3>
             </div>
             <br>
             <form th:action="@{/patient/feedback}" th:method="post" th:object="${feedbackDto}">
                 <div class="doctor-details">
-                    <h4>Your Current Doctor Name: </h4>
-                    <h4 class="doctor-name"><i>Dr. Ramesh kumar Mandal</i></h4>
-                    </br>
-                    <h4 style="color:red;"><i>Rate your doctor based on following criteria:</i></h4>
+                    <h4 class="doctor-name"><i>Dr. Kul Prasad Paudel</i></h4>
                 </div>
                 <div class="wrapper">
-                    <li>
+
                         <input type="checkbox" id="st1" value="1"th:field="*{star_one}" />
-                        <label for="st1"><span>Knowledge and Honorable</span></label>
-                    </li>
-                    <li>
+                        <label for="st1"></label>
+
+
                         <input type="checkbox" id="st2" value="1" th:field="*{star_two}" />
-                        <label for="st2"><span>Responsive and Caring</span></label>
-                    </li>
-                    <li>
+                        <label for="st2"></label>
+
                         <input type="checkbox" id="st3" value="1" th:field="*{star_three}" />
-                        <label for="st3"><span>Good Communicator</span></label>
-                    </li>
-                    <li>
+                        <label for="st3"></label>
+
                         <input type="checkbox" id="st4" value="1" th:field="*{star_four}"/>
-                        <label for="st4"><span>Service is reasonable</span></label>
-                    </li>
-                    <li>
+                        <label for="st4"></label>
+
                         <input type="checkbox" id="st5" value="1" th:field="*{star_five}" />
-                        <label for="st5"><span>Others</span></label>
-                    </li>
+                        <label for="st5"></label>
+
                 </div>
                 <br>
                 <div class="footer-form">
                     <label class="Comments" >Comment:</label><br/>
-                    <textarea rows="3"  placeholder="Write Your feedback here" th:field="*{comment}" ></textarea>
+                    <textarea rows="7"  placeholder="Write Your feedback here" th:field="*{comment}" ></textarea>
                     <br><br>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
-                <br>
-                <br>
-                <p style="color:rgb(179, 218, 218) ">----</p>
+
             </form>
         </div>
     </main>

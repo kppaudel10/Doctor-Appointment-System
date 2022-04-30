@@ -30,6 +30,9 @@ public class DtoEntityConversion {
                 .address(doctorDto.getAddress())
                 .experience(doctorDto.getExperience())
                 .email(doctorDto.getEmail())
+                .profilePhotoPath(doctorDto.getProfilePhotoPath())
+                .password(doctorDto.getPassword())
+                .rating(doctorDto.getRating())
                 .specialization(doctorDto.getSpecialization())
                 .mobileNumber(doctorDto.getMobileNumber()).build();
     }

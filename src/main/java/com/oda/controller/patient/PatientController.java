@@ -3,7 +3,8 @@ package com.oda.controller.patient;
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.GetRating;
 import com.oda.dto.patient.FeedbackDto;
-import com.oda.service.Impl.DoctorServiceImpl;
+import com.oda.dto.patient.SearchDto;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,7 @@ public class PatientController {
     public String getPatientHomePage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
        model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
+       model.addAttribute("searchDto",new SearchDto());
         return "patient/patienthomepage";
     }
 
@@ -80,5 +82,19 @@ public class PatientController {
     public String getProfileViewPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         return "patient/profileview";
+    }
+
+    @GetMapping("/readmore")
+    public String getDoctorViewPage(Model model){
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        return "patient/doctorreadmore";
+    }
+
+    @PostMapping("/search/doctor")
+    public String getSearchDoctor(@ModelAttribute("searchDto")SearchDto searchDto,Model model){
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        model.addAttribute("doctorList",doctorService.findDoctorByANS(searchDto.getUserInput()));
+        model.addAttribute("searchDto",new SearchDto());
+        return "patient/patienthomepage";
     }
 }

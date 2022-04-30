@@ -28,7 +28,7 @@ public class HospitalServiceImpl implements HospitalService {
 
     @Override
     public Hospital findById(Integer integer) {
-        return null;
+        return hospitalRepo.findById(integer).get();
     }
 
     @Override

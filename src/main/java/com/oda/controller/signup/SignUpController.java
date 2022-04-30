@@ -8,7 +8,7 @@ import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.dto.response.ResponseDto;
 import com.oda.service.Impl.AdminServiceImpl;
-import com.oda.service.Impl.DoctorServiceImpl;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.HospitalServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import org.apache.commons.mail.EmailException;
