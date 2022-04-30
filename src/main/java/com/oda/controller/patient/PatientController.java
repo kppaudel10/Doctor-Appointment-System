@@ -2,8 +2,10 @@ package com.oda.controller.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.GetRating;
+import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.FeedbackDto;
 import com.oda.dto.patient.SearchDto;
+import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
@@ -44,10 +46,14 @@ public class PatientController {
         return "patient/patienthomepage";
     }
 
-    @GetMapping("/feedback")
-    public String getFeedbackForm(Model model){
+    @GetMapping("/feedback/{id}")
+    public String getFeedbackForm(@PathVariable("id")Integer id, Model model) throws IOException {
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-       model.addAttribute("feedbackDto",new FeedbackDto());
+        DoctorDto doctor =doctorService.findById(id);
+        model.addAttribute("doctor",doctor);
+        FeedbackDto feedbackDto = new FeedbackDto();
+        feedbackDto.setDoctorId(doctor.getId());
+       model.addAttribute("feedbackDto",feedbackDto);
         return "patient/feedback";
     }
 
@@ -60,21 +66,23 @@ public class PatientController {
 
        //set rating
         feedbackDto.setRating(Double.valueOf(rating));
+       DoctorDto doctor = doctorService.findById(feedbackDto.getDoctorId());
+       feedbackDto.setDoctor(Doctor.builder().id(doctor.getId()).build());
         //save feedback data
         FeedbackDto feedbackDto1= feedbackService.save(feedbackDto);
-        if (feedbackDto1 !=null){
-            model.addAttribute("message","Feedback submitted successfully");
-        }else {
-            model.addAttribute("message","Unable to submit your feedback.");
-        }
-
-        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-        return "patient/feedback";
+//        if (feedbackDto1 !=null){
+//            model.addAttribute("message","Feedback submitted successfully");
+//        }else {
+//            model.addAttribute("message","Unable to submit your feedback.");
+//        }
+//        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        return "redirect:/patient/home";
     }
 
     @GetMapping("/view/status")
     public String getViewStatusPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        model.addAttribute("appointDetails",applyAppointmentService.findAppointmentOfPatient(AuthorizedUser.getPatient().getId()));
         return "patient/viewstatuspage";
     }
 

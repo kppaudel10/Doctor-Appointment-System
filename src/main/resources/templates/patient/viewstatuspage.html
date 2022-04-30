@@ -91,7 +91,7 @@
         <nav class="navbar">
             <ul>
                 <!--              <a href="#home">Home</a>-->
-                <a th:href="@{/patient/feedback}">Feedback</a>
+<!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
                 <a th:href="@{/patient/view/status}">View Status</a>
                 <a th:href="@{/patient/home}">Home</a>
             </ul>
@@ -123,32 +123,14 @@
            </tr>
            </thead>
            <tbody>
-           <tr>
-               <td>1</td>
-               <td>OM Hospital</td>
-               <td>Dr.Ramesh kumar mandal</td>
-               <td>2022/10/5</td>
-               <td>12:30 AM</td>
-               <td>Pending</td>
+           <tr th:each="loop ,i : ${appointDetails}">
+               <td th:text="${i.count}"></td>
+               <td th:text="${loop.hospital.name}">OM Hospital</td>
+               <td th:text="${loop.doctor.name}"></td>
+               <td th:text="${loop.applyDate}"></td>
+               <td th:text="${loop.fromTime}"></td>
+               <td th:text="${loop.applyStatus.name()}"></td>
            </tr>
-           <tr>
-               <td>1</td>
-               <td>OM Hospital</td>
-               <td>Dr.Ramesh kumar mandal</td>
-               <td>2022/10/5</td>
-               <td>12:30 AM</td>
-               <td>Pending</td>
-           </tr>
-
-           <!--        <tr th:each="i,loop:  ${expensesList}">-->
-           <!--            <td th:text="${loop.count}"></td>-->
-           <!--            <td th:text="${i.expensesSource}"></td>-->
-           <!--            <td  th:text="${i.expensesAmount}"></td>-->
-           <!--            <td  th:text="${i.paidDate}"></td>-->
-           <!--            <td>-->
-           <!--                <a class="button1" th:href="@{/expenses/view/{id}(id =${i.id})}">View</a>-->
-           <!--            </td>-->
-           <!--        </tr>-->
            </tbody>
        </table>
    </div>

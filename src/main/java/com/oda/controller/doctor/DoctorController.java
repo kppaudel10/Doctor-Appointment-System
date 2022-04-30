@@ -2,6 +2,7 @@ package com.oda.controller.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
+import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/doctor")
 public class DoctorController {
     private final DoctorServiceImpl doctorService;
+    private final FeedbackServiceImpl feedbackService;
 
-    public DoctorController(DoctorServiceImpl doctorService) {
+    public DoctorController(DoctorServiceImpl doctorService, FeedbackServiceImpl feedbackService) {
         this.doctorService = doctorService;
+        this.feedbackService = feedbackService;
     }
 
     @GetMapping("/home")
@@ -30,6 +33,8 @@ public class DoctorController {
     @GetMapping("/feedback")
     public String getDoctorFeedback(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+       model.addAttribute("feedbackList",
+               feedbackService.findFeedbackBYDoctorID(AuthorizedUser.getDoctor().getId()));
         return "doctor/doctorfeedback";
     }
 

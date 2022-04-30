@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,15 +38,16 @@ public class FeedbackServiceImpl implements FeedbackService {
         feedback.setPatient(AuthorizedUser.getPatient());
         feedback.setDoctor(feedbackDto.getDoctor());
         feedback.setRating(feedbackDto.getRating());
+        feedback.setFeedbackDate(new Date());
 
         //findDoctor by id
-      DoctorDto doctorDto = doctorService.findById(feedbackDto.getDoctor().getId());
+      DoctorDto doctorDto = doctorService.findById(feedbackDto.getDoctorId());
         //calculate rating
         Double previousRating = doctorDto.getRating();
         Double currentRating = 0D;
         if (previousRating != null){
             //get current rating
-            Double currentRatingByUser = feedbackDto.getRating() + 2;
+            Double currentRatingByUser = feedbackDto.getRating();
 
             //get number of rater
             Integer feedbackNumber = doctorDto.getNumberOfFeedback();
@@ -83,5 +85,9 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public void deleteById(Integer integer) {
 
+    }
+
+    public List<Feedback> findFeedbackBYDoctorID(Integer doctorId){
+        return feedbackRepo.findFeedbackByDoctorId(doctorId);
     }
 }

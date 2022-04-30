@@ -104,7 +104,7 @@
         <nav class="navbar">
             <ul>
                 <!--              <a href="#home">Home</a>-->
-                <a th:href="@{/patient/feedback}">Feedback</a>
+<!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
                 <a th:href="@{/patient/view/status}">View Status</a>
                 <a th:href="@{/patient/home}">Home</a>
             </ul>
@@ -149,7 +149,7 @@
                     <th>Action</th>
                 </tr>
                <tr th:each="loop,i : ${workingHospitalList}">
-                <td th:text="${i.index}"></td>
+                <td th:text="${i.count}"></td>
                 <td th:text="${loop.getHospital().name}">OM Hospital</td>
                 <td th:text="${loop.fromTime}"></td>
                    <td th:text="${loop.toTime}"></td>

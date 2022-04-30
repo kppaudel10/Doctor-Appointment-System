@@ -35,17 +35,23 @@ public class DoctorServiceImpl implements DoctorService {
                 .profilePhotoPath(doctorDto.getProfilePhotoPath())
                 .mobileNumber(doctorDto.getMobileNumber())
                 .specialization(doctorDto.getSpecialization().toLowerCase())
-                .experience(doctorDto.getExperience()).
+                .experience(doctorDto.getExperience())
+                .rating(doctorDto.getRating())
+                .numberOfFeedback(doctorDto.getNumberOfFeedback())
+                .feedbackList(doctorDto.getFeedbackList()).
                 password(doctorDto.getPassword()).build();
+
+        //for update
+        if(doctor.getId() !=null){
+            doctor.setProfilePhotoPath(doctorRepo.findById(doctor.getId()).get().getProfilePhotoPath());
+        }else {
+            //for new save(first time)
+            doctor.setRating(3D);
+            doctor.setNumberOfFeedback(1);
+        }
         //save into database
         Doctor doctor1 = doctorRepo.save(doctor);
 
-        //save into user table
-//        User user = new User();
-//        user.setEmail(doctorDto.getEmail());
-//        user.setPassword(passwordEncoder.encode(doctorDto.getPassword()));
-//        user.setUserStatus(UserStatus.DOCTOR);
-//        userService.save(user);
 
         return DoctorDto.builder().id(doctor1.getId()).build();
     }
@@ -61,8 +67,11 @@ public class DoctorServiceImpl implements DoctorService {
                 .specialization(doctor.getSpecialization())
                 .experience(doctor.getExperience())
                 .rating(doctor.getRating())
+                .password(doctor.getPassword())
                 .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath()))
                 .numberOfFeedback(doctor.getNumberOfFeedback())
+                .genderStatus(doctor.getGenderStatus())
+                .feedbackList(doctor.getFeedbackList())
                 .email(doctor.getEmail()).build();
     }
 

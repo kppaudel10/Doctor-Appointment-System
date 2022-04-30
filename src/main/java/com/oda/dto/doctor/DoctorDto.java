@@ -1,10 +1,12 @@
 package com.oda.dto.doctor;
 
 import com.oda.enums.GenderStatus;
+import com.oda.model.patient.Feedback;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -53,10 +55,14 @@ public class DoctorDto {
 
     private Integer userPinCode;
 
+    private List<Feedback> feedbackList;
+
     @NotNull(message = "File must be choose")
     private MultipartFile multipartFilePhoto;
 
     private String profilePhotoPath;
+
+    private String profilePathWithOutEncode;
 
 //    @NotNull(message = "File must be choose")
 //    private MultipartFile multipartFileDocument;

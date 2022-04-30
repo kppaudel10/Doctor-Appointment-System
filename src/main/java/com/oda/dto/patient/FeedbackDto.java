@@ -21,6 +21,7 @@ public class FeedbackDto {
     private String comment;
     private Double rating;
     private Doctor doctor;
+    private Integer doctorId;
     private Patient patient;
     private Integer star_one;
     private Integer star_two;

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>DOCTOR || HOME</title>
+  <title>APPLY || HOSPITAL</title>
 <style>
   *, *:before, *:after {
     -moz-box-sizing: border-box;
@@ -125,6 +125,11 @@ input{
     }
 
   }
+  .home{
+    background-color: #dfdfe3;
+    height: 100%;
+    margin-bottom: 1px;
+  }
 
 </style>
 </head>
@@ -181,8 +186,8 @@ input{
             <input type="time"  name="user_name" th:field="*{toTime}" required>
 
           </div>
-          <label>Upload Documents:</label>
-          <input type="file" id="mail" name="user_email">
+<!--          <label>Upload Documents:</label>-->
+<!--          <input type="file" id="mail" name="user_email">-->
         </fieldset>
         <button type="submit">Submit</button>
       </form>

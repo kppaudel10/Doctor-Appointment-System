@@ -21,6 +21,8 @@
            background-color: rgb(43, 152, 102);
            padding: 15px;
            border-radius: 8px;
+           width: auto;
+           height: auto;
        }
 
        .title h3{
@@ -47,8 +49,8 @@
            height: 1px;
            overflow: hidden;
            position: absolute !important;
-           clip: rect(1px 1px 1px 1px);
-           clip: rect(1px, 1px, 1px, 1px);
+           /*clip: rect(1px 1px 1px 1px);*/
+           /*clip: rect(1px, 1px, 1px, 1px);*/
            opacity: 0;
            text-align: center;
 
@@ -64,25 +66,26 @@
            font-family: FontAwesome;
            display: inline-block;
            font-size: 1.5em;
-           color: #ccc;
+           color: white;
            -webkit-user-select: none;
            -moz-user-select: none;
            user-select: none;
        }
 
        .wrapper input:checked ~ label:before {
-           color: #FFC107;
+           color: #ffb007;
        }
 
        .wrapper label:hover ~ label:before {
-           color: #ffdb70;
+           color: whitesmoke;
        }
 
        .wrapper label:hover:before {
-           color: #FFC107;
+           color: #ffb007;
        }
-
-
+       .wrapper li{
+           list-style-type: none;
+       }
        /* star desig end */
 
        .Comments{
@@ -135,6 +138,24 @@
             margin-left:70px;
             color: #ebf1f0;
         }
+       .image img {
+           width: 20%;
+           border-radius: 30%;
+           text-align: center;
+           border: 2px solid rgb(116, 116, 162);
+           margin-top: 5px;
+           padding: 6px;
+           margin-left: auto;
+           position: absolute;
+           margin-right: 80%;
+       }
+       .doctor_basic{
+           margin-top: 21%;
+           color: rgba(9, 9, 16, 0.94);
+           margin-left: 24px;
+           font-size: 18px;
+           position: absolute;
+       }
 </style>
 </head>
 <body>
@@ -150,7 +171,7 @@
         <nav class="navbar">
             <ul>
                 <!--              <a href="#home">Home</a>-->
-                <a th:href="@{/patient/feedback}">Feedback</a>
+<!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
                 <a th:href="@{/patient/view/status}">View Status</a>
                 <a th:href="@{/patient/home}">Home</a>
             </ul>
@@ -169,19 +190,26 @@
 </div>
 
 <div class="home">
+       <span class="image">
+                            <img th:src="${doctor.getProfilePhotoPath()}">
+                        </span>
+    <div class="doctor_basic">
+        <h2 th:text="${doctor.name}"></h2>
+    </div>
     <main class="main-header" style="height: 70vh">
         <div class="feedbackhome">
-            <div class="title">
-                <h3>Give feedback to your doctor</h3>
-            </div>
+<!--            <div class="title">-->
+<!--                <h3>Give feedback to your doctor</h3>-->
+<!--            </div>-->
             <br>
             <form th:action="@{/patient/feedback}" th:method="post" th:object="${feedbackDto}">
+                <input type="hidden" th:field="*{doctorId}">
                 <div class="doctor-details">
-                    <h4 class="doctor-name"><i>Dr. Kul Prasad Paudel</i></h4>
+                    <h4 class="doctor-name"><i>Rate Your Doctor out Five</i></h4>
                 </div>
                 <div class="wrapper">
 
-                        <input type="checkbox" id="st1" value="1"th:field="*{star_one}" />
+                        <input type="checkbox" id="st1" value="1"th:field="*{star_one}" checked />
                         <label for="st1"></label>
 
 
