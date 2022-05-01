@@ -1,5 +1,6 @@
 package com.oda.model.doctor;
 
+import com.oda.enums.ApplyStatus;
 import com.oda.model.hospital.Hospital;
 import lombok.*;
 
@@ -36,5 +37,8 @@ public class ApplyHospital {
 
     @Column(nullable = false)
     private String toTime;
+
+    @Column(nullable = false)
+    private ApplyStatus applyStatus;
 
 }

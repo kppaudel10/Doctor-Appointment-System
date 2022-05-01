@@ -1,12 +1,15 @@
 package com.oda.controller.admin;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.dto.doctor.ApplyDto;
+import com.oda.model.doctor.ApplyHospital;
+import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -34,20 +37,20 @@ public class AdminController {
     public String getDoctorViewPage(Model model){
         model.addAttribute("doctorDetails",
                 applyHospitalService.
-                        findApplyHospitalListByHospital(AuthorizedUser.getAdmin().getHospital().getId()));
+                        findApplyHospitalListByHospitalBooked(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/viewdoctor";
     }
 
     @GetMapping("/doctor-request")
     public String getDoctorRequestPage(Model model){
         model.addAttribute("doctorRequest",
-                applyHospitalService.findApplyHospitalListByHospital(AuthorizedUser.getAdmin().getHospital().getId()));
+                applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/doctorrequest";
     }
     @GetMapping("/patient-view")
     public String getPatientViewPage(Model model){
         model.addAttribute("patientRequestDetails",
-                applyAppointmentService.findAppointmentForHospital(AuthorizedUser.getAdmin().getHospital().getId()));
+                applyAppointmentService.findAppointmentForHospitalOfBooked(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/viewpatient";
     }
 
@@ -55,7 +58,29 @@ public class AdminController {
     @GetMapping("/patient-request")
     public String getPatientRequestPage(Model model){
         model.addAttribute("patientRequest",
-                applyAppointmentService.findAppointmentForHospital(AuthorizedUser.getAdmin().getHospital().getId()));
+                applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        return "admin/patientrequest";
+    }
+
+    @GetMapping("/accept-patient/{id}")
+    public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
+      ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+      //update appointment status
+        applyAppointmentService.update(applyAppointment);
+
+        model.addAttribute("patientRequest",
+                applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        return "admin/patientrequest";
+    }
+
+    @GetMapping("/accept-doctor/{id}")
+    public String getAcceptDoctor(@PathVariable("id")Integer id, Model model){
+     ApplyDto applyHospital = applyHospitalService.findById(id);
+        //update appointment status
+        applyHospitalService.update(applyHospital);
+
+        model.addAttribute("patientRequest",
+                applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/patientrequest";
     }
 }

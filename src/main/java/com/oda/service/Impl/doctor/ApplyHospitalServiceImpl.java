@@ -2,6 +2,7 @@ package com.oda.service.Impl.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
+import com.oda.enums.ApplyStatus;
 import com.oda.model.doctor.ApplyHospital;
 import com.oda.repo.doctor.ApplyHospitalRepo;
 import com.oda.service.Impl.HospitalServiceImpl;
@@ -33,7 +34,9 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
                 .hospital(applyDto.getHospital())
                 .doctor(AuthorizedUser.getDoctor())
                 .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
-                .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime())).build();
+                .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
+                .applyStatus(ApplyStatus.PENDING).build();
+
         applyHospitalRepo.save(applyHospital);
         return applyDto;
     }
@@ -46,6 +49,7 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
                 .hospital(applyHospital.getHospital())
                 .doctor(applyHospital.getDoctor())
                 .formTime(applyHospital.getFromTime())
+                .applyStatus(applyHospital.getApplyStatus())
                 .toTime(applyHospital.getToTime())
                 .build();
     }
@@ -64,7 +68,25 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
         return applyHospitalRepo.findApplyByDoctorId(doctorId);
     }
 
-    public List<ApplyHospital> findApplyHospitalListByHospital(Integer hospitalId){
-        return applyHospitalRepo.findApplyHospitalByHospital(hospitalId);
+    public List<ApplyHospital> findApplyHospitalListByHospitalBooked(Integer hospitalId){
+        return applyHospitalRepo.findApplyHospitalOfBooked(hospitalId);
     }
+
+    public List<ApplyHospital> findApplyHospitalListOfPending(Integer hospitalId){
+        return applyHospitalRepo.findApplyHospitalOfPending(hospitalId);
+    }
+
+    public ApplyDto update(ApplyDto applyDto){
+        //update status
+        ApplyHospital applyHospital = ApplyHospital.builder()
+                .id(applyDto.getId())
+                .hospital(applyDto.getHospital())
+                .doctor(AuthorizedUser.getDoctor())
+                .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
+                .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
+                .applyStatus(ApplyStatus.BOOKED).build();
+
+        return applyDto;
+    }
+
 }

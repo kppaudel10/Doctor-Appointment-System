@@ -29,10 +29,11 @@ public class ApplyAppointmentServiceImpl {
     public ApplyAppointment save(ApplyDto apply)
     {
         ApplyAppointment applyAppointment = ApplyAppointment.builder()
-                .applyStatus(ApplyStatus.PENDING)
+                .id(apply.getId())
                 .patient(AuthorizedUser.getPatient())
                 .doctor(apply.getDoctor())
                 .fromTime(apply.getFormTime())
+                .applyStatus(ApplyStatus.PENDING)
                 .applyDate(new Date())
                 .toTime(apply.getToTime())
                 .hospital(apply.getHospital()).build();
@@ -45,7 +46,22 @@ public class ApplyAppointmentServiceImpl {
         return applyAppointmentRepo.findApplyAppointmentByPatientId(patientId);
     }
 
-    public List<ApplyAppointment> findAppointmentForHospital(Integer hospitalId){
-        return applyAppointmentRepo.findApplyAppointmentByHospital(hospitalId);
+    public List<ApplyAppointment> findAppointmentForHospitalOfPending(Integer hospitalId){
+        return applyAppointmentRepo.findApplyAppointmentByHospitalOfPending(hospitalId);
+    }
+
+    public List<ApplyAppointment> findAppointmentForHospitalOfBooked(Integer hospitalId){
+        return applyAppointmentRepo.findApplyAppointmentByHospitalOfBooked(hospitalId);
+    }
+
+    public ApplyAppointment findById(Integer id){
+        return applyAppointmentRepo.findById(id).get();
+    }
+
+    public ApplyAppointment update(ApplyAppointment applyAppointment){
+        //update status
+        applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
+        applyAppointmentRepo.save(applyAppointment);
+        return applyAppointment;
     }
 }

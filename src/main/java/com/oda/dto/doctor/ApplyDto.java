@@ -1,5 +1,6 @@
 package com.oda.dto.doctor;
 
+import com.oda.enums.ApplyStatus;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.hospital.Hospital;
 import lombok.*;
@@ -29,6 +30,8 @@ public class ApplyDto {
     private String formTime;
 
     private String toTime;
+
+    private ApplyStatus applyStatus;
 
     public static String getTimeWithAmPm(String time){
         String hours = time.substring(0,2);
