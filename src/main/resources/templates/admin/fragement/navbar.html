@@ -16,23 +16,15 @@
 
         <nav class="navbar">
             <ul>
-<!--                <a href="#services">services</a>-->
-<!--                <a href="#about">About</a>-->
-<!--                <a href="#doctors">Doctor</a>-->
-<!--                <a href="#doctors">Patient</a>-->
 
                 <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req</a>
                 <a class="a1" th:href="@{/admin/patient-request}">Patients Req</a>
                 <a class="a1" th:href="@{/admin/doctor-view}">View Doctor</a>
                 <a class="a1" th:href="@{/admin/patient-view}">View Patient</a>
-
-<!--               <div>-->
-<!--&lt;!&ndash;                   <a href="#home">Home</a>&ndash;&gt;-->
-<!--               </div>-->
             </ul>
         </nav>
         <div class="dropdown">
-            <img class="dropbtn" th:src="@{image/adminpp.jpg}" alt="">
+            <img class="dropbtn" src="image/adminpp.jpg" alt="">
             <div class="dropdown-content">
                 <a href="#">Views</a>
                 <a th:href="@{/logout}">Log out</a>

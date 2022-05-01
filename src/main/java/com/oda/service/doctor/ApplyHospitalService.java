@@ -8,5 +8,5 @@ import com.oda.service.GenericCrudService;
  * @project OnlineDoctorAppointMent
  * @Date 4/30/22
  */
-public interface ApplyService extends GenericCrudService<ApplyDto,Integer> {
+public interface ApplyHospitalService extends GenericCrudService<ApplyDto,Integer> {
 }

@@ -40,7 +40,7 @@ public class ApplyAppointment {
     private Doctor doctor;
 
     @OneToOne
-    @JoinColumn(name = "hosipital_id")
+    @JoinColumn(name = "hospital_id")
     private Hospital hospital;
 
     @OneToOne

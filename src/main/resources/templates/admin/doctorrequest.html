@@ -3,6 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>DOCTOR || REQUEST</title>
+    <style>
+        body {
+            background-color:#EEEFEF;
+            font-family: roboto, open sans;
+
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container {
+
+        }
+        h2 {
+            text-align: center;
+            font-size: 3rem;
+            color: #2b9866;
+        }
+        table {
+            background-color: #fff;
+            box-shadow: 1px 1px 5px #888888;
+            border: 0px !important;
+            border-radius: 10px;
+        }
+
+        thead {
+            background-color:#3288FA;
+            color:#fff;
+            font-size: 2rem;
+        }
+        tbody>tr>td {
+            border-right: 0px !important;
+            border-left:0px !important;
+            font-size: 1.5rem;
+            padding: 1em !important;
+
+        }
+        thead>tr>th {
+            border-right: 0px !important;
+            border-left:0px !important;
+            padding: 1em !important;
+
+        }
+        tr:hover{
+            cursor: pointer;
+        }
+
+        @media screen and (max-width: 767px) {
+            table caption {
+                border-bottom: 1px solid #ddd;
+            }
+        }
+
+        .p {
+            text-align: center;
+            padding-top: 140px;
+            font-size: 14px;
+        }
+
+        .btn {
+            font-size:0.9em;
+            text-transform:uppercase;
+            font-weight:600;
+            border: 0px;
+        }
+        .btn-success {
+            background-color: #46A137;
+        }
+        .btn-warning {
+            background-color:#F6B400;
+        }
+        .btn-danger {
+            background-color:#DC3D30;
+        }
+        .btn-info{
+            background-color: #168CFF;
+        }
+        .home{
+            text-align: center;
+            margin-left: 5.5rem;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
@@ -10,7 +90,46 @@
 <div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
 <div class="home">
-    <h2>This is doctor request page</h2>
+    <h2> Doctor Request Details</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>S.N</th>
+                            <th>Doctor Name</th>
+                            <th>Address</th>
+                            <th>Phone_No</th>
+                            <th>Specialization</th>
+                            <th>Experience(years)</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="loop ,i : ${doctorRequest}">
+                            <td th:text="${i.count}"></td>
+                            <td th:text="${loop.doctor.name}"></td>
+                            <td th:text="${loop.doctor.address}"></td>
+                            <td th:text="${loop.doctor.mobileNumber}"></td>
+                            <td th:text="${loop.doctor.specialization}"></td>
+                            <td th:text="${loop.doctor.experience}">3.4</td>
+                            <td>
+                               <a  href="#">
+                                   <span class="btn btn-danger">View</span>
+                               </a>
+                                <a  href="#">
+                                    <span class="btn btn-danger">Accept</span>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div><!--end of .table-responsive-->
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -44,4 +44,8 @@ public class ApplyAppointmentServiceImpl {
     public List<ApplyAppointment> findAppointmentOfPatient(Integer patientId){
         return applyAppointmentRepo.findApplyAppointmentByPatientId(patientId);
     }
+
+    public List<ApplyAppointment> findAppointmentForHospital(Integer hospitalId){
+        return applyAppointmentRepo.findApplyAppointmentByHospital(hospitalId);
+    }
 }

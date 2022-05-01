@@ -1,8 +1,103 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>VIEW || PATIENT</title>
+  <meta charset="UTF-8">
+  <title>VIEW || PATIENT</title>
+  <style>
+    #members td, #members th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #members tr:nth-child(even){background-color: #f2f2f2;}
+
+    #members tr:hover {background-color: #ddd;}
+
+    #members th {
+      padding-top: 10px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #04AA6D;
+      color: white;
+      font-size: 23px;
+    }
+    #members td{
+      font-size: 22px;
+      color: black;
+      text-align: left;
+    }
+    table{
+      position: absolute;
+      margin-top: 40px;
+      margin-right: 60px;
+      margin-left: 60px;
+      width: 80%;
+    }
+    .head_caption{
+      color: #1e1e1e;
+      font-size: 30px;
+      text-align: center;
+    }
+    .button1{
+      padding: 5px;
+      width:40px;
+      background-color: #040faa;
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .button1:hover{
+      background-color: darkgray;
+      color: white;
+    }
+    .button2{
+      padding: 5px;
+      width:40px;
+      background-color: hsl(0, 95%, 34%);
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .button2:hover{
+      background-color: darkgray;
+      color: white;
+    }
+    .button3{
+      padding: 5px;
+      width:40px;
+      background-color: hsl(180, 68%, 56%);
+      color: white;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .button3:hover{
+      background-color: darkgray;
+      color: white;
+    }
+    .tables tr td button {
+      color: white;
+      background-color: #04AA6D;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.3rem;
+    }
+    .view{
+      background-color: #04AA6D;
+      width: auto;
+      height: auto;
+      font-size: 20px;
+      border-radius: 20%;
+    }
+    .delete{
+      background-color: red;
+      width: auto;
+      height: auto;
+      font-size: 20px;
+      border-radius: 20%;
+    }
+
+  </style>
 </head>
 <body>
 <div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
@@ -10,7 +105,42 @@
 <div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
 <div class="home">
-    <h2>This is Patient view page</h2>
+  <div class="container">
+    <h2 class="head_caption"><u><i>Patient Details</i></u></h2>
+    <table id="members">
+      <thead>
+      <tr>
+        <th>S.N</th>
+        <th>Patient Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Mobile Number</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="loop , i : ${patientRequestDetails}">
+        <td th:text="${i.count}"></td>
+        <td th:text="${loop.patient.name}"></td>
+        <td th:text="${loop.patient.address}"></td>
+        <td th:text="${loop.patient.email}"></td>
+        <td th:text="${loop.patient.mobileNumber}"></td>
+        <td>
+        <a href="">
+          <button class="view">
+            View
+          </button>
+        </a>
+          <a href="">
+            <button class="delete">
+              Delete
+            </button>
+          </a>
+      </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 </body>
 </html>

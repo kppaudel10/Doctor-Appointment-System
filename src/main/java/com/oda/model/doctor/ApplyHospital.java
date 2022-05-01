@@ -4,7 +4,6 @@ import com.oda.model.hospital.Hospital;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Time;
 
 /**
  * @author kulPaudel
@@ -19,7 +18,7 @@ import java.sql.Time;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Apply {
+public class ApplyHospital {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
