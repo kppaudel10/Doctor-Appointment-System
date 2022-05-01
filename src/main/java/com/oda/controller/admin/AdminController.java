@@ -79,8 +79,8 @@ public class AdminController {
         //update appointment status
         applyHospitalService.update(applyHospital);
 
-        model.addAttribute("patientRequest",
-                applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
-        return "admin/patientrequest";
+        model.addAttribute("doctorRequest",
+                applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        return "admin/doctorrequest";
     }
 }

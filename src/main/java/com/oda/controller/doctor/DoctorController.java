@@ -2,6 +2,7 @@ package com.oda.controller.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
+import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,16 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DoctorController {
     private final DoctorServiceImpl doctorService;
     private final FeedbackServiceImpl feedbackService;
+    private final ApplyAppointmentServiceImpl applyAppointmentService;
 
-    public DoctorController(DoctorServiceImpl doctorService, FeedbackServiceImpl feedbackService) {
+    public DoctorController(DoctorServiceImpl doctorService, FeedbackServiceImpl feedbackService, ApplyAppointmentServiceImpl applyAppointmentService) {
         this.doctorService = doctorService;
         this.feedbackService = feedbackService;
+        this.applyAppointmentService = applyAppointmentService;
     }
 
     @GetMapping("/home")
     public String getDoctorHomePage(Model model){
-        model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
-        return "doctor/doctorhomepage";
+        model.addAttribute("ppPath",
+                AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        return "doctor/doctorhome";
     }
 
     @GetMapping("/feedback")
@@ -41,7 +46,7 @@ public class DoctorController {
     @GetMapping("/booking/request")
     public String getBookReuestPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
-        return "doctor/bookingrequest";
+        return "doctorhome";
     }
 
     @GetMapping("/apply/hospital")

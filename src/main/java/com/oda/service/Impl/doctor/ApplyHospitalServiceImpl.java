@@ -81,12 +81,13 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
         ApplyHospital applyHospital = ApplyHospital.builder()
                 .id(applyDto.getId())
                 .hospital(applyDto.getHospital())
-                .doctor(AuthorizedUser.getDoctor())
-                .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
-                .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
+                .doctor(applyDto.getDoctor())
+                .fromTime(applyDto.getFormTime())
+                .toTime(applyDto.getToTime())
                 .applyStatus(ApplyStatus.BOOKED).build();
 
-        return applyDto;
+       ApplyHospital applyHospital1 = applyHospitalRepo.save(applyHospital);
+        return ApplyDto.builder().id(applyHospital1.getId()).build();
     }
 
 }

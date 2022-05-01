@@ -16,7 +16,7 @@ import java.util.List;
 @Repository
 public interface ApplyHospitalRepo extends JpaRepository<ApplyHospital,Integer> {
 
-    @Query(value = "select  * from oda_hospital_apply where doctor_id = ?1",nativeQuery = true)
+    @Query(value = "select  * from oda_hospital_apply where doctor_id = ?1 and apply_status = 1",nativeQuery = true)
     List<ApplyHospital> findApplyByDoctorId(Integer id);
 
     @Query(value = "select * from oda_hospital_apply where hospital_id = ?1 and apply_status = 1",nativeQuery = true)

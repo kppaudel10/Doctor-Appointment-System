@@ -64,4 +64,12 @@ public class ApplyAppointmentServiceImpl {
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }
+
+    /*
+    this is method return list of appointment that is for him/her
+    only booked appointment will display
+     */
+    public List<ApplyAppointment> findAppointmentThatIsBooked(){
+        return applyAppointmentRepo.findApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId());
+    }
 }
