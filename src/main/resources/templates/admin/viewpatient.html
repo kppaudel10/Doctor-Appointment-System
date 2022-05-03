@@ -148,6 +148,22 @@
       left: 76%;
       transform: translate(-50%, -50%);
     }
+    .view{
+      color: white;
+      background-color: #5572f5;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.6rem;
+    }
+    .delete{
+      color: white;
+      background-color: #e32a3f;
+      padding: 6px 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1.6rem;
+    }
   </style>
 </head>
 <body>
@@ -158,7 +174,7 @@
 <div class="home">
 
   <div class="wrap">
-    <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
+    <form th:action="@{/admin/patient-search}" th:method="post" th:object="${searchDto}" autocomplete="off">
       <div class="search">
         <input type="text" class="searchTerm" placeholder="Search by contact or email..." th:field="*{userInput}"/>
         <button type="submit" class="searchButton">

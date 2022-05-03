@@ -198,7 +198,8 @@ public class DoctorServiceImpl implements DoctorService {
                }).collect(Collectors.toList());
     }
 
-   public List<Doctor> findDoctorByMobileOrEmail(String userInput){
-        return doctorRepo.findDoctorByMobileNumberAndEmail(userInput);
+
+    public Doctor findIdByContactOrEmail(String details){
+        return doctorRepo.findIdByContactOrEmail(details);
     }
 }

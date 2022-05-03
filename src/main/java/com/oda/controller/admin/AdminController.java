@@ -14,10 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author kulPaudel
@@ -94,17 +91,17 @@ public class AdminController {
         return "admin/doctorrequest";
     }
 
-    @GetMapping("/doctor-search")
+    @PostMapping("/doctor-search")
     public String getListOfDoctor(@ModelAttribute("searchDto")SearchDto searchDto,Model model){
         model.addAttribute("doctorDetails",
-                doctorService.findDoctorByMobileOrEmail(searchDto.getUserInput()));
+                applyHospitalService.findDoctorApplyDetailsByContact(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
         return "admin/viewdoctor";
     }
 
-    @GetMapping("/patient-search")
+    @PostMapping("/patient-search")
     public String getListOfPatient(@ModelAttribute("searchDto")SearchDto searchDto, Model model){
-        model.addAttribute("patientRequestDetails",patientService.findPatientByMobileOrEmail(searchDto.getUserInput()));
+        model.addAttribute("patientRequestDetails",applyAppointmentService.findAppointMentByPatientId(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
         return "admin/viewpatient";
     }

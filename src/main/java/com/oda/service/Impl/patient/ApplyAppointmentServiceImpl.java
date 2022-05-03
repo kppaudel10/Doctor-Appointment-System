@@ -4,8 +4,10 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
+import com.oda.model.patient.Patient;
 import com.oda.repo.patient.ApplyAppointmentRepo;
 import com.oda.service.Impl.HospitalServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -17,14 +19,13 @@ import java.util.List;
  * @Date 4/18/22
  */
 @Service
+@RequiredArgsConstructor
 public class ApplyAppointmentServiceImpl {
     private final ApplyAppointmentRepo applyAppointmentRepo;
     private final HospitalServiceImpl hospitalService;
 
-    public ApplyAppointmentServiceImpl(ApplyAppointmentRepo applyAppointmentRepo, HospitalServiceImpl hospitalService) {
-        this.applyAppointmentRepo = applyAppointmentRepo;
-        this.hospitalService = hospitalService;
-    }
+    private final PatientServiceImpl patientService;
+
 
     public ApplyAppointment save(ApplyDto apply)
     {
@@ -72,4 +73,15 @@ public class ApplyAppointmentServiceImpl {
     public List<ApplyAppointment> findAppointmentThatIsBooked(){
         return applyAppointmentRepo.findApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId());
     }
+
+    public List<ApplyAppointment> findAppointMentByPatientId(String deatils){
+        //find patient details
+        Patient patient= patientService.findPatientByContactDetails(deatils);
+        if(patient !=null){
+            return applyAppointmentRepo.findApplyAppointmentByPatientId(patient.getId());
+        }else {
+            return null;
+        }
+    }
+
 }

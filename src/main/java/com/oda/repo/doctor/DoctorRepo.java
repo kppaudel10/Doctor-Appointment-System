@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.print.Doc;
 import java.util.List;
 
@@ -28,6 +29,6 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
     @Query(value = "select * from  oda_doctor d where  d.address = ?1",nativeQuery = true)
     List<Doctor> findDoctorByAddress(String address);
 
-    @Query(value = "select * from  oda_doctor d where  d.mobile_number = ?1 or d.email = ?1",nativeQuery = true)
-    List<Doctor> findDoctorByMobileNumberAndEmail(String userInput);
+    @Query(value = "select * from  oda_doctor d where d.mobile_number =?1 or d.email = ?1",nativeQuery = true)
+    public Doctor findIdByContactOrEmail(String contactDetails);
 }

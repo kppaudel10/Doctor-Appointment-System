@@ -4,9 +4,11 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.doctor.ApplyHospital;
+import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.ApplyHospitalRepo;
 import com.oda.service.Impl.HospitalServiceImpl;
 import com.oda.service.doctor.ApplyHospitalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -18,14 +20,13 @@ import java.util.List;
  * @Date 4/30/22
  */
 @Service
+@RequiredArgsConstructor
 public class ApplyHospitalServiceImpl implements ApplyHospitalService {
     private final ApplyHospitalRepo applyHospitalRepo;
+    private final DoctorServiceImpl doctorService;
+
     private final HospitalServiceImpl hospitalService;
 
-    public ApplyHospitalServiceImpl(ApplyHospitalRepo applyHospitalRepo, HospitalServiceImpl hospitalService) {
-        this.applyHospitalRepo = applyHospitalRepo;
-        this.hospitalService = hospitalService;
-    }
 
     @Override
     public ApplyDto save(ApplyDto applyDto) throws ParseException {
@@ -90,4 +91,12 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
         return ApplyDto.builder().id(applyHospital1.getId()).build();
     }
 
+   public List<ApplyHospital> findDoctorApplyDetailsByContact(String contactDetails){
+        //first find doctor id
+       Doctor doctor = doctorService.findIdByContactOrEmail(contactDetails);
+       if(doctor !=null){
+           return applyHospitalRepo.findApplyHospitalByDoctorId(doctor.getId());
+       }
+       return null;
+   }
 }

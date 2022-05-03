@@ -203,11 +203,8 @@
         }
 
         .basic-card-dark .card-link a:after {
+
             background:#eee;
-        }
-        .main{
-            width: 90%;
-            margin: 40px auto
         }
 
     </style>
@@ -244,18 +241,17 @@
     </header>
 </div>
 <div class="home">
-
+    <div class="card-category-1">
   <span class="main" th:each="loop : ${feedbackList}">
             <div class="basic-card basic-card-light">
             <div class="card-content">
                 <span class="card-title" th:text="${loop.patient.name}"></span>
-                <p class="card-text" th:text="${loop.comment}">
-                </p>
-
+                <p class="card-text" th:text="${loop.comment}"> </p>
             </div>
         </div>
-  </span>
+    </span>
 
+</div>
 </div>
 </body>
 </html>

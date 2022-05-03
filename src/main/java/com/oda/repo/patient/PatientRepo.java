@@ -20,4 +20,7 @@ public interface PatientRepo extends JpaRepository<Patient, Integer> {
 
     @Query(value = "select * from oda_patient p where p.mobile_number = ?1 or p.email = ?1",nativeQuery = true)
     List<Patient> findPatientByEmailAndMobileNumber(String userInput);
+
+    @Query(value = "select * from oda_patient p where p.mobile_number = ?1 or p.email = ?1",nativeQuery = true)
+    public Patient findPatientByContactDetails(String contact);
 }

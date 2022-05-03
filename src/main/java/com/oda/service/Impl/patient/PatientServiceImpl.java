@@ -108,4 +108,8 @@ public class PatientServiceImpl implements PatientService {
    public List<Patient> findPatientByMobileOrEmail(String userInput){
         return patientRepo.findPatientByEmailAndMobileNumber(userInput);
     }
+
+    public Patient findPatientByContactDetails(String contactDetails){
+        return patientRepo.findPatientByContactDetails(contactDetails);
+    }
 }

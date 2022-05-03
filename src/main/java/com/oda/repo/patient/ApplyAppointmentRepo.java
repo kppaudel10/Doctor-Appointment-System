@@ -27,4 +27,5 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
 
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and apply_status = 1",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentBookedOfDoctor(Integer doctorId);
+
 }
