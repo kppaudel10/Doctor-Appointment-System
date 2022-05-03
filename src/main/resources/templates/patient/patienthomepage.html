@@ -174,6 +174,58 @@
             padding: 8px;
             color: bisque;
         }
+
+        /*  search bar css*/
+        @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+        body{
+            background: #f2f2f2;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .search {
+            width: 100%;
+            position: relative;
+            display: flex;
+        }
+
+        .searchTerm {
+            width: 100%;
+            border: 3px solid #00B4CC;
+            border-right: none;
+            padding: 25px;
+            height: 25px;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            color: #9DBFAF;
+        }
+
+        .searchTerm:focus{
+            color: #151616;
+        }
+
+        .searchButton {
+            width: 40px;
+            border: 1px solid #00B4CC;
+            background: #00B4CC;
+            text-align: center;
+            color: #fff;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        input {
+            font-size: 20px;
+        }
+
+        /*Resize the wrap to see the search bar change!*/
+        .wrap {
+            width: 22%;
+            position: absolute;
+            top: 14%;
+            left: 76.5%;
+            transform: translate(-50%, -50%);
+        }
     </style>
 </head>
 <body>
@@ -209,13 +261,24 @@
 </div>
 <div class="home">
 
-    <div class="box">
-        <div class="container-4">
-            <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
-                <input type="search" id="search" placeholder="Search Doctors..." th:field="*{userInput}"/>
-                <input type="submit" class="icon"><i class="fa fa-search"></i></input>
-            </form>
-        </div>
+<!--    <div class="box">-->
+<!--        <div class="container-4">-->
+<!--            <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">-->
+<!--                <input type="search" id="search" placeholder="Search Doctors..." th:field="*{userInput}"/>-->
+<!--                <input type="submit" class="icon"><i class="fa fa-search"></i></input>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <div class="wrap">
+        <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
+            <div class="search">
+                <input type="text" class="searchTerm" placeholder="Search doctors...." th:field="*{userInput}"/>
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </form>
     </div>
 
     <span class="main" th:each=" loop : ${doctorList}">

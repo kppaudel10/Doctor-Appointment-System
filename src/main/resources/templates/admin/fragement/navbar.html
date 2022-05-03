@@ -16,7 +16,6 @@
 
         <nav class="navbar">
             <ul>
-
                 <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req</a>
                 <a class="a1" th:href="@{/admin/patient-request}">Patients Req</a>
                 <a class="a1" th:href="@{/admin/doctor-view}">View Doctor</a>
@@ -24,7 +23,8 @@
             </ul>
         </nav>
         <div class="dropdown">
-            <img class="dropbtn" src="image/adminpp.jpg" alt="">
+            <img class="dropbtn" src="../static/images/doctorpp.jpg"  alt="" width="100%" height="100%">
+<!--            <img class="dropbtn" src="/home/ErrorMx/Downloads/download.png" alt="" width="100%" height="100%">-->
             <div class="dropdown-content">
                 <a href="#">Views</a>
                 <a th:href="@{/logout}">Log out</a>
@@ -40,72 +40,77 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
 
-        :root{
-            --green:#16a085;
-            --black:#444;
+        :root {
+            --green: #16a085;
+            --black: #444;
             --light-color: #ebf1f0;
-            --box-shadow:.5rem .5rem 0 rgba(22, 160, 133, .2);
-            --text-shadow:.4rem .4rem 0 rgba(0, 0, 0, .2);
-            --border:.2rem solid var(--green);
+            --box-shadow: .5rem .5rem 0 rgba(22, 160, 133, .2);
+            --text-shadow: .4rem .4rem 0 rgba(0, 0, 0, .2);
+            --border: .2rem solid var(--green);
         }
 
-        *{
+        * {
             font-family: 'Poppins', sans-serif;
-            margin:0; padding: 0;
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            outline: none; border: none;
+            outline: none;
+            border: none;
             text-transform: capitalize;
             /*transition: all .2s ease-out;*/
             text-decoration: none;
         }
 
-        html{
+        html {
             font-size: 62.5%;
             overflow-x: hidden;
             scroll-padding-top: 7rem;
             scroll-behavior: smooth;
         }
-        body{
+
+        body {
             background-color: var(--box-shadow);
         }
 
-        .btn{
+        .btn {
             display: inline-block;
             margin-top: 1rem;
             padding: .5rem;
             padding-left: 1rem;
-            border:var(--border);
+            border: var(--border);
             border-radius: .5rem;
             box-shadow: var(--box-shadow);
-            color:var(--green);
+            color: var(--green);
             cursor: pointer;
             font-size: 1.7rem;
             background-color: #fff;
         }
 
-        .btn span{
-            padding:.7rem 1rem;
+        .btn span {
+            padding: .7rem 1rem;
             border-radius: .5rem;
             background: var(--green);
-            color:#fff;
+            color: #fff;
             margin-left: .5rem;
         }
 
-        .btn:hover{
+        .btn:hover {
             background: var(--green);
-            color:#fff;
+            color: #fff;
         }
 
-        .btn:hover span{
+        .btn:hover span {
             color: var(--green);
-            background:#fff;
+            background: #fff;
             margin-left: 1rem;
         }
 
-        .header{
-            padding:1rem 7%;
+        .header {
+            padding: 1rem 7%;
             position: fixed;
-            top:0; left: 0; right: 0;
+            top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
             display: flex;
@@ -114,26 +119,28 @@
             background: #fff;
         }
 
-        .header .logo{
+        .header .logo {
             font-size: 1rem;
             color: var(--black);
             letter-spacing: 3px;
-            font-size:20px;
+            font-size: 20px;
             border: 3px solid var(--green);
             padding: 6px 8px;
             border-radius: 10px 30px;
             margin-left: -2rem;
         }
 
-        .header .logo i{
+        .header .logo i {
             color: var(--green);
 
         }
-        .header .navbar ul{
+
+        .header .navbar ul {
             margin-left: 50rem;
 
         }
-        .header .navbar a{
+
+        .header .navbar a {
             font-size: 1.8rem;
             color: black;
             margin-right: 5rem;
@@ -143,7 +150,7 @@
         }
 
 
-        .header .navbar a:hover{
+        .header .navbar a:hover {
 
             background-color: var(--green);
             border-radius: 7px;
@@ -152,25 +159,26 @@
 
         }
 
-        #menu-btn{
+        #menu-btn {
             font-size: 2.5rem;
             border-radius: .5rem;
             background: #eee;
-            color:var(--green);
+            color: var(--green);
             padding: 1rem 1.5rem;
             cursor: pointer;
             display: none;
         }
 
 
-        .home{
+        .home {
 
             /*background-color: red;*/
             padding: 7rem;
             margin-top: 3rem;
 
         }
-        .header .dropdown img{
+
+        .header .dropdown img {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -184,6 +192,7 @@
             float: left;
             overflow: hidden;
         }
+
         .dropdown .dropbtn {
             font-size: 16px;
             border: none;
@@ -213,6 +222,7 @@
             font-size: 16px;
 
         }
+
         .dropdown-content a:hover {
             background-color: rgb(230, 233, 235);
             background-color: var(--green);
@@ -223,41 +233,38 @@
             display: block;
         }
 
-        .dropdown  fa-caret-down{
+        .dropdown fa-caret-down {
             font-size: 10px;
         }
 
 
-
-
-
-
         /* media queries  */
-        @media (max-width:991px){
+        @media (max-width: 991px) {
 
-            html{
+            html {
                 font-size: 55%;
             }
 
-            .header{
+            .header {
                 padding: 2rem;
             }
 
-            section{
-                padding:2rem;
+            section {
+                padding: 2rem;
             }
 
         }
 
-        @media (max-width:768px){
+        @media (max-width: 768px) {
 
-            #menu-btn{
+            #menu-btn {
                 display: initial;
             }
 
-            .header .navbar{
+            .header .navbar {
                 position: absolute;
-                top:115%; right: 2rem;
+                top: 115%;
+                right: 2rem;
                 border-radius: .5rem;
                 box-shadow: var(--box-shadow);
                 width: 30rem;
@@ -270,17 +277,17 @@
             }
 
 
-            .header .navbar a{
+            .header .navbar a {
                 font-size: 2rem;
                 display: block;
-                margin:2.5rem;
+                margin: 2.5rem;
             }
 
         }
 
-        @media (max-width:450px){
+        @media (max-width: 450px) {
 
-            html{
+            html {
                 font-size: 50%;
             }
 
@@ -296,12 +303,12 @@
         let menu = document.querySelector('#menu-btn');
         let navbar = document.querySelector('.navbar');
 
-        menu.onclick = () =>{
+        menu.onclick = () => {
             menu.classList.toggle('fa-times');
             navbar.classList.toggle('active');
         }
 
-        window.onscroll = () =>{
+        window.onscroll = () => {
             menu.classList.remove('fa-times');
             navbar.classList.remove('active');
         }
