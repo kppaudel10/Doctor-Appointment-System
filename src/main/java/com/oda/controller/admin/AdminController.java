@@ -113,4 +113,10 @@ public class AdminController {
         applyAppointmentService.deleteBYId(id);
         return "redirect:/admin/patient-view";
     }
+
+    @GetMapping("/doctor-hospital-apply-delete/{id}")
+    public String getDeletDoctorHospitalApply(@PathVariable("id")Integer id, Model model){
+        applyHospitalService.deleteById(id);
+        return "redirect:/admin/doctor-view";
+    }
 }
