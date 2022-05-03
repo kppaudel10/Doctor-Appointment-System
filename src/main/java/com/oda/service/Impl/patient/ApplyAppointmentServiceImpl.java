@@ -10,6 +10,7 @@ import com.oda.service.Impl.HospitalServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 
@@ -82,6 +83,10 @@ public class ApplyAppointmentServiceImpl {
         }else {
             return null;
         }
+    }
+
+    public void deleteBYId(Integer integer){
+        applyAppointmentRepo.deleteById(integer);
     }
 
 }

@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 /**
  * @author kulPaudel
  * @project OnlineDoctorAppointMent
@@ -104,5 +106,11 @@ public class AdminController {
         model.addAttribute("patientRequestDetails",applyAppointmentService.findAppointMentByPatientId(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
         return "admin/viewpatient";
+    }
+
+    @GetMapping("/patient-appointment-delete/{id}")
+    public String getDeletePatientAppointMent(@PathVariable("id")Integer id, Model model){
+        applyAppointmentService.deleteBYId(id);
+        return "redirect:/admin/patient-view";
     }
 }
