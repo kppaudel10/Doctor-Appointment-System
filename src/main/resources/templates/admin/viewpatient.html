@@ -158,9 +158,9 @@
 <div class="home">
 
   <div class="wrap">
-    <form>
+    <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
       <div class="search">
-        <input type="text" class="searchTerm" placeholder="Search by contact or email...">
+        <input type="text" class="searchTerm" placeholder="Search by contact or email..." th:field="*{userInput}"/>
         <button type="submit" class="searchButton">
           <i class="fa fa-search"></i>
         </button>

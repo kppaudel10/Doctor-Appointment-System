@@ -2,13 +2,20 @@ package com.oda.controller.admin;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
+import com.oda.dto.patient.SearchDto;
 import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
+import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
+import com.oda.service.Impl.patient.PatientServiceImpl;
+import com.sun.mail.imap.protocol.MODSEQ;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -19,14 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
     private final ApplyAppointmentServiceImpl applyAppointmentService;
     private final ApplyHospitalServiceImpl applyHospitalService;
 
-    public AdminController(ApplyAppointmentServiceImpl applyAppointmentService, ApplyHospitalServiceImpl applyHospitalService) {
-        this.applyAppointmentService = applyAppointmentService;
-        this.applyHospitalService = applyHospitalService;
-    }
+    private final DoctorServiceImpl doctorService;
+
+    private final PatientServiceImpl patientService ;
+
 
     @GetMapping("/home")
     public String getAdminHomePage(Model model){
@@ -38,6 +46,7 @@ public class AdminController {
         model.addAttribute("doctorDetails",
                 applyHospitalService.
                         findApplyHospitalListByHospitalBooked(AuthorizedUser.getAdmin().getHospital().getId()));
+        model.addAttribute("searchDto",new SearchDto());
         return "admin/viewdoctor";
     }
 
@@ -51,6 +60,7 @@ public class AdminController {
     public String getPatientViewPage(Model model){
         model.addAttribute("patientRequestDetails",
                 applyAppointmentService.findAppointmentForHospitalOfBooked(AuthorizedUser.getAdmin().getHospital().getId()));
+       model.addAttribute("searchDto",new SearchDto());
         return "admin/viewpatient";
     }
 
@@ -82,5 +92,20 @@ public class AdminController {
         model.addAttribute("doctorRequest",
                 applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/doctorrequest";
+    }
+
+    @GetMapping("/doctor-search")
+    public String getListOfDoctor(@ModelAttribute("searchDto")SearchDto searchDto,Model model){
+        model.addAttribute("doctorDetails",
+                doctorService.findDoctorByMobileOrEmail(searchDto.getUserInput()));
+        model.addAttribute("searchDto",new SearchDto());
+        return "admin/viewdoctor";
+    }
+
+    @GetMapping("/patient-search")
+    public String getListOfPatient(@ModelAttribute("searchDto")SearchDto searchDto, Model model){
+        model.addAttribute("patientRequestDetails",patientService.findPatientByMobileOrEmail(searchDto.getUserInput()));
+        model.addAttribute("searchDto",new SearchDto());
+        return "admin/viewpatient";
     }
 }
