@@ -9,6 +9,7 @@ import com.oda.service.doctor.DoctorService;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
     private final FileStorageComponent fileStorageComponent;
+
+    private static final DecimalFormat df = new DecimalFormat("0.00");
 
     public DoctorServiceImpl(DoctorRepo doctorRepo, FileStorageComponent fileStorageComponent) {
         this.doctorRepo = doctorRepo;
@@ -36,7 +39,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .mobileNumber(doctorDto.getMobileNumber())
                 .specialization(doctorDto.getSpecialization().toLowerCase())
                 .experience(doctorDto.getExperience())
-                .rating(doctorDto.getRating())
+                .rating(Double.valueOf(df.format(doctorDto.getRating())))
                 .numberOfFeedback(doctorDto.getNumberOfFeedback())
                 .feedbackList(doctorDto.getFeedbackList()).
                 password(doctorDto.getPassword()).build();
