@@ -199,7 +199,7 @@
                 <td th:text="${loop.doctor.mobileNumber}"></td>
                 <td th:text="${loop.doctor.specialization}"></td>
                 <td>
-                    <a href="">
+                    <a th:href="@{/admin/doctor-view/}+${loop.id}">
                         <button class="view">
                             View
                         </button>

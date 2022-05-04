@@ -2,8 +2,11 @@ package com.oda.controller.admin;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
+import com.oda.dto.doctor.DoctorDto;
+import com.oda.dto.hospital.HospitalDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.dto.patient.SearchDto;
+import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
@@ -126,5 +129,15 @@ public class AdminController {
         model.addAttribute("patientDetails",patientDto);
         model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
         return "admin/viewpatientone";
+    }
+
+    @GetMapping("/doctor-view/{id}")
+    public String viewDoctor(@PathVariable("id")Integer id,Model model) throws IOException {
+        ApplyDto applyHospital = applyHospitalService.findById(id);
+        //find patientby Id
+        DoctorDto doctorDto = doctorService.findById(applyHospital.getDoctor().getId());
+        model.addAttribute("doctorDetails",doctorDto);
+        model.addAttribute("ppPath",doctorDto.getProfilePhotoPath());
+        return "admin/viewdoctorone";
     }
 }
