@@ -2,7 +2,10 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>DOCTOR || HOME</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOUR || PROFILE </title>
+    <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
 </head>
 <body>
 <div th:replace="doctor/fragement/navbar :: doctorNabarLink"></div>
@@ -35,7 +38,26 @@
 
 </header>
 <div class="home">
-  <h2>This is doctor profile view page</h2>
+  <main class="box">
+    <div class="image">
+      <img th:src="${ppPath}">
+    </div>
+    <span class="basic-details">
+            <h1><u></u><i>Basic Details</i></u></h1>
+            <h2 th:text="'Name --> '+${doctorDetails.name}"></h2>
+            <h2 th:text="'Address --> '+${doctorDetails.address}"></h2>
+            <h2 th:text="'Contact --> '+${doctorDetails.mobileNumber}"></h2>
+            <h2 th:text="'Email --> '+${doctorDetails.email}">Text:</h2>
+            <h2 th:text="'Specialization -->'+${doctorDetails.specialization}"></h2>
+           <h2 th:text="'Experience -->'+${doctorDetails.experience}"></h2>
+            <br>
+      <!--             <h1><u></u><i>Further Details</i></u></h1>-->
+      <!--            <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+        </span>
+  </main>
 </div>
 </body>
 </html>

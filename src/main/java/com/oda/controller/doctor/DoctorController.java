@@ -58,6 +58,7 @@ public class DoctorController {
     @GetMapping("/view")
     public String getViewProfile(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
         return "doctor/profileview";
     }
 }
