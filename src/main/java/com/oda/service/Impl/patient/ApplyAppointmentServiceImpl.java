@@ -77,7 +77,7 @@ public class ApplyAppointmentServiceImpl {
 
     public ApplyAppointment update(ApplyAppointment applyAppointment){
         //update status
-        applyAppointment.setApplyStatus(ApplyStatus.FORWARD);
+        applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }

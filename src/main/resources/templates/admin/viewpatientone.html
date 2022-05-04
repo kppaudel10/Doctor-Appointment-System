@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YOUR || PROFILE </title>
+  <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarCss"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
+
+</div>
+<div class="home">
+  <main class="box">
+    <div class="image">
+      <img th:src="${ppPath}">
+    </div>
+    <span class="basic-details">
+            <h1><u></u><i>Basic Details</i></u></h1>
+            <h2 th:text="'Name --> '+${patientDetails.name}"></h2>
+            <h2 th:text="'Address --> '+${patientDetails.address}"></h2>
+            <h2 th:text="'Contact --> '+${patientDetails.mobileNumber}"></h2>
+            <h2 th:text="'Email --> '+${patientDetails.email}">Text:</h2>
+            <h2 th:text="'Date Of Birth -->'+${patientDetails.birthDate}"></h2>
+            <br>
+      <!--             <h1><u></u><i>Further Details</i></u></h1>-->
+      <!--            <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+      <!--              <h2>Text</h2>-->
+
+        </span>
+      <div class="btn>">
+          <a th:href="@{/admin/patient-view}" class="next">&laquo; Back</a>
+      </div>
+  </main>
+</div>
+</body>
+</html>

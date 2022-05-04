@@ -130,8 +130,8 @@ public class PatientController {
        }else {
            model.addAttribute("msg","Already submitted.");
        }
-        model.addAttribute("doctor",doctorService.findById(id));
-        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(id));
+        model.addAttribute("doctor",doctorService.findById(applyAppointment.getDoctor().getId()));
+        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         return "patient/doctorreadmore";
     }

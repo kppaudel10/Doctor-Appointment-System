@@ -51,14 +51,19 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientDto findById(Integer integer) {
+    public PatientDto findById(Integer integer) throws IOException {
         Patient patient = patientRepo.findById(integer).get();
         return PatientDto.builder()
                 .id(patient.getId())
-                .name(patient.getName())
-                .email(patient.getEmail())
                 .address(patient.getAddress())
-                .mobileNumber(patient.getMobileNumber()).build();
+                .email(patient.getEmail())
+                .mobileNumber(patient.getMobileNumber())
+                .genderStatus(patient.getGenderStatus())
+                .name(patient.getName())
+                .password(patient.getPassword())
+                .birthDate(String.valueOf(patient.getBirthDate()))
+                .profilePhotoPath(fileStorageComponent.base64Encoded(patient.getProfilePhotoPath())).build();
+
     }
 
     @Override

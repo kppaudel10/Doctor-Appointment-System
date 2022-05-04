@@ -2,21 +2,19 @@ package com.oda.controller.admin;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
+import com.oda.dto.patient.PatientDto;
 import com.oda.dto.patient.SearchDto;
-import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
-import com.sun.mail.imap.protocol.MODSEQ;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.io.IOException;
 
 /**
  * @author kulPaudel
@@ -118,5 +116,15 @@ public class AdminController {
     public String getDeletDoctorHospitalApply(@PathVariable("id")Integer id, Model model){
         applyHospitalService.deleteById(id);
         return "redirect:/admin/doctor-view";
+    }
+
+    @GetMapping("/patient-view/{id}")
+    public String viewPatient(@PathVariable("id")Integer id,Model model) throws IOException {
+       ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+        //find patientby Id
+       PatientDto patientDto = patientService.findById(applyAppointment.getPatient().getId());
+        model.addAttribute("patientDetails",patientDto);
+        model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
+        return "admin/viewpatientone";
     }
 }
