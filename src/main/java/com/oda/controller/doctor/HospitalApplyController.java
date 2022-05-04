@@ -44,7 +44,7 @@ public class HospitalApplyController {
            if(applyDto1 !=null){
                model.addAttribute("message","Apply successfully.");
            }else {
-               model.addAttribute("message","Failed to apply");
+               model.addAttribute("message","You already applied to this hospital.");
            }
             model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         return "doctor/applyhospital";

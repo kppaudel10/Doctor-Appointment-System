@@ -39,7 +39,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .mobileNumber(doctorDto.getMobileNumber())
                 .specialization(doctorDto.getSpecialization().toLowerCase())
                 .experience(doctorDto.getExperience())
-                .rating(Double.valueOf(df.format(doctorDto.getRating())))
+                .rating(doctorDto.getRating())
                 .numberOfFeedback(doctorDto.getNumberOfFeedback())
                 .feedbackList(doctorDto.getFeedbackList()).
                 password(doctorDto.getPassword()).build();

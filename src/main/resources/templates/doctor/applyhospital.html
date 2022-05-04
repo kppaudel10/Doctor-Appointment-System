@@ -131,6 +131,11 @@ input{
     margin-bottom: 1px;
     width: 100%;
   }
+  .message{
+    margin-left: 70%;
+    color: #3ac162;
+    font-size: 24px;
+  }
 
 </style>
 </head>
@@ -168,6 +173,7 @@ input{
 
   <div class="row">
     <div class="col-md-12">
+      <h2 th:text="${message}" class="message"></h2>
       <form th:action="@{/doctor-hospital/apply}" method="post" th:object="${applyDto}">
         <h1> Apply for Hospitals</h1>
         <fieldset>
@@ -192,7 +198,7 @@ input{
         </fieldset>
         <button type="submit">Submit</button>
       </form>
-      <h2 th:text="${message}" style="color: #04AA6D"></h2>
+<!--      <h2 th:text="${message}" style="color: #04AA6D"></h2>-->
     </div>
   </div>
 <br>

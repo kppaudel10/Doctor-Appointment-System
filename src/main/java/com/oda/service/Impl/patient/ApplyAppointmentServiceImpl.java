@@ -62,7 +62,7 @@ public class ApplyAppointmentServiceImpl {
 
     public ApplyAppointment update(ApplyAppointment applyAppointment){
         //update status
-        applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
+        applyAppointment.setApplyStatus(ApplyStatus.FORWARD);
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }
@@ -87,6 +87,11 @@ public class ApplyAppointmentServiceImpl {
 
     public void deleteBYId(Integer integer){
         applyAppointmentRepo.deleteById(integer);
+    }
+
+    public ApplyAppointment findAppointmentByDateAndPatient(Date date, Integer patientId){
+
+        return applyAppointmentRepo.findApplyAppointmentByDateAndPatient(date,patientId);
     }
 
 }

@@ -28,4 +28,7 @@ public interface ApplyHospitalRepo extends JpaRepository<ApplyHospital,Integer> 
 
     @Query(value = "select * from oda_hospital_apply h where h.doctor_id = ?1 ",nativeQuery = true)
     List<ApplyHospital> findApplyHospitalByDoctorId(Integer id);
+
+    @Query(value = "select * from oda_hospital_apply h where h.doctor_id = ?1 ",nativeQuery = true)
+    ApplyHospital findApplyHospitalDetailsByDoctorId(Integer doctorId);
 }

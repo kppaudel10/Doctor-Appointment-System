@@ -9,6 +9,7 @@ import com.oda.repo.doctor.ApplyHospitalRepo;
 import com.oda.service.Impl.HospitalServiceImpl;
 import com.oda.service.doctor.ApplyHospitalService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -30,16 +31,20 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
 
     @Override
     public ApplyDto save(ApplyDto applyDto) throws ParseException {
-        ApplyHospital applyHospital = ApplyHospital.builder()
-                .id(applyDto.getId())
-                .hospital(applyDto.getHospital())
-                .doctor(AuthorizedUser.getDoctor())
-                .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
-                .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
-                .applyStatus(ApplyStatus.PENDING).build();
-
-        applyHospitalRepo.save(applyHospital);
-        return applyDto;
+        //check hospital that is already apply or not
+      if(applyHospitalRepo.findApplyHospitalDetailsByDoctorId(AuthorizedUser.getDoctor().getId()) == null){
+          ApplyHospital applyHospital = ApplyHospital.builder()
+                  .id(applyDto.getId())
+                  .hospital(applyDto.getHospital())
+                  .doctor(AuthorizedUser.getDoctor())
+                  .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
+                  .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
+                  .applyStatus(ApplyStatus.PENDING).build();
+                  ApplyHospital applyHospital1 = applyHospitalRepo.save(applyHospital);
+                  return ApplyDto.builder().id(applyHospital1.getId()).build();
+      }else {
+          return null;
+      }
     }
 
     @Override
@@ -98,5 +103,9 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
            return applyHospitalRepo.findApplyHospitalByDoctorId(doctor.getId());
        }
        return null;
+   }
+
+   public ApplyHospital applyHospitalByDoctorId(Integer doctorId){
+        return applyHospitalRepo.findApplyHospitalDetailsByDoctorId(doctorId);
    }
 }

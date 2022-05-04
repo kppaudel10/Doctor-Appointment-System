@@ -12,7 +12,7 @@
             -moz-osx-font-smoothing: grayscale;
         }
         .container {
-            margin-left: 12%;
+            margin-left: 20%;
         }
         h2 {
             text-align: center;
@@ -24,12 +24,14 @@
             box-shadow: 1px 1px 5px #888888;
             border: 0px !important;
             border-radius: 10px;
+            margin-right: 20%;
         }
 
         thead {
             background-color:#3288FA;
             color:#fff;
             font-size: 2rem;
+
         }
         tbody>tr>td {
             border-right: 0px !important;
@@ -79,8 +81,10 @@
             background-color: #168CFF;
         }
         .home{
-            text-align: center;
-            margin-left: 5.5rem;
+            background-color: #dfdfe3;
+            height: 100vh;
+            margin:auto;
+            width: 100%;
         }
     </style>
 </head>
@@ -89,7 +93,7 @@
 <div th:replace="doctor/fragement/navbar :: doctorNavbarCss"></div>
 <div th:replace="doctor/fragement/navbar :: doctorNavbarJs"></div>
 <!--<div th:replace="doctor/fragement/navbar :: doctorNavbarHome"></div>-->
-<header class="header">
+<header class="header ">
 
     <a href="#" class="logo"> <i class="fas fa-heartbeat"></i>ODAS </a>
 
@@ -124,7 +128,7 @@
                         <thead>
                         <tr>
                             <th>S.N</th>
-                            <th>Patient_Name</th>
+                            <th>Patient_Name </th>
                             <th>Phone_No</th>
                             <th>Address</th>
                             <th>Time</th>

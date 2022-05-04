@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,5 +28,9 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
 
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and apply_status = 1",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentBookedOfDoctor(Integer doctorId);
+
+    @Query(value = "select  * from  oda_appointment where apply_date = ?1 and patient_id = ?2",nativeQuery = true)
+    ApplyAppointment findApplyAppointmentByDateAndPatient(Date date,Integer patientId);
+
 
 }
