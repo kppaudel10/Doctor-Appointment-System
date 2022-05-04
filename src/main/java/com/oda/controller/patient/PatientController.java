@@ -11,6 +11,7 @@ import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +95,12 @@ public class PatientController {
     @GetMapping("/profile/view")
     public String getProfileViewPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        model.addAttribute("patientDetails",AuthorizedUser.getPatient());
+//        model.addAttribute("pendingAppointment",
+//                applyAppointmentService.getTotalPendingAppointmentOfPatient());
+//        model.addAttribute("bookedAppointment",
+//                applyAppointmentService.getTotalBookedAppointmentOfPatient());
+
         return "patient/profileview";
     }
 
@@ -115,10 +122,17 @@ public class PatientController {
 
 
     @GetMapping("/hospital-appointment/{id}")
-    public String getApplyForAppointMnt(@PathVariable("id") Integer id){
+    public String getApplyForAppointMnt(@PathVariable("id") Integer id, Model model) throws IOException, ParseException {
         //save log
        ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospitalService.findById(id));
-//        return "redirect:/patient/doctor-readmore/"+applyAppointment.getDoctor().getId();
-        return "redirect:/patient/home";
+       if(applyAppointment !=null){
+           model.addAttribute("msg","Your appointment submitted successfully.");
+       }else {
+           model.addAttribute("msg","Already submitted.");
+       }
+        model.addAttribute("doctor",doctorService.findById(id));
+        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(id));
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        return "patient/doctorreadmore";
     }
 }

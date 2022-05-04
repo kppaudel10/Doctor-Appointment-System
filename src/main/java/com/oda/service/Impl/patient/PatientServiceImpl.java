@@ -95,7 +95,7 @@ public class PatientServiceImpl implements PatientService {
                        .genderStatus(patient.getGenderStatus())
                        .name(patient.getName())
                        .password(patient.getPassword())
-                       .birthDate(patient.getBirthDate().toString())
+                       .birthDate(String.valueOf(patient.getBirthDate()))
                        .profilePhotoPath(fileStorageComponent.base64Encoded(patient.getProfilePhotoPath())).build();
 
            }catch (Exception e){

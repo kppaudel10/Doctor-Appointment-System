@@ -10,7 +10,10 @@ import com.oda.service.Impl.HospitalServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +31,17 @@ public class ApplyAppointmentServiceImpl {
     private final PatientServiceImpl patientService;
 
 
-    public ApplyAppointment save(ApplyDto apply)
-    {
+    public ApplyAppointment save(ApplyDto apply) throws ParseException {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+       String dateStr =  simpleDateFormat.format(date);
+
+       Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+
+        //check this patient is already apply in this hospital
+        if(applyAppointmentRepo.findApplyAppointmentByDateAndPatient(date1,
+                AuthorizedUser.getPatient().getId(),apply.getDoctor().getId()) == null){
         ApplyAppointment applyAppointment = ApplyAppointment.builder()
                 .id(apply.getId())
                 .patient(AuthorizedUser.getPatient())
@@ -40,8 +52,11 @@ public class ApplyAppointmentServiceImpl {
                 .toTime(apply.getToTime())
                 .hospital(apply.getHospital()).build();
         //save into database
-       ApplyAppointment applyAppointment1 = applyAppointmentRepo.save(applyAppointment);
+        ApplyAppointment applyAppointment1 = applyAppointmentRepo.save(applyAppointment);
         return applyAppointment1;
+    }else{
+    return null;
+         }
     }
 
     public List<ApplyAppointment> findAppointmentOfPatient(Integer patientId){
@@ -89,9 +104,23 @@ public class ApplyAppointmentServiceImpl {
         applyAppointmentRepo.deleteById(integer);
     }
 
-    public ApplyAppointment findAppointmentByDateAndPatient(Date date, Integer patientId){
-
-        return applyAppointmentRepo.findApplyAppointmentByDateAndPatient(date,patientId);
+    public Integer getTotalPendingAppointmentOfPatient(){
+        List<ApplyAppointment>applyAppointments =
+                applyAppointmentRepo.countPendingAppointment(AuthorizedUser.getDoctor().getId());
+        if(applyAppointments !=null){
+            return applyAppointments.size();
+        }else {
+            return null;
+        }
     }
 
+    public Integer getTotalBookedAppointmentOfPatient(){
+        List<ApplyAppointment>applyAppointments =
+                applyAppointmentRepo.countBookedAppointment(AuthorizedUser.getDoctor().getId());
+        if(applyAppointments !=null){
+            return applyAppointments.size();
+        }else {
+            return null;
+        }
+    }
 }
