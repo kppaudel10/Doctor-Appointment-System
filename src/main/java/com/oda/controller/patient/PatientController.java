@@ -126,7 +126,7 @@ public class PatientController {
         //save log
        ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospitalService.findById(id));
        if(applyAppointment !=null){
-           model.addAttribute("msg","Your appointment submitted successfully.");
+           model.addAttribute("msg","Submitted successfully.");
        }else {
            model.addAttribute("msg","Already submitted.");
        }
