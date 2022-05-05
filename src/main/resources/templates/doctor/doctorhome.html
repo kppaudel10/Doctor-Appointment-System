@@ -86,6 +86,11 @@
             margin:auto;
             width: 100%;
         }
+        .message{
+            color: #3ac162;
+            font-size: 21px;
+            margin-left: 73%;
+        }
     </style>
 </head>
 <body>
@@ -119,6 +124,7 @@
 
 </header>
 <div class="home">
+    <span th:text="${message}" class="message"></span>
     <h2> Booking Request Details</h2>
     <div class="container">
         <div class="row">
@@ -144,7 +150,15 @@
                             <td th:text="${loop.patient.address}"></td>
                             <td th:text="${loop.fromTime}"></td>
                             <td th:text="${loop.hospital.name}"></td>
-                            <td><span class="btn btn-danger">Accept</span></td>
+                            <td>
+                               <a th:href="@{/doctor/accept-patient/}+${loop.id}">
+                                   <span class="btn btn-danger">Accept</span>
+                               </a>
+
+                                <a th:href="@{/doctor/reject-patient/}+${loop.id}">
+                                    <span class="btn btn-danger">Reject</span>
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

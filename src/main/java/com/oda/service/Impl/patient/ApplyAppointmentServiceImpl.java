@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -75,9 +73,15 @@ public class ApplyAppointmentServiceImpl {
         return applyAppointmentRepo.findById(id).get();
     }
 
-    public ApplyAppointment update(ApplyAppointment applyAppointment){
+    public ApplyAppointment updateByAdmin(ApplyAppointment applyAppointment){
         //update status
-        applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
+        applyAppointment.setApplyStatus(ApplyStatus.FORWARD);
+        applyAppointmentRepo.save(applyAppointment);
+        return applyAppointment;
+    }
+
+    public ApplyAppointment updateByDoctor(ApplyAppointment applyAppointment){
+        //update status
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }

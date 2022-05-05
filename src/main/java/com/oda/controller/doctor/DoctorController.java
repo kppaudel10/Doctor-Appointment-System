@@ -1,12 +1,15 @@
 package com.oda.controller.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.enums.ApplyStatus;
+import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -60,5 +63,39 @@ public class DoctorController {
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
         return "doctor/profileview";
+    }
+
+    @GetMapping("/accept-patient/{id}")
+    public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
+        ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+        applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
+        //update appointment status
+      ApplyAppointment applyAppointment1=  applyAppointmentService.updateByDoctor(applyAppointment);
+      if(applyAppointment1 !=null){
+          model.addAttribute("message","Request accepted successfully.");
+      }else {
+          model.addAttribute("message","Failed to accept request.");
+      }
+        model.addAttribute("ppPath",
+                AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        return "doctor/doctorhome";
+    }
+
+    @GetMapping("/reject-patient/{id}")
+    public String getRejectPatient(@PathVariable("id")Integer id, Model model){
+        ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+        applyAppointment.setApplyStatus(ApplyStatus.REJECTED);
+        //update appointment status
+        ApplyAppointment applyAppointment1=  applyAppointmentService.updateByDoctor(applyAppointment);
+        if(applyAppointment1 !=null){
+            model.addAttribute("message","Request Rejected successfully.");
+        }else {
+            model.addAttribute("message","Failed to Reject request.");
+        }
+        model.addAttribute("ppPath",
+                AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        return "doctor/doctorhome";
     }
 }

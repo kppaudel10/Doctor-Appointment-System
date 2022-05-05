@@ -46,7 +46,9 @@ public class HospitalApplyController {
            }else {
                model.addAttribute("message","You already applied to this hospital.");
            }
-            model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("applyDto",new ApplyDto());
+        model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("hospitalList",hospitalService.findALl());
         return "doctor/applyhospital";
     }
 }

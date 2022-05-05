@@ -80,6 +80,11 @@
         .btn-info{
             background-color: #168CFF;
         }
+        .message{
+            margin-left: 75%;
+            font-size: 24px;
+            color: #f52645;
+        }
     </style>
 </head>
 <body>
@@ -88,6 +93,7 @@
 <div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
 <div class="home">
+    <span th:text="${message}" class="message"></span>
     <h2> Patient Request Details</h2>
     <div class="container">
         <div class="row">
@@ -116,12 +122,14 @@
                             <td th:text="${loop.fromTime}"></td>
                             <td th:text="${loop.doctor.name}"></td>
                             <td>
-                                <a  href="#">
-                                    <span class="btn btn-danger">View</span>
-                                </a>
                                 <a  th:href="@{/admin/accept-patient/}+${loop.id}">
                                     <span class="btn btn-danger">Forward</span>
                                 </a>
+
+                                <a  th:href="@{/admin/delete-patient/}+${loop.id}">
+                                    <span class="btn btn-danger">Delete</span>
+                                </a>
+
                             </td>
                         </tr>
                         </tbody>

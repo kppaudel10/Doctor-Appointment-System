@@ -6,5 +6,5 @@ package com.oda.enums;
  * @Date 4/18/22
  */
 public enum ApplyStatus {
-    PENDING,BOOKED
+    PENDING,BOOKED,FORWARD,REJECTED
 }

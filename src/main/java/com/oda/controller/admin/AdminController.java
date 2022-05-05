@@ -3,10 +3,8 @@ package com.oda.controller.admin;
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.dto.doctor.DoctorDto;
-import com.oda.dto.hospital.HospitalDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.dto.patient.SearchDto;
-import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
@@ -72,11 +70,11 @@ public class AdminController {
         return "admin/patientrequest";
     }
 
-    @GetMapping("/accept-patient/{id}")
+    @GetMapping("/forward-patient/{id}")
     public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
       ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
       //update appointment status
-        applyAppointmentService.update(applyAppointment);
+        applyAppointmentService.updateByAdmin(applyAppointment);
 
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
@@ -139,5 +137,14 @@ public class AdminController {
         model.addAttribute("doctorDetails",doctorDto);
         model.addAttribute("ppPath",doctorDto.getProfilePhotoPath());
         return "admin/viewdoctorone";
+    }
+
+    @GetMapping("/delete-patient/{id}")
+    public String deletePatient(@PathVariable("id")Integer id,Model model){
+        applyAppointmentService.deleteBYId(id);
+        model.addAttribute("message","Successfully deleted.");
+        model.addAttribute("patientRequest",
+                applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        return "admin/patientrequest";
     }
 }
