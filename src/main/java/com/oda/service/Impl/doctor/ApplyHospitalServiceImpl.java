@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,9 +31,14 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
 
     private final HospitalServiceImpl hospitalService;
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+    String dateStr =  simpleDateFormat.format(date);
 
     @Override
     public ApplyDto save(ApplyDto applyDto) throws ParseException {
+
+
         //check hospital that is already apply or not
       if(applyHospitalRepo.findApplyHospitalDetailsByDoctorId(AuthorizedUser.getDoctor().getId()) == null){
           ApplyHospital applyHospital = ApplyHospital.builder()
@@ -39,7 +47,8 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
                   .doctor(AuthorizedUser.getDoctor())
                   .fromTime(ApplyDto.getTimeWithAmPm(applyDto.getFormTime()))
                   .toTime(ApplyDto.getTimeWithAmPm(applyDto.getToTime()))
-                  .applyStatus(ApplyStatus.PENDING).build();
+                  .applyStatus(ApplyStatus.PENDING)
+                  .applyDate(dateStr).build();
                   ApplyHospital applyHospital1 = applyHospitalRepo.save(applyHospital);
                   return ApplyDto.builder().id(applyHospital1.getId()).build();
       }else {
@@ -55,6 +64,7 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
                 .hospital(applyHospital.getHospital())
                 .doctor(applyHospital.getDoctor())
                 .formTime(applyHospital.getFromTime())
+                .applyDate(applyHospital.getApplyDate())
                 .applyStatus(applyHospital.getApplyStatus())
                 .toTime(applyHospital.getToTime())
                 .build();
@@ -90,6 +100,7 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
                 .doctor(applyDto.getDoctor())
                 .fromTime(applyDto.getFormTime())
                 .toTime(applyDto.getToTime())
+                .applyDate(applyDto.getApplyDate())
                 .applyStatus(ApplyStatus.BOOKED).build();
 
        ApplyHospital applyHospital1 = applyHospitalRepo.save(applyHospital);
@@ -107,5 +118,15 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
 
    public ApplyHospital applyHospitalByDoctorId(Integer doctorId){
         return applyHospitalRepo.findApplyHospitalDetailsByDoctorId(doctorId);
+   }
+
+   public Integer getTodayDoctorApply(){
+        List<ApplyHospital> applyHospitalList = applyHospitalRepo.getTodayDoctorApply(dateStr);
+
+        if(applyHospitalList !=null){
+            return applyHospitalList.size();
+        }else {
+            return 0;
+        }
    }
 }

@@ -37,6 +37,9 @@ public class AdminController {
 
     @GetMapping("/home")
     public String getAdminHomePage(Model model){
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/adminhomepage";
     }
 
@@ -76,8 +79,12 @@ public class AdminController {
     public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
       ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
       //update appointment status
-        applyAppointmentService.updateByAdmin(applyAppointment);
-
+       ApplyAppointment applyAppointment1 = applyAppointmentService.updateByAdmin(applyAppointment);
+        if(applyAppointment1 != null){
+            model.addAttribute("message","Successfully Forwarded.");
+        }else {
+            model.addAttribute("message","Failed To Forward");
+        }
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/patientrequest";

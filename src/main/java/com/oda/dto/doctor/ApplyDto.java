@@ -8,6 +8,7 @@ import lombok.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.xml.transform.sax.SAXResult;
 import java.sql.Time;
 import java.time.LocalTime;
 
@@ -28,6 +29,8 @@ public class ApplyDto {
     private Hospital hospital;
 
     private String formTime;
+
+    private String applyDate;
 
     private String toTime;
 

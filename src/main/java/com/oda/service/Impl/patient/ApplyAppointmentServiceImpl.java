@@ -29,6 +29,9 @@ public class ApplyAppointmentServiceImpl {
 
     private final PatientServiceImpl patientService;
 
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    Date date = new Date();
+    String dateStr =  simpleDateFormat.format(date);
 
     public ApplyAppointment save(ApplyDto apply, AppointmentDto appointmentDto) throws ParseException {
 
@@ -135,10 +138,16 @@ public class ApplyAppointmentServiceImpl {
     }
 
     public List<ApplyAppointment> getListOfToDayPatient(){
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        String dateStr =  simpleDateFormat.format(date);
 
         return applyAppointmentRepo.getApplyAppointmentForToday(AuthorizedUser.getDoctor().getId(),dateStr);
+    }
+
+    public Integer getTodayAppointmentSize(){
+        List<ApplyAppointment> applyAppointments = applyAppointmentRepo.getTodayAppointment(dateStr);
+        if(applyAppointments !=null){
+            return applyAppointments.size();
+        }else {
+            return 0;
+        }
     }
 }

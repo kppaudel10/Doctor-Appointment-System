@@ -39,6 +39,9 @@ public class ApplyHospital {
     private String toTime;
 
     @Column(nullable = false)
+    private String applyDate;
+
+    @Column(nullable = false)
     private ApplyStatus applyStatus;
 
 }

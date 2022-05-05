@@ -111,13 +111,13 @@
                             <td th:text="${loop.doctor.address}"></td>
                             <td th:text="${loop.doctor.mobileNumber}"></td>
                             <td th:text="${loop.doctor.specialization}"></td>
-                            <td th:text="${loop.doctor.experience}">3.4</td>
+                            <td th:text="${loop.doctor.experience}"></td>
                             <td>
                                 <a  th:href="@{/admin/accept-doctor/}+${loop.id}">
                                     <span class="btn btn-danger">Accept</span>
                                 </a>
 
-                               <a  th:href="#">
+                               <a href="#">
                                    <span class="btn btn-danger">Reject</span>
                                </a>
                             </td>

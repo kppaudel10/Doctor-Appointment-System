@@ -18,13 +18,13 @@ import java.util.List;
 @Repository
 public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Integer> {
 
-    @Query(value = "select * from oda_appointment where patient_id = ?1",nativeQuery = true)
+    @Query(value = "select * from oda_appointment a where a.patient_id = ?1 order by a.id DESC",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentByPatientId(Integer id);
 
     @Query(value = "select * from oda_appointment where hospital_id = ?1 and apply_status = 0",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentByHospitalOfPending(Integer hospitalId);
 
-    @Query(value = "select * from oda_appointment where hospital_id = ?1 and apply_status = 1",nativeQuery = true)
+    @Query(value = "select * from oda_appointment where hospital_id = ?1 and apply_status = 1 order by id DESC ",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentByHospitalOfBooked(Integer hospitalId);
 
 
@@ -43,6 +43,9 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
 
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and apply_status = 1 and appointment_date = ?2",nativeQuery = true)
     List<ApplyAppointment> getApplyAppointmentForToday(Integer doctorId,String date);
+
+    @Query(value = "select * from oda_appointment where apply_date = ?1 and apply_status = 0",nativeQuery = true)
+    List<ApplyAppointment> getTodayAppointment(String date);
 
 
 }
