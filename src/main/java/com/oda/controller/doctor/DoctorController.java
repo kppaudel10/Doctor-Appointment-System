@@ -35,7 +35,15 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
-        return "doctor/doctorhome";
+        return "doctor/home";
+    }
+    
+    @GetMapping("/pateint-booking-request")
+    public String bookingRequest(Model model){
+        model.addAttribute("ppPath",
+                AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        return "doctor/bookingrequest";
     }
 
     @GetMapping("/feedback")
@@ -49,7 +57,7 @@ public class DoctorController {
     @GetMapping("/booking/request")
     public String getBookReuestPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
-        return "doctorhome";
+        return "doctor/bookingrequest";
     }
 
     @GetMapping("/apply/hospital")
@@ -79,7 +87,8 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
-        return "doctor/doctorhome";
+        return "doctor/bookingrequest";
+
     }
 
     @GetMapping("/reject-patient/{id}")
@@ -96,6 +105,7 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
-        return "doctor/doctorhome";
+        return "doctor/bookingrequest";
     }
+    
 }
