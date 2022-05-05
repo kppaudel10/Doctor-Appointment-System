@@ -113,12 +113,13 @@
                             <td th:text="${loop.doctor.specialization}"></td>
                             <td th:text="${loop.doctor.experience}">3.4</td>
                             <td>
-                               <a  href="#">
-                                   <span class="btn btn-danger">View</span>
-                               </a>
                                 <a  th:href="@{/admin/accept-doctor/}+${loop.id}">
                                     <span class="btn btn-danger">Accept</span>
                                 </a>
+
+                               <a  th:href="#">
+                                   <span class="btn btn-danger">Reject</span>
+                               </a>
                             </td>
                         </tr>
                         </tbody>

@@ -35,10 +35,10 @@ public class ApplyAppointmentServiceImpl {
         Date date = new Date();
        String dateStr =  simpleDateFormat.format(date);
 
-       Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+//       Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
 
         //check this patient is already apply in this hospital
-        if(applyAppointmentRepo.findApplyAppointmentByDateAndPatient(date1,
+        if(applyAppointmentRepo.findApplyAppointmentByDateAndPatient(dateStr,
                 AuthorizedUser.getPatient().getId(),apply.getDoctor().getId()) == null){
         ApplyAppointment applyAppointment = ApplyAppointment.builder()
                 .id(apply.getId())
@@ -46,7 +46,7 @@ public class ApplyAppointmentServiceImpl {
                 .doctor(apply.getDoctor())
                 .fromTime(apply.getFormTime())
                 .applyStatus(ApplyStatus.PENDING)
-                .applyDate(new Date())
+                .applyDate(dateStr)
                 .toTime(apply.getToTime())
                 .hospital(apply.getHospital()).build();
         //save into database
@@ -75,7 +75,7 @@ public class ApplyAppointmentServiceImpl {
 
     public ApplyAppointment updateByAdmin(ApplyAppointment applyAppointment){
         //update status
-        applyAppointment.setApplyStatus(ApplyStatus.FORWARD);
+        applyAppointment.setApplyStatus(ApplyStatus.PROCESSING);
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }
@@ -126,5 +126,13 @@ public class ApplyAppointmentServiceImpl {
         }else {
             return null;
         }
+    }
+
+    public List<ApplyAppointment> getListOfToDayPatient(){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String dateStr =  simpleDateFormat.format(date);
+
+        return applyAppointmentRepo.getApplyAppointmentForToday(AuthorizedUser.getDoctor().getId(),dateStr);
     }
 }

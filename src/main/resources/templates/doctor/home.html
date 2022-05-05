@@ -3,6 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>DOCTOR || HOME</title>
+    <style>
+        #members td, #members th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #members tr:nth-child(even){background-color: #f2f2f2;}
+
+        #members tr:hover {background-color: #ddd;}
+
+        #members th {
+            padding-top: 10px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+            font-size: 23px;
+        }
+        #members td{
+            font-size: 22px;
+            color: black;
+            text-align: left;
+        }
+        table{
+            position: absolute;
+            /*margin-top: 5px;*/
+            margin-right: 60px;
+            margin-left: 60px;
+            width: 80%;
+        }
+        .head_caption{
+            color: #1e1e1e;
+            font-size: 30px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="doctor/fragement/navbar :: doctorNabarLink"></div>
@@ -17,9 +54,8 @@
         <ul>
             <a th:href="@{/doctor-hospital/apply}">Apply</a>
             <a th:href="@{/doctor/feedback}">Feedback</a>
-
-            <a th:href="@{doctor/booking/request}">Home</a>
-<!--            <a th:href="@{/doctor/home}">Home</a>-->
+            <a th:href="@{/doctor/patient-booking-request}">Booking Request</a>
+            <a th:href="@{/doctor/home}">Home</a>
             <!--                <a href="#doctors">doctors</a>-->
         </ul>
     </nav>
@@ -36,7 +72,31 @@
 
 </header>
 <div class="home">
-    <h2>This is doctor home page</h2>
+    <div class="container">
+        <h2 class="head_caption"><u><i>Today Patient</i></u></h2>
+        <table id="members">
+            <thead>
+            <tr>
+                <th>S.N</th>
+                <th>Hospital Name</th>
+                <th>Patient Name</th>
+                <th>Address</th>
+                <th>Contact</th>
+                <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="loop , i : ${appointmentList}">
+                <td th:text="${i.count}"></td>
+                <td th:text="${loop.getHospital().name}"></td>
+                <td th:text="${loop.getPatient().name}"></td>
+                <td th:text="${loop.getPatient().address}"></td>
+                <td th:text="${loop.getPatient().mobileNumber}"></td>
+                <td th:text="${loop.getFromTime()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 </body>
 </html>

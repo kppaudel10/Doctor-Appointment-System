@@ -26,8 +26,7 @@ public class ApplyAppointment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
-    private Date applyDate;
+    private String applyDate;
 
     private String fromTime;
 

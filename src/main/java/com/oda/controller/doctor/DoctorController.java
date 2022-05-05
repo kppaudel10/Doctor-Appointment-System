@@ -34,11 +34,11 @@ public class DoctorController {
     public String getDoctorHomePage(Model model){
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
-        model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        model.addAttribute("appointmentList",applyAppointmentService.getListOfToDayPatient());
         return "doctor/home";
     }
     
-    @GetMapping("/pateint-booking-request")
+    @GetMapping("/patient-booking-request")
     public String bookingRequest(Model model){
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
