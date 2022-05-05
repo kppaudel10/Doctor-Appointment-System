@@ -2,9 +2,12 @@ package com.oda.controller.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.GetRating;
+import com.oda.dto.doctor.ApplyDto;
 import com.oda.dto.doctor.DoctorDto;
+import com.oda.dto.patient.AppointmentDto;
 import com.oda.dto.patient.FeedbackDto;
 import com.oda.dto.patient.SearchDto;
+import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
@@ -105,10 +108,12 @@ public class PatientController {
     }
 
     @GetMapping("/doctor-readmore/{id}")
-    public String getDoctorViewPage(@PathVariable("id") Integer id, Model model) throws IOException {
+    public String getDoctorViewPage(@PathVariable("id") Integer id,
+                                    Model model) throws IOException {
         model.addAttribute("doctor",doctorService.findById(id));
         model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(id));
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        model.addAttribute("doctorId",id);
         return "patient/doctorreadmore";
     }
 
@@ -123,13 +128,26 @@ public class PatientController {
 
     @GetMapping("/hospital-appointment/{id}")
     public String getApplyForAppointMnt(@PathVariable("id") Integer id, Model model) throws IOException, ParseException {
+        AppointmentDto appointmentDto = new AppointmentDto();
+        appointmentDto.setHospitalApplyId(id);
+//        appointmentDto.setDoctorId();
+        model.addAttribute("appointmentDto",appointmentDto);
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         //save log
-       ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospitalService.findById(id));
-       if(applyAppointment !=null){
-           model.addAttribute("msg","Submitted successfully.");
-       }else {
-           model.addAttribute("msg","Already submitted.");
-       }
+        return "patient/furtherdetailsforappointment";
+    }
+
+    @PostMapping("/hospital-appointment")
+    public String getApplyAppointMnt(@ModelAttribute("appointmentDto") AppointmentDto appointmentDto, Model model) throws IOException, ParseException {
+       ApplyDto applyHospital= applyHospitalService.findById(appointmentDto.getHospitalApplyId());
+
+        //save log
+        ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospital,appointmentDto);
+        if(applyAppointment !=null){
+            model.addAttribute("msg","Submitted successfully.");
+        }else {
+            model.addAttribute("msg","Already submitted.");
+        }
         model.addAttribute("doctor",doctorService.findById(applyAppointment.getDoctor().getId()));
         model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());

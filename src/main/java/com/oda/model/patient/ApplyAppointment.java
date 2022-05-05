@@ -34,6 +34,10 @@ public class ApplyAppointment {
 
     private ApplyStatus applyStatus;
 
+    private String appointmentDate;
+
+    private String reasonOrProblem;
+
     @OneToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;

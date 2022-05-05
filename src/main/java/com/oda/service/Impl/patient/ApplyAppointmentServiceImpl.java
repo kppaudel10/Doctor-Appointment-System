@@ -2,6 +2,7 @@ package com.oda.service.Impl.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
+import com.oda.dto.patient.AppointmentDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.model.patient.Patient;
@@ -29,11 +30,12 @@ public class ApplyAppointmentServiceImpl {
     private final PatientServiceImpl patientService;
 
 
-    public ApplyAppointment save(ApplyDto apply) throws ParseException {
+    public ApplyAppointment save(ApplyDto apply, AppointmentDto appointmentDto) throws ParseException {
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
        String dateStr =  simpleDateFormat.format(date);
+
 
 //       Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
 
@@ -48,7 +50,9 @@ public class ApplyAppointmentServiceImpl {
                 .applyStatus(ApplyStatus.PENDING)
                 .applyDate(dateStr)
                 .toTime(apply.getToTime())
-                .hospital(apply.getHospital()).build();
+                .hospital(apply.getHospital())
+                .appointmentDate(appointmentDto.getAppointmentDate())
+                .reasonOrProblem(appointmentDto.getDescription()).build();
         //save into database
         ApplyAppointment applyAppointment1 = applyAppointmentRepo.save(applyAppointment);
         return applyAppointment1;
@@ -105,7 +109,9 @@ public class ApplyAppointmentServiceImpl {
     }
 
     public void deleteBYId(Integer integer){
-        applyAppointmentRepo.deleteById(integer);
+      ApplyAppointment applyAppointment = applyAppointmentRepo.findById(integer).get();
+      applyAppointment.setApplyStatus(ApplyStatus.REJECTED);
+      applyAppointmentRepo.save(applyAppointment);
     }
 
     public Integer getTotalPendingAppointmentOfPatient(){
