@@ -11,16 +11,42 @@
             color: red;
         }
         .problem-des{
-            margin-right: 30%;
+            margin-right: 28%;
         }
     </style>
 </head>
 <body>
-<div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
-<div th:replace="admin/fragement/navbar :: adminNavbarCss"></div>
-<div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
-<div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
+<div th:replace="doctor/fragement/navbar :: doctorNabarLink"></div>
+<div th:replace="doctor/fragement/navbar :: doctorNavbarCss"></div>
+<div th:replace="doctor/fragement/navbar :: doctorNavbarJs"></div>
+<!--<div th:replace="doctor/fragement/navbar :: doctorNavbarHome"></div>-->
+<div>
+    <header class="header ">
 
+        <a href="#" class="logo"> <i class="fas fa-heartbeat"></i>ODAS </a>
+
+        <nav class="navbar">
+            <ul>
+                <a th:href="@{/doctor-hospital/apply}">Apply</a>
+                <a th:href="@{/doctor/feedback}">Feedback</a>
+                <a th:href="@{/doctor/patient-booking-request}">Booking Request</a>
+                <a th:href="@{/doctor/home}">Home</a>
+                <!--            <a th:href="@{/doctor/home}">Home</a>-->
+                <!--                <a href="#doctors">doctors</a>-->
+            </ul>
+        </nav>
+        <div class="dropdown">
+            <img class="dropbtn" th:src="${ppPath}" alt="">
+            <div class="dropdown-content">
+                <a th:href="@{/doctor/view}">Views</a>
+                <a th:href="@{/logout}">Log out</a>
+
+            </div>
+        </div>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
 </div>
 <div class="home">
   <main class="box">
@@ -37,12 +63,11 @@
             <h1><u></u><i>Appointment Details</i></u></h1>
            <h2><span>Appointment Date --></span><span th:text="${appointmentDetails.appointmentDate}"></span></h2>
            <h2><span>Doctor Name --></span><span th:text="${appointmentDetails.doctor.name}"></span></h2>
-            <h1 style="color: red"><u></u><i>Problem Description</i></u></h1>
+            <h1 class="problem"><u></u><i>Problem Description</i></u></h1>
         <h2 class="problem-des"><span>--></span><span th:text="${appointmentDetails.reasonOrProblem}"></span></h2>
-
         </span>
       <div class="btn>">
-          <a th:href="@{/admin/patient-view}" class="next">&laquo; Back</a>
+          <a th:href="@{/doctor/patient-booking-request}" class="next">&laquo; Back</a>
       </div>
   </main>
 </div>

@@ -17,8 +17,10 @@ import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
 
@@ -138,19 +140,30 @@ public class PatientController {
     }
 
     @PostMapping("/hospital-appointment")
-    public String getApplyAppointMnt(@ModelAttribute("appointmentDto") AppointmentDto appointmentDto, Model model) throws IOException, ParseException {
-       ApplyDto applyHospital= applyHospitalService.findById(appointmentDto.getHospitalApplyId());
+    public String getApplyAppointMnt(@Valid @ModelAttribute("appointmentDto") AppointmentDto appointmentDto, BindingResult bindingResult,
+                                     Model model) throws IOException, ParseException {
+     if(!bindingResult.hasErrors())
+     {
+         ApplyDto applyHospital= applyHospitalService.findById(appointmentDto.getHospitalApplyId());
 
-        //save log
-        ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospital,appointmentDto);
-        if(applyAppointment !=null){
-            model.addAttribute("msg","Submitted successfully.");
-        }else {
-            model.addAttribute("msg","Already submitted.");
-        }
-        model.addAttribute("doctor",doctorService.findById(applyAppointment.getDoctor().getId()));
-        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
-        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-        return "patient/doctorreadmore";
+         //save log
+         ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospital,appointmentDto);
+         if(applyAppointment !=null){
+             model.addAttribute("msg","Submitted successfully.");
+         }else {
+             model.addAttribute("msg","Already submitted.");
+         }
+         model.addAttribute("doctor",doctorService.findById(applyAppointment.getDoctor().getId()));
+         model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
+         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+         return "patient/doctorreadmore";
+     }else {
+         model.addAttribute("message","Maximum length is 100.");
+         model.addAttribute("appointmentDto",appointmentDto);
+         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+         //save log
+         return "patient/furtherdetailsforappointment";
+
+     }
     }
 }

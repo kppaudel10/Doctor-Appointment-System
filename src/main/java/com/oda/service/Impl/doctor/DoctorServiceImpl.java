@@ -6,6 +6,7 @@ import com.oda.dto.doctor.DoctorDto;
 import com.oda.model.doctor.Doctor;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.doctor.DoctorService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,42 +16,42 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepo doctorRepo;
     private final FileStorageComponent fileStorageComponent;
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
-    public DoctorServiceImpl(DoctorRepo doctorRepo, FileStorageComponent fileStorageComponent) {
-        this.doctorRepo = doctorRepo;
-        this.fileStorageComponent = fileStorageComponent;
-    }
 
 
     @Override
     public DoctorDto save(DoctorDto doctorDto) {
-        Doctor doctor = Doctor.builder()
-                .id(doctorDto.getId())
-                .name(doctorDto.getName())
-                .address(doctorDto.getAddress().toLowerCase())
-                .email(doctorDto.getEmail())
-                .genderStatus(doctorDto.getGenderStatus())
-                .profilePhotoPath(doctorDto.getProfilePhotoPath())
-                .mobileNumber(doctorDto.getMobileNumber())
-                .specialization(doctorDto.getSpecialization().toLowerCase())
-                .experience(doctorDto.getExperience())
-                .rating(doctorDto.getRating())
-                .numberOfFeedback(doctorDto.getNumberOfFeedback())
-                .feedbackList(doctorDto.getFeedbackList()).
-                password(doctorDto.getPassword()).build();
+        Doctor doctor = new Doctor();
+         if(doctorDto.getId() == null){
+             doctor = Doctor.builder()
+                     .id(doctorDto.getId())
+                     .name(doctorDto.getName())
+                     .address(doctorDto.getAddress().toLowerCase())
+                     .email(doctorDto.getEmail())
+                     .genderStatus(doctorDto.getGenderStatus())
+                     .profilePhotoPath(doctorDto.getProfilePhotoPath())
+                     .mobileNumber(doctorDto.getMobileNumber())
+                     .specialization(doctorDto.getSpecialization().toLowerCase())
+                     .experience(doctorDto.getExperience())
+                     .rating(3D)
+                     .numberOfFeedback(1)
+                     .feedbackList(doctorDto.getFeedbackList()).
+                     password(doctorDto.getPassword()).build();
+         }
 
         //for update
-        if(doctor.getId() !=null){
-            doctor.setProfilePhotoPath(doctorRepo.findById(doctor.getId()).get().getProfilePhotoPath());
-        }else {
-            //for new save(first time)
-            doctor.setRating(3D);
-            doctor.setNumberOfFeedback(1);
+        if(doctorDto.getId() !=null){
+          Doctor  doctor1 = doctorRepo.findById(doctorDto.getId()).get();
+          doctor = doctor1;
+            doctor.setProfilePhotoPath(doctor1.getProfilePhotoPath());
+            doctor.setRating(Double.valueOf(df.format(doctorDto.getRating())));
+            doctor.setNumberOfFeedback(doctorDto.getNumberOfFeedback());
         }
         //save into database
         Doctor doctor1 = doctorRepo.save(doctor);

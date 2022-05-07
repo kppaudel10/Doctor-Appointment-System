@@ -133,6 +133,7 @@ public class AdminController {
        ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
         //find patientby Id
        PatientDto patientDto = patientService.findById(applyAppointment.getPatient().getId());
+       model.addAttribute("appointmentDetails",applyAppointment);
         model.addAttribute("patientDetails",patientDto);
         model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
         return "admin/viewpatientone";

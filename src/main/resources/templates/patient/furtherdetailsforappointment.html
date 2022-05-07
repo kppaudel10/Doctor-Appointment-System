@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GET || APPOINTMENT</title>
-<!--    <link rel="stylesheet" -->
-<!--          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body{
             background-color: rgb(160, 156, 156);
@@ -104,6 +104,14 @@
             margin:auto;
             width: 100%;
         }
+        .header .navbar ul{
+            margin-left: 24rem;
+
+        }
+        #msg{
+            margin-right: 30%;
+            font-size: 17px;
+        }
 
     </style>
 </head>
@@ -127,11 +135,11 @@
         </nav>
         <div class="dropdown">
             <img class="dropbtn" th:src="${ppPath}" alt="">
-            <div class="dropdown-content">
-                <a th:href="@{/patient/profile/view}">Views</a>
-                <a th:href="@{/logout}">Log out</a>
+<!--            <div class="dropdown-content">-->
+<!--                <a th:href="@{/patient/profile/view}">Views</a>-->
+<!--                <a th:href="@{/logout}">Log out</a>-->
 
-            </div>
+<!--            </div>-->
         </div>
 
         <div id="menu-btn" class="fas fa-bars"></div>
@@ -141,7 +149,7 @@
 <div class="home">
 
     <main class="main-body">
-        <form th:action="@{/patient/hospital-appointment}" th:method="post" th:object="${appointmentDto}">
+        <form th:action="@{/patient/hospital-appointment}" th:method="post" th:object="${appointmentDto}" name="more-form">
         <br>
             <input type="hidden" th:field="*{hospitalApplyId}">
 
@@ -157,7 +165,8 @@
         </div>
         <label>Reason Or Problem</label>
         <br>
-        <textarea rows="6" placeholder="Write your problem here" th:field="*{description}"></textarea><br>
+        <textarea rows="6" placeholder="Write your problem here"  id="des" th:field="*{description}" required></textarea><br>
+            <p style="color: red" id="msg" th:text="${message}"></p>
         <br>
         <input type="submit" value="Submit">
         </form>

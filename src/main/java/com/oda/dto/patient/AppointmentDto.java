@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
@@ -11,6 +12,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class AppointmentDto {
     private Integer hospitalApplyId;
+
+    @Size(max = 110)
     private String description;
+
     private String appointmentDate;
 }

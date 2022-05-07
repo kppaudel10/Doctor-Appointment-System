@@ -1,16 +1,21 @@
 package com.oda.controller.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.dto.patient.PatientDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
+import com.oda.service.Impl.patient.PatientServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.IOException;
 
 /**
  * @author kulPaudel
@@ -19,16 +24,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/doctor")
+@RequiredArgsConstructor
 public class DoctorController {
     private final DoctorServiceImpl doctorService;
     private final FeedbackServiceImpl feedbackService;
     private final ApplyAppointmentServiceImpl applyAppointmentService;
 
-    public DoctorController(DoctorServiceImpl doctorService, FeedbackServiceImpl feedbackService, ApplyAppointmentServiceImpl applyAppointmentService) {
-        this.doctorService = doctorService;
-        this.feedbackService = feedbackService;
-        this.applyAppointmentService = applyAppointmentService;
-    }
+    private final PatientServiceImpl patientService;
+
 
     @GetMapping("/home")
     public String getDoctorHomePage(Model model){
@@ -106,6 +109,17 @@ public class DoctorController {
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
         return "doctor/bookingrequest";
+    }
+
+    @GetMapping("/patient-view/{id}")
+    public String getViewPatient(@PathVariable("id")Integer id,Model model) throws IOException {
+        ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+        //find patientby Id
+        PatientDto patientDto = patientService.findById(applyAppointment.getPatient().getId());
+        model.addAttribute("appointmentDetails",applyAppointment);
+        model.addAttribute("patientDetails",patientDto);
+        model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
+        return "doctor/viewpatientone";
     }
     
 }

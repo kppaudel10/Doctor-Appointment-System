@@ -153,6 +153,10 @@
                             <td th:text="${loop.fromTime}"></td>
                             <td th:text="${loop.hospital.name}"></td>
                             <td>
+                                <a th:href="@{/doctor/patient-view/}+${loop.id}">
+                                    <span class="btn btn-danger">View</span>
+                                </a>
+
                                <a th:href="@{/doctor/accept-patient/}+${loop.id}">
                                    <span class="btn btn-danger">Accept</span>
                                </a>
