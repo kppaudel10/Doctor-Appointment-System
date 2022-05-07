@@ -217,11 +217,10 @@
                                     <p class="display_msg" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></p>
                                 </div>
 
-<!--                                <div class="form-group">-->
-<!--                                    <label>Document file *</label>-->
-<!--                                    <input type="file" class="form-control" placeholder="document file *" th:field="*{multipartFileDocument}" value="" />-->
-<!--                                    <p class="display_msg" th:if="${#fields.hasErrors('multipartFileDocument')}" th:errors="*{multipartFileDocument}"></p>-->
-<!--                                </div>-->
+                                <div class="form-group">
+                                    <input type="number" name="txtEmpPhone" class="form-control" placeholder="basic charge (Rs) *" th:field="*{basicCharge}" value="" />
+                                    <p class="display_msg" th:if="${#fields.hasErrors('basicCharge')}" th:errors="*{basicCharge}"></p>
+                                </div>
 
                                 <div class="form-group">
                                     <label>Photo(pp size) *</label>

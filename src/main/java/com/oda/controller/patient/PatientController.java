@@ -4,6 +4,7 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.GetRating;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.dto.doctor.DoctorDto;
+import com.oda.dto.doctor.DoctorSortDto;
 import com.oda.dto.patient.AppointmentDto;
 import com.oda.dto.patient.FeedbackDto;
 import com.oda.dto.patient.SearchDto;
@@ -46,13 +47,27 @@ public class PatientController {
 
     @GetMapping("/home")
     public String getPatientHomePage(Model model){
+      //if sort value is not low or high
+        model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
+        model.addAttribute("doctorSortDto",new DoctorSortDto());
+        model.addAttribute("searchDto",new SearchDto());
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-       model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
-//        model.addAttribute("doctorList",doctorService.oneTimeVisitedDoctor());
-       model.addAttribute("searchDto",new SearchDto());
         return "patient/patienthomepage";
     }
 
+    @GetMapping("/sort-doctor")
+    public String getSortDoctor(@ModelAttribute("doctorSortDto")DoctorSortDto doctorSortDto,Model model){
+        if(doctorSortDto.getSortValue() == 1){
+            model.addAttribute("doctorList",doctorService.sortDoctorByLowCharge());
+        }else if(doctorSortDto.getSortValue() == 2){
+            model.addAttribute("doctorList",doctorService.sortDoctorByHighCharge());
+        }else {
+            model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
+        }
+        model.addAttribute("searchDto",new SearchDto());
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        return "patient/patienthomepage";
+    }
     @GetMapping("/feedback/{id}")
     public String getFeedbackForm(@PathVariable("id")Integer id, Model model) throws IOException {
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
@@ -109,11 +124,6 @@ public class PatientController {
     public String getProfileViewPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         model.addAttribute("patientDetails",AuthorizedUser.getPatient());
-//        model.addAttribute("pendingAppointment",
-//                applyAppointmentService.getTotalPendingAppointmentOfPatient());
-//        model.addAttribute("bookedAppointment",
-//                applyAppointmentService.getTotalBookedAppointmentOfPatient());
-
         return "patient/profileview";
     }
 

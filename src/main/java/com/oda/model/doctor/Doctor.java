@@ -58,4 +58,6 @@ public class Doctor {
 
    private Integer numberOfFeedback;
 
+   private Integer basicCharge;
+
 }

@@ -167,6 +167,16 @@
             margin:auto;
             width: 100%;
         }
+        .sort-from{
+            margin-left: 5px;
+            margin-top: 5px;
+            position: absolute;
+            font-size: 18px;
+        }
+        .sort-from,label{
+            color: green;
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -201,17 +211,20 @@
     </header>
 </div>
 <div class="home">
-
-
-<!--    <div class="box">-->
-<!--        <div class="container-4">-->
-<!--            <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">-->
-<!--                <input type="search" id="search" placeholder="Search Doctors..." th:field="*{userInput}"/>-->
-<!--                <input type="submit" class="icon"><i class="fa fa-search"></i></input>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-
+<span class="sort-from">
+    <form th:action="@{/patient/sort-doctor}" th:method="get" th:object="${doctorSortDto}">
+        <label>Sort By:</label>
+        <select onchange='if(this.value != 0) { this.form.submit(); }' th:field="*{sortValue}">
+            <option value="0"></option>
+            <option value="1">
+                Low Charge
+            </option>
+            <option value="2">
+                High Charge
+            </option>
+        </select>
+    </form>
+</span>
     <div class="wrap">
         <form th:action="@{/patient/search/doctor}" th:method="post" th:object="${searchDto}" autocomplete="off">
             <div class="search">
@@ -237,6 +250,7 @@
                     <span class="number" th:text="${loop.getRating()}"></span>
                     <i class="fa fa-star"></i>
                     <p style="font-size: 18px" th:text="${loop.getSpecialization()}"></p>
+<!--                    <p style="font-size: 18px" th:text="'Charge Rs.'${loop.getBasicCharge()}"></p>-->
                 </div>
                 <div class="btn">
                     <button class="btnlinks">

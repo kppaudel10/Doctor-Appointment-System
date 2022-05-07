@@ -81,7 +81,7 @@
         .tables{
             text-align: center;
             padding-bottom: 2rem;
-            margin-top: 15rem;
+            margin-top: 5rem;
         }
         .tables tr td button{
             color: white;
@@ -171,6 +171,7 @@
             <h2><span th:text="'Name: '+${doctor.name}"></span><span class="tab"></span><span th:text="'Address: '+${doctor.address}"></span></h2>
             <h2><span th:text="'Contact: '+${doctor.mobileNumber}"></span><span class="tab"></span><span th:text="'Email:' +${doctor.email}"></span></h2>
             <h2><span th:text="'Specialization: '+${doctor.specialization}"></span> <span class="tab"></span> <span  th:text="'Experience: '+${doctor.experience}+' Years'"></span></h2>
+            <h2 th:text="'Basic Charge (Rs): '+${doctor.basicCharge}"></h2>
 </div>
 <!--        <span class="dr-name">-->
 <!--  <h1 class="dname" th:text="'Dr.' +${doctor.name}"></h1>-->

@@ -38,4 +38,11 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
             "       d.specialization,d.rating,d.profile_photo_path\n" +
             "from oda_doctor d left join oda_appointment oa on d.id = oa.doctor_id where patient_id = ?1",nativeQuery = true)
     List<DoctorDto>findOneTimeVisitedDoctor(Integer patientId);
+
+
+    @Query(value = "select * from oda_doctor where id is not null order by basic_charge",nativeQuery = true)
+    List<Doctor> shortDoctorByLowCharge();
+
+    @Query(value = "select * from oda_doctor where id is not null order by basic_charge DESC",nativeQuery = true)
+    List<Doctor> shortDoctorByHighCharge();
 }

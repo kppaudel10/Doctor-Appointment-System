@@ -41,6 +41,7 @@ public class DoctorServiceImpl implements DoctorService {
                      .experience(doctorDto.getExperience())
                      .rating(3D)
                      .numberOfFeedback(1)
+                     .basicCharge(doctorDto.getBasicCharge())
                      .feedbackList(doctorDto.getFeedbackList()).
                      password(doctorDto.getPassword()).build();
          }
@@ -72,6 +73,7 @@ public class DoctorServiceImpl implements DoctorService {
                 .experience(doctor.getExperience())
                 .rating(doctor.getRating())
                 .password(doctor.getPassword())
+                .basicCharge(doctor.getBasicCharge())
                 .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath()))
                 .numberOfFeedback(doctor.getNumberOfFeedback())
                 .genderStatus(doctor.getGenderStatus())
@@ -172,6 +174,7 @@ public class DoctorServiceImpl implements DoctorService {
                        .email(doctor.getEmail())
                        .experience(doctor.getExperience())
                        .rating(doctor.getRating())
+                       .basicCharge(doctor.getBasicCharge())
                        .specialization(doctor.getSpecialization())
                        .genderStatus(doctor.getGenderStatus())
                        .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
@@ -192,6 +195,7 @@ public class DoctorServiceImpl implements DoctorService {
                                .email(doctor.getEmail())
                                .experience(doctor.getExperience())
                                .rating(doctor.getRating())
+                               .basicCharge(doctor.getBasicCharge())
                                .specialization(doctor.getSpecialization())
                                .genderStatus(doctor.getGenderStatus())
                                .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
@@ -217,6 +221,49 @@ public class DoctorServiceImpl implements DoctorService {
                         .email(doctor.getEmail())
                         .experience(doctor.getExperience())
                         .rating(doctor.getRating())
+                        .basicCharge(doctor.getBasicCharge())
+                        .specialization(doctor.getSpecialization())
+                        .genderStatus(doctor.getGenderStatus())
+                        .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toList());
+    }
+
+    public List<DoctorDto> sortDoctorByLowCharge(){
+        return doctorRepo.shortDoctorByLowCharge().stream().map(doctor -> {
+            try {
+                return DoctorDto.builder()
+                        .id(doctor.getId())
+                        .name(doctor.getName())
+                        .address(doctor.getAddress())
+                        .email(doctor.getEmail())
+                        .experience(doctor.getExperience())
+                        .rating(doctor.getRating())
+                        .basicCharge(doctor.getBasicCharge())
+                        .specialization(doctor.getSpecialization())
+                        .genderStatus(doctor.getGenderStatus())
+                        .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toList());
+    }
+
+    public List<DoctorDto> sortDoctorByHighCharge(){
+        return doctorRepo.shortDoctorByHighCharge().stream().map(doctor -> {
+            try {
+                return DoctorDto.builder()
+                        .id(doctor.getId())
+                        .name(doctor.getName())
+                        .address(doctor.getAddress())
+                        .email(doctor.getEmail())
+                        .experience(doctor.getExperience())
+                        .rating(doctor.getRating())
+                        .basicCharge(doctor.getBasicCharge())
                         .specialization(doctor.getSpecialization())
                         .genderStatus(doctor.getGenderStatus())
                         .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();

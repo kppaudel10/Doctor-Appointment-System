@@ -3,6 +3,7 @@ package com.oda.dto.doctor;
 import com.oda.enums.GenderStatus;
 import com.oda.model.patient.Feedback;
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.*;
@@ -70,4 +71,6 @@ public class DoctorDto {
     private Double rating;
 
     private Integer numberOfFeedback;
+
+    private Integer basicCharge;
 }
