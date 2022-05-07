@@ -43,13 +43,6 @@
             margin:0;
         }
 
-        .category-name {
-            font-family: sans-serif;
-            width: -webkit-fill-available;
-            text-align: center;
-            font-size: 40px;
-        }
-
         .card-category-2 ul, .card-category-3 ul, .card-category-4 ul, .card-category-5 ul  .card-category-6 ul {
             padding: 0;
         }
@@ -64,10 +57,10 @@
             margin: 10px 5px;
         }
 
-        .card-category-1, .card-category-2, .card-category-3, .card-category-4, .card-category-5, .card-category-6 {
+        .card-category-1 {
             font-family: sans-serif;
             margin-bottom: 45px;
-            text-align: center;
+            text-align: left;
         }
         .card-category-1 div, .card-category-2 div {
             display:inline-block;
@@ -80,7 +73,8 @@
 
         /* Basic Card */
         .basic-card {
-            width:400px;
+            width:390px;
+            height: 200px;
             position: relative;
 
             -webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.3);
@@ -93,10 +87,12 @@
             padding: 30px;
         }
 
-        .basic-card .card-title {
-            font-size: 25px;
+    .card-title {
+            font-size: 20px;
             font-family: 'Open Sans', sans-serif;
             text-align: left;
+        font-weight: bold;
+            margin-top: 2px;
         }
 
         .basic-card .card-text {
@@ -108,7 +104,7 @@
         .basic-card .card-link a {
             text-decoration: none;
             position: relative;
-            padding: 10px 0px;
+            padding: 5px 0px;
         }
 
         .basic-card .card-link a:after {
@@ -129,27 +125,6 @@
         .basic-card .card-link a:hover:after {
             width: 100%;
             left: 0;
-        }
-
-
-        .basic-card-aqua {
-            background-image: linear-gradient(to bottom right, #00bfad, #99a3d4);
-        }
-
-        .basic-card-aqua .card-content, .basic-card .card-link a {
-            color: #fff;
-        }
-
-        .basic-card-aqua .card-link {
-            border-top:1px solid #82c1bb;
-        }
-
-        .basic-card-aqua .card-link a:after {
-            background:#fff;
-        }
-
-        .basic-card-lips {
-            background-image: linear-gradient(to bottom right, #ec407b, #ff7d94);
         }
 
         .basic-card-lips .card-content {
@@ -184,10 +159,6 @@
             background:#636363;
         }
 
-        .basic-card-dark {
-            background-image: linear-gradient(to bottom right, #252525, #4a4a4a);
-        }
-
         .basic-card-dark .card-title, .basic-card-dark .card-link a {
             color:#eee;
         }
@@ -203,6 +174,12 @@
         .basic-card-dark .card-link a:after {
 
             background:#eee;
+        }
+        .date{
+            margin-left: 25rem;
+            font-size: 15px;
+            color: #3ac162;
+            position: absolute;
         }
 
     </style>
@@ -244,7 +221,8 @@
   <span class="main" th:each="loop : ${feedbackList}">
             <div class="basic-card basic-card-light">
             <div class="card-content">
-                <span class="card-title" th:text="${loop.patient.name}"></span>
+                <span class="date" th:text="${loop.feedbackDate}"></span>
+                <div class="card-title" th:text="${loop.patient.name}"></div>
                 <p class="card-text" th:text="${loop.comment}"> </p>
             </div>
         </div>

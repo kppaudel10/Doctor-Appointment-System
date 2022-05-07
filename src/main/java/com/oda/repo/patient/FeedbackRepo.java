@@ -15,6 +15,6 @@ import java.util.List;
 @Repository
 public interface FeedbackRepo extends JpaRepository<Feedback, Integer> {
 
-    @Query(value = "select  * from oda_feedback where doctor_id = ?1",nativeQuery = true)
+    @Query(value = "select  * from oda_feedback where doctor_id = ?1 order by feedback_date DESC ",nativeQuery = true)
     List<Feedback> findFeedbackByDoctorId(Integer doctorId);
 }

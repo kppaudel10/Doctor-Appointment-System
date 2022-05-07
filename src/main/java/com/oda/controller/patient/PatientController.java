@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  * @author kulPaudel
@@ -130,18 +131,25 @@ public class PatientController {
     @GetMapping("/doctor-readmore/{id}")
     public String getDoctorViewPage(@PathVariable("id") Integer id,
                                     Model model) throws IOException {
+        List<ApplyHospital> applyHospitalList = applyHospitalService.findApplyDetailsOfDoctor(id);
+        if(applyHospitalList.size()==  0){
+            model.addAttribute("notWorkMsg","Not Working Yet.");
+        }else {
+            model.addAttribute("workingHospitalList",applyHospitalList);
+
+        }
         model.addAttribute("doctor",doctorService.findById(id));
-        model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(id));
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         model.addAttribute("doctorId",id);
         return "patient/doctorreadmore";
     }
 
     @PostMapping("/search/doctor")
-    public String getSearchDoctor(@ModelAttribute("searchDto")SearchDto searchDto,Model model){
+    public String getSearchDoctor(@ModelAttribute("searchDto")SearchDto searchDto, Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
         model.addAttribute("doctorList",doctorService.findDoctorByANS(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
+        model.addAttribute("doctorSortDto",new DoctorSortDto());
         return "patient/patienthomepage";
     }
 
