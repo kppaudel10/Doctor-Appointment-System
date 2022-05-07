@@ -3,43 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>DOCTOR || HOME</title>
-    <style>
-        #members td, #members th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
+    <link th:href="@{/css/doctor/home.css}" rel="stylesheet"/>
 
-        #members tr:nth-child(even){background-color: #f2f2f2;}
-
-        #members tr:hover {background-color: #ddd;}
-
-        #members th {
-            padding-top: 10px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #04AA6D;
-            color: white;
-            font-size: 23px;
-        }
-        #members td{
-            font-size: 22px;
-            color: black;
-            text-align: left;
-        }
-        table{
-            position: absolute;
-            /*margin-top: 5px;*/
-            margin-right: 60px;
-            margin-left: 60px;
-            width: 80%;
-        }
-        .head_caption{
-            color: #1e1e1e;
-            font-size: 30px;
-            margin-top: 20px;
-            text-align: center;
-        }
-    </style>
 </head>
 <body>
 <div th:replace="doctor/fragement/navbar :: doctorNabarLink"></div>
