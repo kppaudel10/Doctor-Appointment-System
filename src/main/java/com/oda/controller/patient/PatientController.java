@@ -48,6 +48,7 @@ public class PatientController {
     public String getPatientHomePage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
        model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
+//        model.addAttribute("doctorList",doctorService.oneTimeVisitedDoctor());
        model.addAttribute("searchDto",new SearchDto());
         return "patient/patienthomepage";
     }
@@ -66,23 +67,30 @@ public class PatientController {
     @PostMapping("/feedback")
     public String getStoreFeedback(@ModelAttribute("feedbackDto")FeedbackDto feedbackDto,
                                    Model model) throws ParseException, IOException {
-       //calculate rating
-       Integer rating = GetRating.getRating(feedbackDto.getStar_one(),feedbackDto.getStar_two(),
-               feedbackDto.getStar_three(),feedbackDto.getStar_four(),feedbackDto.getStar_five());
+    if(feedbackService.checkPatientCanGiveFeedBackOrNot(feedbackDto)){
+        //calculate rating
+        Integer rating = GetRating.getRating(feedbackDto.getStar_one(),feedbackDto.getStar_two(),
+                feedbackDto.getStar_three(),feedbackDto.getStar_four(),feedbackDto.getStar_five());
 
-       //set rating
+        //set rating
         feedbackDto.setRating(Double.valueOf(rating));
-       DoctorDto doctor = doctorService.findById(feedbackDto.getDoctorId());
-       feedbackDto.setDoctor(Doctor.builder().id(doctor.getId()).build());
+        DoctorDto doctor = doctorService.findById(feedbackDto.getDoctorId());
+        feedbackDto.setDoctor(Doctor.builder().id(doctor.getId()).build());
         //save feedback data
         FeedbackDto feedbackDto1= feedbackService.save(feedbackDto);
-//        if (feedbackDto1 !=null){
-//            model.addAttribute("message","Feedback submitted successfully");
-//        }else {
-//            model.addAttribute("message","Unable to submit your feedback.");
-//        }
-//        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-        return "redirect:/patient/home";
+        model.addAttribute("msg","Your feedback submitted successfully.");
+    }else {
+        model.addAttribute("msg","Can not give feedback");
+    }
+
+        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+    //set doctor id null or zero so that's second time canot give feedback
+        DoctorDto doctor =doctorService.findById(feedbackDto.getDoctorId());
+        model.addAttribute("doctor",doctor);
+        FeedbackDto feedbackDto1 = new FeedbackDto();
+        feedbackDto1.setDoctorId(doctor.getId());
+        model.addAttribute("feedbackDto",feedbackDto1);
+        return "patient/feedback";
     }
 
     @GetMapping("/view/status")

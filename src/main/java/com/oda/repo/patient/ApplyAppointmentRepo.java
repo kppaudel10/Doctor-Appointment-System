@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Temporal;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.TemporalType;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
 
@@ -47,5 +48,7 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
     @Query(value = "select * from oda_appointment where apply_date = ?1 and apply_status = 0",nativeQuery = true)
     List<ApplyAppointment> getTodayAppointment(String date);
 
+    @Query(value = "select * from oda_appointment where doctor_id = ?1 and patient_id = ?2",nativeQuery = true)
+    List<ApplyAppointment> findApplyAppointmentByDoctorIdAndPatientId(Integer doctorId, Integer patientId);
 
 }

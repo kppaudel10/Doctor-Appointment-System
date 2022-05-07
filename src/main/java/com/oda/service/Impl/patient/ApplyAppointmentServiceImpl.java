@@ -150,4 +150,14 @@ public class ApplyAppointmentServiceImpl {
             return 0;
         }
     }
+
+    public Boolean isExitAppointment(Integer doctorId,Integer patientId){
+        List<ApplyAppointment> applyAppointment = applyAppointmentRepo.
+                findApplyAppointmentByDoctorIdAndPatientId(doctorId,patientId);
+        if (applyAppointment.size() >=1){
+            return true;
+        }else {
+            return false;
+        }
+    }
 }

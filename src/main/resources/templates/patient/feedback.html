@@ -156,6 +156,13 @@
            font-size: 18px;
            position: absolute;
        }
+       .msg{
+           color: red;
+       }
+       .msg-display{
+           margin-right: 30%;
+           position: absolute;
+       }
 </style>
 </head>
 <body>
@@ -236,7 +243,11 @@
 
             </form>
         </div>
+
     </main>
+    <span class="msg-display">
+            <h1 th:text="${msg}" class="msg"></h1>
+    </span>
 </div>
 </body>
 </html>

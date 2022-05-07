@@ -1,5 +1,6 @@
 package com.oda.repo.doctor;
 
+import com.oda.dto.doctor.DoctorDto;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
@@ -31,4 +32,10 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
 
     @Query(value = "select * from  oda_doctor d where d.mobile_number =?1 or d.email = ?1",nativeQuery = true)
     public Doctor findIdByContactOrEmail(String contactDetails);
+
+    @Query(value = "select d.id,d.doctor_name,d.email ,d.address,\n" +
+            "       d.experience,d.gender_status,d.mobile_number,d.number_of_feedback,\n" +
+            "       d.specialization,d.rating,d.profile_photo_path\n" +
+            "from oda_doctor d left join oda_appointment oa on d.id = oa.doctor_id where patient_id = ?1",nativeQuery = true)
+    List<DoctorDto>findOneTimeVisitedDoctor(Integer patientId);
 }

@@ -206,4 +206,24 @@ public class DoctorServiceImpl implements DoctorService {
     public Doctor findIdByContactOrEmail(String details){
         return doctorRepo.findIdByContactOrEmail(details);
     }
+
+    public List<DoctorDto> oneTimeVisitedDoctor(){
+        return doctorRepo.findOneTimeVisitedDoctor(AuthorizedUser.getPatient().getId()).stream().map(doctor -> {
+            try {
+                return DoctorDto.builder()
+                        .id(doctor.getId())
+                        .name(doctor.getName())
+                        .address(doctor.getAddress())
+                        .email(doctor.getEmail())
+                        .experience(doctor.getExperience())
+                        .rating(doctor.getRating())
+                        .specialization(doctor.getSpecialization())
+                        .genderStatus(doctor.getGenderStatus())
+                        .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath())).build();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }).collect(Collectors.toList());
+    }
 }

@@ -7,6 +7,7 @@ import com.oda.model.patient.Feedback;
 import com.oda.repo.patient.FeedbackRepo;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.patient.FeedbackService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,14 +21,12 @@ import java.util.List;
  * @Date 4/18/22
  */
 @Service
+@RequiredArgsConstructor
 public class FeedbackServiceImpl implements FeedbackService {
     private final FeedbackRepo feedbackRepo;
     private final DoctorServiceImpl doctorService;
 
-    public FeedbackServiceImpl(FeedbackRepo feedbackRepo, DoctorServiceImpl doctorService) {
-        this.feedbackRepo = feedbackRepo;
-        this.doctorService = doctorService;
-    }
+    private final ApplyAppointmentServiceImpl applyAppointmentService;
 
     @Override
     public FeedbackDto save(FeedbackDto feedbackDto) throws ParseException, IOException {
@@ -89,5 +88,12 @@ public class FeedbackServiceImpl implements FeedbackService {
 
     public List<Feedback> findFeedbackBYDoctorID(Integer doctorId){
         return feedbackRepo.findFeedbackByDoctorId(doctorId);
+    }
+
+    public Boolean checkPatientCanGiveFeedBackOrNot(FeedbackDto feedbackDto){
+        //check patient can give feedback to or not
+        // if patient apply for appointment then can give feedback
+      return  applyAppointmentService.
+              isExitAppointment(feedbackDto.getDoctorId(),AuthorizedUser.getPatient().getId());
     }
 }
