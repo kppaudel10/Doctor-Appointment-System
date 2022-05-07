@@ -1,0 +1,76 @@
+#members td, #members th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#members tr:nth-child(even){background-color: #f2f2f2;}
+
+#members tr:hover {background-color: #ddd;}
+
+#members th {
+    padding-top: 10px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;
+    font-size: 23px;
+}
+#members td{
+    font-size: 22px;
+    color: black;
+    text-align: left;
+}
+table{
+    position: absolute;
+    margin-top: 10px;
+    margin-right: 60px;
+    margin-left: 60px;
+    width: 80%;
+}
+.head_caption{
+    color: #1e1e1e;
+    font-size: 30px;
+    text-align: center;
+}
+.button1{
+    padding: 5px;
+    width:40px;
+    background-color: #040faa;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.button1:hover{
+    background-color: darkgray;
+    color: white;
+}
+.button2{
+    padding: 5px;
+    width:40px;
+    background-color: hsl(0, 95%, 34%);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.button2:hover{
+    background-color: darkgray;
+    color: white;
+}
+.button3{
+    padding: 5px;
+    width:40px;
+    background-color: hsl(180, 68%, 56%);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+.button3:hover{
+    background-color: darkgray;
+    color: white;
+}
+.home{
+    background-color: #f9f9fb;
+    height: 100vh;
+    margin:auto;
+    width: 100%;
+}

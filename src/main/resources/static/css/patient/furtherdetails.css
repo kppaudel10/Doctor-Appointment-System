@@ -1,0 +1,104 @@
+body{
+    background-color: rgb(160, 156, 156);
+}
+.main-body{
+    width:65%;
+    border: 3px solid rgb(205, 208, 214);
+    margin: 2rem auto;
+    padding-bottom: 2rem;
+    /*background-color: #fff;*/
+    background-color: rgb(201, 193, 193);
+    border-radius: 6px;
+}
+
+.main-body .further-details h1{
+    text-align: center;
+}
+
+
+a {
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 20px;
+    margin-left: 45%;
+    position: absolute;
+}
+
+/*a:hover {*/
+/*    background-color: rgb(224, 22, 22);*/
+/*    color: #fff;*/
+/*}*/
+
+.back {
+    background-color: rgb(224, 22, 22);
+    margin-top: 2rem;
+    margin-left: 50%;
+    color: #fff;
+}
+.date{
+    padding: 12px;
+    margin-left:14%;
+}
+.date label{
+    font-size: 25px;
+    margin: 15px;
+
+
+}
+
+[type="date"] {
+    width: 40%;
+    padding: 10px;
+    font-size: 20px;
+    text-decoration: none;
+    outline: none;
+    border: 2px solid green;
+    border-radius: 5px;
+
+}
+
+textarea {
+    font-size: 20px;
+    width: 65%;
+    padding: 10px 15px;
+    box-sizing: border-box;
+    outline: none;
+    border: 2px solid green;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    margin-left:15%;
+}
+label{
+    margin-left: 17%;
+    font-size: 25px;
+    color: rgb(4, 90, 54);
+
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #04AA6D;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-left: 15%;
+    font-size: 20px;
+}
+.further-details,h1{
+    font-size: 30px;
+}
+.home{
+    background-color: #dfdfe3;
+    height: 96vh;
+    margin:auto;
+    width: 100%;
+}
+.header .navbar ul{
+    margin-left: 24rem;
+
+}
+#msg{
+    margin-right: 30%;
+    font-size: 17px;
+}
