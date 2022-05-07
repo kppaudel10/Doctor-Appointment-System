@@ -77,7 +77,7 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
 
     @Override
     public void deleteById(Integer integer) {
-        applyHospitalRepo.deleteById(integer);
+      applyHospitalRepo.deleteById(integer);
     }
 
     public List<ApplyHospital> findApplyDetailsOfDoctor(Integer doctorId){

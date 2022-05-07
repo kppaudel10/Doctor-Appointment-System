@@ -150,11 +150,20 @@ public class AdminController {
     }
 
     @GetMapping("/delete-patient/{id}")
-    public String deletePatient(@PathVariable("id")Integer id,Model model){
+    public String deletePatientRequest(@PathVariable("id")Integer id,Model model){
         applyAppointmentService.deleteBYId(id);
         model.addAttribute("message","Successfully deleted.");
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/patientrequest";
+    }
+
+    @GetMapping("/reject-doctor/{id}")
+    public String deleteDoctorRequest(@PathVariable("id")Integer id,Model model){
+        applyHospitalService.deleteById(id);
+        model.addAttribute("message","Successfully Rejected.");
+        model.addAttribute("doctorRequest",
+                applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        return "admin/doctorrequest";
     }
 }

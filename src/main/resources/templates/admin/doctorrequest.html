@@ -19,6 +19,7 @@
             text-align: center;
             font-size: 3rem;
             color: #2b9866;
+            margin-top: 25px;
         }
         table {
             background-color: #fff;
@@ -79,6 +80,12 @@
         .btn-info{
             background-color: #168CFF;
         }
+        .message{
+            margin-left: 75%;
+            font-size: 24px;
+            color: #f52645;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -87,6 +94,7 @@
 <div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
 <div class="home">
+    <h2 class="message" th:text="${message}"></h2>
     <h2> Doctor Request Details</h2>
     <div class="container">
         <div class="row">
@@ -117,7 +125,7 @@
                                     <span class="btn btn-danger">Accept</span>
                                 </a>
 
-                               <a href="#">
+                               <a th:href="@{/admin/reject-doctor/}+${loop.id}">
                                    <span class="btn btn-danger">Reject</span>
                                </a>
                             </td>
