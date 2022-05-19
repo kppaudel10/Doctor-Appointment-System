@@ -1,6 +1,8 @@
 package com.oda.controller.doctor;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.component.mail.MailSend;
+import com.oda.dto.MailSendDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
@@ -9,6 +11,7 @@ import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +34,7 @@ public class DoctorController {
     private final ApplyAppointmentServiceImpl applyAppointmentService;
 
     private final PatientServiceImpl patientService;
+
 
 
     @GetMapping("/home")
@@ -77,12 +81,22 @@ public class DoctorController {
     }
 
     @GetMapping("/accept-patient/{id}")
-    public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
+    public String getAcceptPatient(@PathVariable("id")Integer id, Model model) throws EmailException {
         ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
         applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
         //update appointment status
       ApplyAppointment applyAppointment1=  applyAppointmentService.updateByDoctor(applyAppointment);
       if(applyAppointment1 !=null){
+          //send confirm mail to patient
+          MailSendDto mailSendDto = new MailSendDto();
+          mailSendDto.setUserName(applyAppointment.getPatient().getName());
+          mailSendDto.setMessage("Your request for doctor appointment has been confirmed,\nFor date "
+                  +applyAppointment1.getAppointmentDate()+" Time "+applyAppointment1.getFromTime()+" \n" +
+                  "Please Visit hospital on time.\nThank you..");
+          mailSendDto.setEmail(applyAppointment1.getPatient().getEmail());
+          MailSend mailSend = new MailSend();
+          mailSend.sendConfirmMail(mailSendDto);
+
           model.addAttribute("message","Request accepted successfully.");
       }else {
           model.addAttribute("message","Failed to accept request.");

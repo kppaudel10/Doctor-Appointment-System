@@ -33,4 +33,22 @@ public class MailSend {
         System.out.println("Mail send successfully");
         return Integer.valueOf(pinCode);
     }
+
+    public void sendConfirmMail(MailSendDto mailSendDto) throws EmailException {
+        //mail send process
+        String username = "onlineassistance400@gmail.com";
+        String password = "izfxybivpuotfhjq";
+
+        Email email1 = new SimpleEmail();
+        email1.setHostName("smtp.googlemail.com");
+        email1.setSmtpPort(465);
+        email1.setAuthentication(username, password);
+        email1.setSSLOnConnect(true);
+        email1.setFrom("onlineassistance400@gmail.com");
+        email1.setSubject("Verification");
+        email1.setMsg("Hey " + mailSendDto.getUserName() + ",\n" + mailSendDto.getMessage());
+        email1.addTo(mailSendDto.getEmail());
+        email1.send();
+        System.out.println("Mail send successfully");
+    }
 }
