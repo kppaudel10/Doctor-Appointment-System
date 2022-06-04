@@ -39,11 +39,19 @@ public class DoctorServiceImpl implements DoctorService {
                      .mobileNumber(doctorDto.getMobileNumber())
                      .specialization(doctorDto.getSpecialization().toLowerCase())
                      .experience(doctorDto.getExperience())
-                     .rating(3D)
+//                     .rating(3D)
                      .numberOfFeedback(1)
                      .basicCharge(doctorDto.getBasicCharge())
                      .feedbackList(doctorDto.getFeedbackList()).
                      password(doctorDto.getPassword()).build();
+
+             if (doctorDto.getExperience() >= 10D){
+                 doctor.setRating(3.75D);
+             }else if (doctorDto.getExperience() >= 5D) {
+                 doctor.setRating(3.40D);
+             }else {
+                 doctor.setRating(3.2D);
+             }
          }
 
         //for update
@@ -156,6 +164,7 @@ public class DoctorServiceImpl implements DoctorService {
                            .genderStatus(doctor.getGenderStatus())
                            .mobileNumber(doctor.getMobileNumber())
                            .numberOfFeedback(doctor.getNumberOfFeedback())
+                           .specialization(doctor.getSpecialization())
                            .profilePhotoPath(fileStorageComponent.base64Encoded(doctor.getProfilePhotoPath()))
                            .password(doctor.getPassword()).build();
                }
