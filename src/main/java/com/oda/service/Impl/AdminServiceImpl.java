@@ -77,7 +77,12 @@ public class AdminServiceImpl implements AdminService {
     }
 
     public Admin findByUserName(String userName) {
-        return adminRepo.findByUserName(userName);
+        Admin admin = adminRepo.findByUserName(userName);
+        if (admin == null){
+            return null;
+        }else {
+            return admin;
+        }
     }
 
     public Integer checkEmailDuplicate(String email){

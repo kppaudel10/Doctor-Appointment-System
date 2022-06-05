@@ -7,9 +7,13 @@ import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
+import com.oda.repo.admin.AdminRepo;
+import com.oda.repo.doctor.DoctorRepo;
+import com.oda.repo.patient.PatientRepo;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import com.oda.utils.PasswordEncryption;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,6 +24,7 @@ import java.io.IOException;
  * @Date 4/16/22
  */
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl {
     private final AdminServiceImpl adminService;
     private final PatientServiceImpl patientService;
@@ -27,12 +32,12 @@ public class LoginServiceImpl {
 
     private final PasswordEncryption passwordEncryption;
 
-    public LoginServiceImpl(AdminServiceImpl adminService, PatientServiceImpl patientService, DoctorServiceImpl doctorService, PasswordEncryption passwordEncryption) {
-        this.adminService = adminService;
-        this.patientService = patientService;
-        this.doctorService = doctorService;
-        this.passwordEncryption = passwordEncryption;
-    }
+    private final AdminRepo adminRepo;
+
+    private final DoctorRepo doctorRepo;
+
+    private final PatientRepo patientRepo;
+
 
     public UserStatus getLogin(String userName, String password) throws IOException {
         UserStatus userStatus = null;
@@ -108,5 +113,32 @@ public class LoginServiceImpl {
          Patient patient = patientService.findByEmail(passwordResetDto.getEmail());
          patient.setPassword(encryptedPassword);
         }
+    }
+
+    public Boolean updatePassword(PasswordResetDto passwordResetDto){
+        Boolean result = true;
+        String encryptedPassword = passwordEncryption.getEncryptedPassword(passwordResetDto.getNewPassword());
+        if (passwordResetDto.getUserStatus().equals(UserStatus.ADMIN)){
+            Admin admin = adminService.findByUserName(passwordResetDto.getEmail());
+            if (admin == null)
+                result = false;
+            else
+                adminRepo.updatePassword(encryptedPassword,admin.getId());
+        }
+        else if (passwordResetDto.getUserStatus().equals(UserStatus.DOCTOR)){
+            Doctor doctor = doctorService.findByEmail(passwordResetDto.getEmail());
+            if (doctor == null)
+                result = false;
+            else
+                doctorRepo.updatePassword(encryptedPassword,doctor.getId());
+        }
+        else {
+            Patient patient = patientService.findByEmail(passwordResetDto.getEmail());
+            if (patient == null)
+                result = false;
+            else
+                patientRepo.updatePassword(encryptedPassword,patient.getId());
+        }
+        return result;
     }
 }

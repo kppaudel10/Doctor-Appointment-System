@@ -115,24 +115,29 @@ public class SignUpController {
     public String saveDoctor(@Valid @ModelAttribute("doctorDto")DoctorDto doctorDto,
                              BindingResult bindingResult,Model model) throws EmailException, IOException {
         if (!bindingResult.hasErrors()){
-          if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())){
-              //if no error then send email and verify that
-              MailSendDto mailSendDto = new MailSendDto(doctorDto.getName(),doctorDto.getEmail(),"Use this pin code for verification");
+          if (doctorService.checkEmailDuplicate(doctorDto.getEmail()) == 0 &&
+          patientService.checkEmailDuplicate(doctorDto.getEmail()) == 0 &&
+          adminService.checkEmailDuplicate(doctorDto.getEmail()) == 0){
+              if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())){
+                  //if no error then send email and verify that
+                  MailSendDto mailSendDto = new MailSendDto(doctorDto.getName(),doctorDto.getEmail(),"Use this pin code for verification");
 
-              Integer pinCode = new MailSend().sendMail(mailSendDto);
+                  Integer pinCode = new MailSend().sendMail(mailSendDto);
 
-              doctorDto.setCorrectPinCode(pinCode);
-              ResponseDto responseDto =   FileStorageComponent.storeFile(doctorDto.getMultipartFilePhoto());
+                  doctorDto.setCorrectPinCode(pinCode);
+                  ResponseDto responseDto =   FileStorageComponent.storeFile(doctorDto.getMultipartFilePhoto());
 
-              doctorDto.setProfilePhotoPath(responseDto.getMessage());
+                  doctorDto.setProfilePhotoPath(responseDto.getMessage());
 
-              model.addAttribute("doctorDto",doctorDto);
+                  model.addAttribute("doctorDto",doctorDto);
 
-              return "doctor/doctoremailverify";
+                  return "doctor/doctoremailverify";
+              }else {
+                  model.addAttribute("messagePassword","Password must match.");
+              }
           }else {
-              model.addAttribute("messagePassword","Password must match.");
+              model.addAttribute("message","Email already exists");
           }
-
         }
             model.addAttribute("doctorDto",doctorDto);
             return "doctor/doctorregisterpage";

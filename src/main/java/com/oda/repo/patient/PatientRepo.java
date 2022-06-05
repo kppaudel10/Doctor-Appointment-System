@@ -4,8 +4,10 @@ import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,4 +28,10 @@ public interface PatientRepo extends JpaRepository<Patient, Integer> {
 
     @Query(value = "select count(id) from oda_patient where email = ?1",nativeQuery = true)
     Integer getEmailCount(String email);
+
+    @Modifying
+    @Transactional
+    @Query(value = "update oda_patient set password = ?1 where id = ?2", nativeQuery = true)
+    void updatePassword(String password, Integer adminId);
+
 }

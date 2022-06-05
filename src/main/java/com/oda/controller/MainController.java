@@ -134,7 +134,16 @@ public class MainController {
     public String createNewPassword(@Valid @ModelAttribute("passwordResetDto") PasswordResetDto passwordResetDto,
                                     Model model, BindingResult bindingResult){
         if (!bindingResult.hasErrors()){
-            //Todo
+           Boolean result =  loginService.updatePassword(passwordResetDto);
+            if (result) {
+                model.addAttribute("message", "Password reset successfully.");
+                model.addAttribute("loginDto", new LoginDto());
+                return "loginpage/loginpage";
+            }else {
+                model.addAttribute("message","Unable to reset password");
+                model.addAttribute("passwordResetDto",new PasswordResetDto());
+                return "signup/forgetPassword";
+            }
         }
         model.addAttribute("passwordResetDto",passwordResetDto);
         return "signup/createNewPassword";
