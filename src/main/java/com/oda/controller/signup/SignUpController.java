@@ -62,22 +62,29 @@ public class SignUpController {
     public String savePatient(@Valid @ModelAttribute("patientDto")PatientDto patientDto,
                               BindingResult bindingResult,Model model) throws EmailException, IOException {
         if (!bindingResult.hasErrors()){
-            if(patientDto.getPassword().equals(patientDto.getReEnterPassword())){
-                //send pin verification code
-                MailSendDto mailSendDto = new MailSendDto(patientDto.getName(),patientDto.getEmail(),"Use This pin code for verification.");
+            if (doctorService.checkEmailDuplicate(patientDto.getEmail()) == 0 &&
+                    patientService.checkEmailDuplicate(patientDto.getEmail()) == 0 &&
+                    adminService.checkEmailDuplicate(patientDto.getEmail()) == 0) {
+                if (patientDto.getPassword().equals(patientDto.getReEnterPassword())) {
+                    //send pin verification code
+                    MailSendDto mailSendDto = new MailSendDto(patientDto.getName(), patientDto.getEmail(), "Use This pin code for verification.");
 
-                Integer pinCode = new MailSend().sendMail(mailSendDto);
+                    Integer pinCode = new MailSend().sendMail(mailSendDto);
 
-                patientDto.setCorrectPinCode(pinCode);
+                    patientDto.setCorrectPinCode(pinCode);
 
-             ResponseDto responseDto =   FileStorageComponent.storeFile(patientDto.getMultipartFilePP());
+                    ResponseDto responseDto = FileStorageComponent.storeFile(patientDto.getMultipartFilePP());
 
-               patientDto.setProfilePhotoPath(responseDto.getMessage());
-                //go to verification page
-                model.addAttribute("patientDto",patientDto);
-                return "patient/emailverification";
-            }else {
-                model.addAttribute("passwordMatchMsg","password does not match");
+                    patientDto.setProfilePhotoPath(responseDto.getMessage());
+                    //go to verification page
+                    model.addAttribute("patientDto", patientDto);
+                    return "patient/emailverification";
+                } else {
+                    model.addAttribute("passwordMatchMsg", "password does not match");
+                }
+            }
+            else {
+                model.addAttribute("message","Email already exists.");
             }
 
         }
@@ -175,19 +182,25 @@ public class SignUpController {
     public String saveAdmin(@Valid @ModelAttribute("adminDto")AdminDto adminDto,
                             BindingResult bindingResult,Model model) throws EmailException {
         if (!bindingResult.hasErrors()){
-            if (adminDto.getPassword().equals(adminDto.getReEnterPassword())){
-                //if no error then send email and verify that
-                MailSendDto mailSendDto = new MailSendDto(adminDto.getName(),adminDto.getEmail(),"Use this pin code for verification");
+            if (doctorService.checkEmailDuplicate(adminDto.getEmail()) == 0 &&
+                    patientService.checkEmailDuplicate(adminDto.getEmail()) == 0 &&
+                    adminService.checkEmailDuplicate(adminDto.getEmail()) == 0) {
+                if (adminDto.getPassword().equals(adminDto.getReEnterPassword())) {
+                    //if no error then send email and verify that
+                    MailSendDto mailSendDto = new MailSendDto(adminDto.getName(), adminDto.getEmail(), "Use this pin code for verification");
 
-                Integer pinCode = new MailSend().sendMail(mailSendDto);
+                    Integer pinCode = new MailSend().sendMail(mailSendDto);
 
-                adminDto.setCorrectPincode(pinCode);
+                    adminDto.setCorrectPincode(pinCode);
 
-                model.addAttribute("adminDto",adminDto);
+                    model.addAttribute("adminDto", adminDto);
 
-                return "admin/emailverification";
+                    return "admin/emailverification";
+                } else {
+                    model.addAttribute("passwordMsg", "Password must match.");
+                }
             }else {
-                model.addAttribute("passwordMsg","Password must match.");
+                model.addAttribute("message","Email Already exists");
             }
 
         }
