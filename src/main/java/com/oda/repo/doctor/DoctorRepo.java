@@ -24,7 +24,7 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
     Doctor findByUserName(String username);
 
 
-    @Query(value = "select * from oda_doctor d where d.doctor_name = ?1 or d.address = ?1 or d.specialization = ?1",nativeQuery = true)
+    @Query(value = "select * from oda_doctor d where lower(d.doctor_name) = ?1 or lower(d.address) = ?1 or lower(d.specialization) = ?1",nativeQuery = true)
     List<Doctor> findDoctorByNameAndAddressAndSpecialization(String userInput);
 
     @Query(value = "select * from  oda_doctor d where  d.address = ?1 order by d.doctor_name",nativeQuery = true)

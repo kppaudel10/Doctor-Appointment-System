@@ -13,4 +13,5 @@ public interface AdminRepo extends JpaRepository<Admin, Integer> {
 
     @Query(value = "select * from oda_admin d where d.email = ?1 or d.mobile_number = ?1",nativeQuery = true)
     Admin findByUserName(String username);
+
 }

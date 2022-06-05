@@ -194,8 +194,9 @@ public class DoctorServiceImpl implements DoctorService {
        }).collect(Collectors.toList());
     }
     public List<DoctorDto> findDoctorByANS(String userInput){
+
        return doctorRepo.
-               findDoctorByNameAndAddressAndSpecialization(userInput).stream().map(doctor -> {
+               findDoctorByNameAndAddressAndSpecialization(userInput.toLowerCase()).stream().map(doctor -> {
                    try {
                        return DoctorDto.builder()
                                .id(doctor.getId())

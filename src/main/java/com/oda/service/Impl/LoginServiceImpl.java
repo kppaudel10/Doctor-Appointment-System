@@ -6,6 +6,7 @@ import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
+import com.oda.utils.PasswordEncryption;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,20 +22,24 @@ public class LoginServiceImpl {
     private final PatientServiceImpl patientService;
     private final DoctorServiceImpl doctorService;
 
-    public LoginServiceImpl(AdminServiceImpl adminService, PatientServiceImpl patientService, DoctorServiceImpl doctorService) {
+    private final PasswordEncryption passwordEncryption;
+
+    public LoginServiceImpl(AdminServiceImpl adminService, PatientServiceImpl patientService, DoctorServiceImpl doctorService, PasswordEncryption passwordEncryption) {
         this.adminService = adminService;
         this.patientService = patientService;
         this.doctorService = doctorService;
+        this.passwordEncryption = passwordEncryption;
     }
 
     public UserStatus getLogin(String userName, String password) throws IOException {
         UserStatus userStatus = null;
-        //first check in database patient
+        //encrypt user request password
+        String encryptedPassword = passwordEncryption.getEncryptedPassword(password);
         for (Integer i = 0 ;i<3;i++){
             if (i == 0){
                PatientDto patient =  patientService.findByUserName(userName);
                if(patient !=null){
-                   if (patient.getPassword().equals(password)){
+                   if (patient.getPassword().equals(encryptedPassword)){
                        userStatus = UserStatus.PATIENT;
                        break;
                    }
@@ -44,7 +49,7 @@ public class LoginServiceImpl {
            if(i == 1){
                 DoctorDto doctor = doctorService.findByUserName(userName);
                 if (doctor !=null){
-                    if (doctor.getPassword().equals(password)){
+                    if (doctor.getPassword().equals(encryptedPassword)){
                         userStatus = UserStatus.DOCTOR;
                         break;
                     }
@@ -53,7 +58,7 @@ public class LoginServiceImpl {
            if(i == 2){
                Admin admin = adminService.findByUserName(userName);
                if (admin !=null){
-                   if (admin.getPassword().equals(password)){
+                   if (admin.getPassword().equals(encryptedPassword)){
                        userStatus = UserStatus.ADMIN;
                    }
                }
