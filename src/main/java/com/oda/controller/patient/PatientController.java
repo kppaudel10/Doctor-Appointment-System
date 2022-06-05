@@ -100,7 +100,7 @@ public class PatientController {
     }
 
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-    //set doctor id null or zero so that's second time canot give feedback
+    //set doctor id null or zero so that's second time can not give feedback
         DoctorDto doctor =doctorService.findById(feedbackDto.getDoctorId());
         model.addAttribute("doctor",doctor);
         FeedbackDto feedbackDto1 = new FeedbackDto();

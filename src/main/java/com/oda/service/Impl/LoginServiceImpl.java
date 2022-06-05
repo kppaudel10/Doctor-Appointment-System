@@ -1,9 +1,12 @@
 package com.oda.service.Impl;
 
+import com.oda.dto.PasswordResetDto;
 import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.enums.UserStatus;
 import com.oda.model.admin.Admin;
+import com.oda.model.doctor.Doctor;
+import com.oda.model.patient.Patient;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
 import com.oda.utils.PasswordEncryption;
@@ -65,5 +68,45 @@ public class LoginServiceImpl {
             }
         }
         return userStatus;
+    }
+
+    public Boolean isEmailExists(PasswordResetDto passwordResetDto){
+        Boolean result = false;
+        for (Integer i = 0;i<3 ;i++){
+            if (passwordResetDto.getUserStatus().equals(UserStatus.ADMIN)){
+                //check in admin repo
+                if (adminService.checkEmailDuplicate(passwordResetDto.getEmail())  != 0 ){
+                    result = true;
+                }
+                break;
+            }
+            else if(passwordResetDto.getUserStatus().equals(UserStatus.DOCTOR)){
+                if (doctorService.checkEmailDuplicate(passwordResetDto.getEmail()) !=0){
+                    result = true;
+                }
+                break;
+            }else {
+                if (patientService.checkEmailDuplicate(passwordResetDto.getEmail()) !=0){
+                    result = true;
+                }
+            }
+        }
+        return result;
+    }
+
+    public void createAndUpdatePassword(PasswordResetDto passwordResetDto) throws IOException {
+        String encryptedPassword = passwordEncryption.getEncryptedPassword(passwordResetDto.getNewPassword());
+        if (passwordResetDto.getUserStatus().equals(UserStatus.ADMIN)){
+          Admin admin = adminService.findByUserName(passwordResetDto.getEmail());
+          admin.setPassword(encryptedPassword);
+        }
+        else if (passwordResetDto.getUserStatus().equals(UserStatus.DOCTOR)){
+           Doctor doctor = doctorService.findByEmail(passwordResetDto.getEmail());
+           doctor.setPassword(encryptedPassword);
+        }
+        else {
+         Patient patient = patientService.findByEmail(passwordResetDto.getEmail());
+         patient.setPassword(encryptedPassword);
+        }
     }
 }

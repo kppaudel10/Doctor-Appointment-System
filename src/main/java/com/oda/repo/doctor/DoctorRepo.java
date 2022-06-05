@@ -45,4 +45,7 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
 
     @Query(value = "select * from oda_doctor where id is not null order by basic_charge DESC",nativeQuery = true)
     List<Doctor> shortDoctorByHighCharge();
+
+    @Query(value = "select count(id) from oda_doctor where email = ?1",nativeQuery = true)
+    Integer getEmailCount(String email);
 }

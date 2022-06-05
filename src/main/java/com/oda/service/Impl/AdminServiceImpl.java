@@ -6,6 +6,7 @@ import com.oda.repo.admin.AdminRepo;
 import com.oda.service.admin.AdminService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,5 +78,9 @@ public class AdminServiceImpl implements AdminService {
 
     public Admin findByUserName(String userName) {
         return adminRepo.findByUserName(userName);
+    }
+
+    public Integer checkEmailDuplicate(String email){
+        return adminRepo.getEmailCount(email);
     }
 }

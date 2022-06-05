@@ -117,4 +117,12 @@ public class PatientServiceImpl implements PatientService {
     public Patient findPatientByContactDetails(String contactDetails){
         return patientRepo.findPatientByContactDetails(contactDetails);
     }
+
+    public Integer checkEmailDuplicate(String email){
+        return patientRepo.getEmailCount(email);
+    }
+
+    public Patient findByEmail(String email){
+        return patientRepo.findByUserName(email);
+    }
 }

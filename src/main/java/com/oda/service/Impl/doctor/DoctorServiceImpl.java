@@ -9,6 +9,7 @@ import com.oda.service.doctor.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -282,5 +283,13 @@ public class DoctorServiceImpl implements DoctorService {
                 return null;
             }
         }).collect(Collectors.toList());
+    }
+
+    public Integer checkEmailDuplicate(String email){
+        return doctorRepo.getEmailCount(email);
+    }
+
+    public Doctor findByEmail(String userName){
+      return  doctorRepo.findByUserName(userName);
     }
 }
