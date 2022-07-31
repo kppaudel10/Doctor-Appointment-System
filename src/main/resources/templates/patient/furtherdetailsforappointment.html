@@ -20,12 +20,12 @@
         <a href="#" class="logo"> <i class="fas fa-heartbeat"></i>ODAS </a>
 
         <nav class="navbar">
-            <ul>
-                <!--              <a href="#home">Home</a>-->
-                <!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
-                <a th:href="@{/patient/view/status}">View Status</a>
-                <a th:href="@{/patient/home}">Home</a>
-            </ul>
+<!--            <ul>-->
+<!--                &lt;!&ndash;              <a href="#home">Home</a>&ndash;&gt;-->
+<!--                &lt;!&ndash;                <a th:href="@{/patient/feedback}">Feedback</a>&ndash;&gt;-->
+<!--                <a th:href="@{/patient/view/status}">View Status</a>-->
+<!--                <a th:href="@{/patient/home}">Home</a>-->
+<!--            </ul>-->
         </nav>
         <div class="dropdown">
             <img class="dropbtn" th:src="${ppPath}" alt="">
@@ -43,7 +43,7 @@
 <div class="home">
 
     <main class="main-body">
-        <form th:action="@{/patient/hospital-appointment}" th:method="post" th:object="${appointmentDto}" name="more-form">
+        <form th:action="@{/patient/doctor-appointment}" th:method="post" th:object="${appointmentDto}" name="more-form">
         <br>
             <input type="hidden" th:field="*{hospitalApplyId}">
 

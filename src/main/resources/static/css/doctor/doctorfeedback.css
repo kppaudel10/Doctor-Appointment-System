@@ -172,3 +172,9 @@ body {
     color: #3ac162;
     position: absolute;
 }
+.home{
+    background-color:  #f5f6f7;
+    height: 100%;
+    margin-left: 2px;
+}
+

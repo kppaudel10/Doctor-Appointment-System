@@ -89,6 +89,7 @@ public class ApplyAppointmentServiceImpl {
 
     public ApplyAppointment updateByDoctor(ApplyAppointment applyAppointment){
         //update status
+        applyAppointment.setVisitTime(ApplyAppointment.getTimeWithAmPm(applyAppointment.getVisitTime()));
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }

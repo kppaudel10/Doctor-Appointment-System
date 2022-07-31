@@ -55,12 +55,27 @@
                <td th:text="${loop.hospital.name}">OM Hospital</td>
                <td th:text="${loop.doctor.name}"></td>
                <td th:text="${loop.appointmentDate}"></td>
-               <td th:text="${loop.fromTime}"></td>
-               <td th:text="${loop.applyStatus.name()}"></td>
+               <td th:text="${loop.visitTime}"></td>
+               <td th:text="${loop.applyStatus.name()}" id="apply-status" class="apply-status"></td>
            </tr>
            </tbody>
        </table>
    </div>
     </div>
+<script type="text/javascript">
+    var table = document.getElementById("members");
+    changeRow = document.querySelector(".apply-status");
+            for (var r = 0, n = table.rows.length; r < n; r++) {
+                for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                    if (table.rows[r].cells[c].innerHTML === "PENDING") {
+                        changeRow.style.backgroundColor = "blue";
+                    } else if (table.rows[r].cells[c].innerHTML === "BOOKED") {
+                        changeRow.style.backgroundColor = "green";
+                    } else if (table.rows[r].cells[c].innerHTML === "REJECTED") {
+                        changeRow.style.backgroundColor = "red";
+                    }
+                }
+            }
+</script>
 </body>
 </html>

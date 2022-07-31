@@ -36,40 +36,26 @@
 
 </header>
 <div class="home">
-
   <div class="row">
     <div class="col-md-12">
       <h2 th:text="${message}" class="message"></h2>
-      <form th:action="@{/doctor-hospital/apply}" method="post" th:object="${applyDto}">
-        <h1> Apply for Hospitals</h1>
+      <form th:action="@{/doctor/accept-patient}" method="post" th:object="${appointment}">
+        <h1>Further Details for Confirmation</h1>
+        <input type="hidden" th:field="*{id}">
         <fieldset>
-          <label for="job">Choose Hospital</label>
-          <select id="job" name="user_job" th:field="*{hospital}" required>
-            <th:block th:each="loop : ${hospitalList}">
-              <option th:value="${loop.id}" th:text="${loop.name}"></option>
-            </th:block>
-          </select>
-        </fieldset>
-        <fieldset>
-          <label class="work-time">Working Time</label>
+          <label class="work-time">Visit Time</label>
           <div class="wrap">
-          <label>From:</label>
-          <input type="time" name="user_name" th:field="*{formTime}" required>
-            <label> To:</label>
-            <input type="time"  name="user_name" th:field="*{toTime}" required>
-
+            <label>Time:</label>
+            <input type="time" name="user_name" th:field="*{visitTime}" required>
           </div>
-<!--          <label>Upload Documents:</label>-->
-<!--          <input type="file" id="mail" name="user_email">-->
+          <!--          <label>Upload Documents:</label>-->
+          <!--          <input type="file" id="mail" name="user_email">-->
         </fieldset>
         <button type="submit">Submit</button>
       </form>
-<!--      <h2 th:text="${message}" style="color: #04AA6D"></h2>-->
+      <!--      <h2 th:text="${message}" style="color: #04AA6D"></h2>-->
     </div>
   </div>
-<br>
-  <br><br>
-  <br><br><br><br><br><br>
 </div>
 </body>
 </html>

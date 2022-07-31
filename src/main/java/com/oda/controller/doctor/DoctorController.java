@@ -14,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -79,10 +77,17 @@ public class DoctorController {
         model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
         return "doctor/profileview";
     }
-
-    @GetMapping("/accept-patient/{id}")
-    public String getAcceptPatient(@PathVariable("id")Integer id, Model model) throws EmailException {
+    @GetMapping("/accept-patient/add-time/{id}")
+    public String addMoreTimeOneUserAccept(@PathVariable("id")Integer id, Model model){
+        model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
+        model.addAttribute("appointment",applyAppointment);
+        return "doctor/furtherdetailsforbooked";
+    }
+    @PostMapping("/accept-patient")
+    public String getAcceptPatient(@ModelAttribute("appointment") ApplyAppointment applyAppointmentByForm, Model model) throws EmailException {
+        ApplyAppointment applyAppointment = applyAppointmentService.findById(applyAppointmentByForm.getId());
+        applyAppointment.setVisitTime(applyAppointmentByForm.getVisitTime());
         applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
         //update appointment status
       ApplyAppointment applyAppointment1=  applyAppointmentService.updateByDoctor(applyAppointment);

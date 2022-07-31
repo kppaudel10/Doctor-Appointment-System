@@ -38,6 +38,8 @@ public class ApplyAppointment {
 
     private String reasonOrProblem;
 
+    private String visitTime;
+
     @OneToOne
     @JoinColumn(name = "doctor_id")
     private Doctor doctor;
@@ -49,4 +51,19 @@ public class ApplyAppointment {
     @OneToOne
     @JoinColumn(name = "patient_id")
     private Patient patient;
+
+    public static String getTimeWithAmPm(String time){
+        String hours = time.substring(0,2);
+        Integer hoursInInt = Integer.valueOf(hours);
+        if(hoursInInt<12){
+            return time + " AM";
+        }else if(hoursInInt == 12){
+            return  time + " PM";
+        }else {
+            Integer hoursIN = hoursInInt - 12;
+            //make str
+            String modifiedHours = String.valueOf(hoursIN) + time.substring(2) + " PM";
+            return modifiedHours;
+        }
+    }
 }

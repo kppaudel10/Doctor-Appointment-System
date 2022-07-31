@@ -154,7 +154,7 @@ public class PatientController {
     }
 
 
-    @GetMapping("/hospital-appointment/{id}")
+    @GetMapping("/doctor-appointment/{id}")
     public String getApplyForAppointMnt(@PathVariable("id") Integer id, Model model) throws IOException, ParseException {
         AppointmentDto appointmentDto = new AppointmentDto();
         appointmentDto.setHospitalApplyId(id);
@@ -165,7 +165,7 @@ public class PatientController {
         return "patient/furtherdetailsforappointment";
     }
 
-    @PostMapping("/hospital-appointment")
+    @PostMapping("/doctor-appointment")
     public String getApplyAppointMnt(@Valid @ModelAttribute("appointmentDto") AppointmentDto appointmentDto, BindingResult bindingResult,
                                      Model model) throws IOException, ParseException {
      if(!bindingResult.hasErrors())
