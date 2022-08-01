@@ -165,5 +165,4 @@ public class AdminController {
         model.addAttribute("doctorRequest",
                 applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
         return "admin/doctorrequest";
-    }
-}
+    }}
