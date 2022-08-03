@@ -1,20 +1,26 @@
 package com.oda.service.Impl.patient;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.component.FileStorageComponent;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.dto.patient.AppointmentDto;
+import com.oda.dto.patient.PatientAppointmentRequestDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.model.patient.Patient;
 import com.oda.repo.patient.ApplyAppointmentRepo;
 import com.oda.service.Impl.HospitalServiceImpl;
+import com.oda.service.patient.ApplyAppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kulPaudel
@@ -23,9 +29,12 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class ApplyAppointmentServiceImpl {
+public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
     private final ApplyAppointmentRepo applyAppointmentRepo;
+
     private final HospitalServiceImpl hospitalService;
+
+    private final FileStorageComponent fileStorageComponent;
 
     private final PatientServiceImpl patientService;
 
@@ -160,5 +169,26 @@ public class ApplyAppointmentServiceImpl {
         }else {
             return false;
         }
+    }
+
+    @Override
+    public List<PatientAppointmentRequestDto> getPatientAppointmentDetails(Integer hospitalId) throws IOException {
+        List<Map<String,Object>>  appointmentDetails =applyAppointmentRepo.getPatientAppointmentDetails(hospitalId);
+        List<PatientAppointmentRequestDto> patientAppointmentRequestDtoList = new ArrayList<>();
+        PatientAppointmentRequestDto patientAppointMentRequestDto ;
+        for (Map<String,Object> map : appointmentDetails){
+            patientAppointMentRequestDto = PatientAppointmentRequestDto.builder()
+                    .id((Integer) map.get("id"))
+                    .address((String) map.get("address"))
+                    .doctorName((String) map.get("doctor_name"))
+                    .mobileNumber((String) map.get("mobile_number"))
+                    .patientName((String) map.get("patient_name"))
+                    .ppPath(fileStorageComponent.base64Encoded((String) map.get("profile_photo_path")))
+                    .date((String) map.get("appointment_date"))
+                    .fromTime((String) map.get("from_time")).build();
+            //add to list
+            patientAppointmentRequestDtoList.add(patientAppointMentRequestDto);
+        }
+        return patientAppointmentRequestDtoList;
     }
 }

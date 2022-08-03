@@ -10,6 +10,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaBuilder;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author kulPaudel
@@ -50,5 +51,21 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
 
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and patient_id = ?2",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentByDoctorIdAndPatientId(Integer doctorId, Integer patientId);
+
+    @Query(value = "select oa.id,\n" +
+            "       op.profile_photo_path,\n" +
+            "       op.patient_name,\n" +
+            "       op.address,\n" +
+            "       op.mobile_number,\n" +
+            "       od.doctor_name,\n" +
+            "       oa.appointment_date,\n" +
+            "       oa.from_time\n" +
+            "from oda_appointment oa\n" +
+            "         inner join oda_patient op on oa.patient_id = op.id\n" +
+            "         inner join oda_doctor od on oa.doctor_id = od.id\n" +
+            "where hospital_id = ?1\n" +
+            "  and apply_status = 1\n" +
+            "order by oa.id DESC",nativeQuery = true)
+    List<Map<String,Object>> getPatientAppointmentDetails(Integer hospitalId);
 
 }
