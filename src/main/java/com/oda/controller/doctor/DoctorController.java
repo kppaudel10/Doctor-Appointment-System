@@ -40,6 +40,8 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.getListOfToDayPatient());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/home";
     }
     
@@ -48,6 +50,8 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/bookingrequest";
     }
 
@@ -56,18 +60,24 @@ public class DoctorController {
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
        model.addAttribute("feedbackList",
                feedbackService.findFeedbackBYDoctorID(AuthorizedUser.getDoctor().getId()));
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/doctorfeedback";
     }
 
     @GetMapping("/booking/request")
     public String getBookReuestPage(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/bookingrequest";
     }
 
     @GetMapping("/apply/hospital")
     public String getApply(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/applyhospital";
     }
 
@@ -75,6 +85,8 @@ public class DoctorController {
     public String getViewProfile(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/profileview";
     }
     @GetMapping("/accept-patient/add-time/{id}")
@@ -82,6 +94,8 @@ public class DoctorController {
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         ApplyAppointment applyAppointment = applyAppointmentService.findById(id);
         model.addAttribute("appointment",applyAppointment);
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/furtherdetailsforbooked";
     }
     @PostMapping("/accept-patient")
@@ -109,6 +123,8 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/bookingrequest";
 
     }
@@ -127,6 +143,8 @@ public class DoctorController {
         model.addAttribute("ppPath",
                 AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("appointmentList",applyAppointmentService.findAppointmentThatIsBooked());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/bookingrequest";
     }
 
@@ -138,6 +156,8 @@ public class DoctorController {
         model.addAttribute("appointmentDetails",applyAppointment);
         model.addAttribute("patientDetails",patientDto);
         model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/viewpatientone";
     }
     

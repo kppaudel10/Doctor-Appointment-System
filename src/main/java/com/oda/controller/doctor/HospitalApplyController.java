@@ -4,6 +4,7 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.service.Impl.HospitalServiceImpl;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
+import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,9 +25,12 @@ public class HospitalApplyController {
     private final HospitalServiceImpl hospitalService;
     private final ApplyHospitalServiceImpl applyHospitalService;
 
-    public HospitalApplyController(HospitalServiceImpl hospitalService, ApplyHospitalServiceImpl applyHospitalService) {
+    private final ApplyAppointmentServiceImpl applyAppointmentService;
+
+    public HospitalApplyController(HospitalServiceImpl hospitalService, ApplyHospitalServiceImpl applyHospitalService, ApplyAppointmentServiceImpl applyAppointmentService) {
         this.hospitalService = hospitalService;
         this.applyHospitalService = applyHospitalService;
+        this.applyAppointmentService = applyAppointmentService;
     }
 
     @GetMapping("/apply")
@@ -34,6 +38,8 @@ public class HospitalApplyController {
         model.addAttribute("applyDto",new ApplyDto());
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("hospitalList",hospitalService.findALl());
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/applyhospital";
     }
 

@@ -14,6 +14,7 @@ import com.oda.service.patient.ApplyAppointmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,7 +75,7 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
     }
 
     public List<ApplyAppointment> findAppointmentOfPatient(Integer patientId){
-        return applyAppointmentRepo.findApplyAppointmentByPatientId(patientId);
+        return applyAppointmentRepo.findApplyAppointmentByPatientId(patientId,dateStr);
     }
 
     public List<ApplyAppointment> findAppointmentForHospitalOfPending(Integer hospitalId){
@@ -83,6 +84,15 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
 
     public List<ApplyAppointment> findAppointmentForHospitalOfBooked(Integer hospitalId){
         return applyAppointmentRepo.findApplyAppointmentByHospitalOfBooked(hospitalId);
+    }
+
+    public Integer countApplyAppointmentBookedOfDoctor(Integer doctorId){
+        Integer count = applyAppointmentRepo.countApplyAppointmentBookedOfDoctor(doctorId);
+        if (count == null){
+            return 0;
+        }else {
+            return count;
+        }
     }
 
     public ApplyAppointment findById(Integer id){
@@ -98,7 +108,7 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
 
     public ApplyAppointment updateByDoctor(ApplyAppointment applyAppointment){
         //update status
-        applyAppointment.setVisitTime(ApplyAppointment.getTimeWithAmPm(applyAppointment.getVisitTime()));
+//        applyAppointment.setVisitTime(ApplyAppointment.getTimeWithAmPm(applyAppointment.getVisitTime()));
         applyAppointmentRepo.save(applyAppointment);
         return applyAppointment;
     }
@@ -115,7 +125,7 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
         //find patient details
         Patient patient= patientService.findPatientByContactDetails(deatils);
         if(patient !=null){
-            return applyAppointmentRepo.findApplyAppointmentByPatientId(patient.getId());
+            return applyAppointmentRepo.findApplyAppointmentByPatientId(patient.getId(),dateStr);
         }else {
             return null;
         }

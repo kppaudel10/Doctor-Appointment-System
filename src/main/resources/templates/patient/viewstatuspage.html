@@ -68,13 +68,13 @@
                 for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
                     changeRow = table.rows[r].cells[c];
                     if (table.rows[r].cells[c].innerHTML === "PENDING") {
-                        changeRow.style.backgroundColor = "yellow";
+                        changeRow.style.color = "yellow";
                     } else if (table.rows[r].cells[c].innerHTML === "BOOKED") {
-                        changeRow.style.backgroundColor = "blue";
+                        changeRow.style.color = "blue";
                     } else if (table.rows[r].cells[c].innerHTML === "REJECTED") {
-                        changeRow.style.backgroundColor = "red";
+                        changeRow.style.color = "red";
                     }else if (table.rows[r].cells[c].innerHTML === "PROCESSING") {
-                        changeRow.style.backgroundColor = "green";
+                        changeRow.style.color = "green";
                     }
                 }
             }
