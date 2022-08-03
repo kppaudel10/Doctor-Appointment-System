@@ -64,15 +64,17 @@
     </div>
 <script type="text/javascript">
     var table = document.getElementById("members");
-    changeRow = document.querySelector(".apply-status");
             for (var r = 0, n = table.rows.length; r < n; r++) {
                 for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
+                    changeRow = table.rows[r].cells[c];
                     if (table.rows[r].cells[c].innerHTML === "PENDING") {
-                        changeRow.style.backgroundColor = "blue";
+                        changeRow.style.backgroundColor = "yellow";
                     } else if (table.rows[r].cells[c].innerHTML === "BOOKED") {
-                        changeRow.style.backgroundColor = "green";
+                        changeRow.style.backgroundColor = "blue";
                     } else if (table.rows[r].cells[c].innerHTML === "REJECTED") {
                         changeRow.style.backgroundColor = "red";
+                    }else if (table.rows[r].cells[c].innerHTML === "PROCESSING") {
+                        changeRow.style.backgroundColor = "green";
                     }
                 }
             }
