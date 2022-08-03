@@ -6,20 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NavBar Home </title>
 </head>
-
-
 <body>
-<div th:fragment="adminNavbarHome">
+<div th:fragment="adminNavbarHome (patient_request)" th:with="doctor_request = ${doctor_request}">
     <header class="header">
 
         <a th:href="@{/admin/home}" class="logo"> <i class="fas fa-heartbeat"></i>ODAS </a>
 
         <nav class="navbar">
             <ul>
-                <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req</a>
-                <a class="a1" th:href="@{/admin/patient-request}">Patients Req</a>
-                <a class="a1" th:href="@{/admin/doctor-view}">View Doctor</a>
-                <a class="a1" th:href="@{/admin/patient-view}">View Patient</a>
+                <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req<sup th:text="'('+${doctor_request}+')'" class="sup-display" id="doctor-sup"></sup></a>
+                <a class="a1" th:href="@{/admin/patient-request}">Patients Req<sup th:text="'('+${patient_request}+')'" class="sup-display" id="patient-sup"></sup></a>
+                <a class="a1" th:href="@{/admin/doctor-view}">View Doctor<sup class="sup-display"></sup></a>
+                <a class="a1" th:href="@{/admin/patient-view}">View Patient<sup class="sup-display"></sup></a>
             </ul>
         </nav>
         <div class="dropdown">
@@ -292,6 +290,12 @@
             }
 
         }
+        .sup-display{
+            /*font-size: 20px;*/
+            color: red;
+            font-weight: bold;
+            /*margin-left: 5px;*/
+        }
 
     </style>
 </div>
@@ -312,6 +316,7 @@
             menu.classList.remove('fa-times');
             navbar.classList.remove('active');
         }
+
     </script>
 </div>
 <div th:fragment="adminNabarLink">

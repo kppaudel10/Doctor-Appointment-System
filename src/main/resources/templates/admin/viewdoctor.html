@@ -10,7 +10,7 @@
 <div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarCss"></div>
 <div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
-<div th:replace="admin/fragement/navbar :: adminNavbarHome"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarHome(patient_request =${patientRequestSize},doctor_request= ${doctorRequestSize})"></div>
 <div class="home">
     <div class="wrap">
         <form th:action="@{/admin/doctor-search}" th:method="post" th:object="${searchDto}" autocomplete="off">

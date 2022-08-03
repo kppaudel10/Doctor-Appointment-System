@@ -49,6 +49,11 @@ public class AdminController {
                 applyHospitalService.
                         findApplyHospitalListByHospitalBooked(AuthorizedUser.getAdmin().getHospital().getId()));
         model.addAttribute("searchDto",new SearchDto());
+
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewdoctor";
     }
 
@@ -56,6 +61,10 @@ public class AdminController {
     public String getDoctorRequestPage(Model model){
         model.addAttribute("doctorRequest",
                 applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/doctorrequest";
     }
     @GetMapping("/patient-view")
@@ -63,6 +72,10 @@ public class AdminController {
         model.addAttribute("patientRequestDetails",
                 applyAppointmentService.findAppointmentForHospitalOfBooked(AuthorizedUser.getAdmin().getHospital().getId()));
        model.addAttribute("searchDto",new SearchDto());
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewpatient";
     }
 
@@ -71,9 +84,22 @@ public class AdminController {
     public String getPatientRequestPage(Model model){
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
 
         return "admin/patientrequest";
     }
+
+//    @GetMapping("/patient-request")
+//    public String getPatientRequestPage(Model model) throws IOException {
+//        model.addAttribute("appointmentList",applyAppointmentService.getPatientAppointmentDetails(AuthorizedUser.getAdmin().getHospital().getId()));
+//        // doctor and patient request count
+//        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+//        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+//
+//        return "admin/cart_patientrequest";
+//    }
 
     @GetMapping("/forward-patient/{id}")
     public String getAcceptPatient(@PathVariable("id")Integer id, Model model){
@@ -87,6 +113,10 @@ public class AdminController {
         }
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/patientrequest";
     }
 
@@ -98,6 +128,10 @@ public class AdminController {
 
         model.addAttribute("doctorRequest",
                 applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/doctorrequest";
     }
 
@@ -106,6 +140,10 @@ public class AdminController {
         model.addAttribute("doctorDetails",
                 applyHospitalService.findDoctorApplyDetailsByContact(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewdoctor";
     }
 
@@ -113,18 +151,30 @@ public class AdminController {
     public String getListOfPatient(@ModelAttribute("searchDto")SearchDto searchDto, Model model){
         model.addAttribute("patientRequestDetails",applyAppointmentService.findAppointMentByPatientId(searchDto.getUserInput()));
         model.addAttribute("searchDto",new SearchDto());
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewpatient";
     }
 
     @GetMapping("/patient-appointment-delete/{id}")
     public String getDeletePatientAppointMent(@PathVariable("id")Integer id, Model model){
         applyAppointmentService.deleteBYId(id);
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "redirect:/admin/patient-view";
     }
 
     @GetMapping("/doctor-hospital-apply-delete/{id}")
     public String getDeletDoctorHospitalApply(@PathVariable("id")Integer id, Model model){
         applyHospitalService.deleteById(id);
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "redirect:/admin/doctor-view";
     }
 
@@ -136,6 +186,10 @@ public class AdminController {
        model.addAttribute("appointmentDetails",applyAppointment);
         model.addAttribute("patientDetails",patientDto);
         model.addAttribute("ppPath",patientDto.getProfilePhotoPath());
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewpatientone";
     }
 
@@ -146,6 +200,10 @@ public class AdminController {
         DoctorDto doctorDto = doctorService.findById(applyHospital.getDoctor().getId());
         model.addAttribute("doctorDetails",doctorDto);
         model.addAttribute("ppPath",doctorDto.getProfilePhotoPath());
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/viewdoctorone";
     }
 
@@ -155,6 +213,10 @@ public class AdminController {
         model.addAttribute("message","Successfully deleted.");
         model.addAttribute("patientRequest",
                 applyAppointmentService.findAppointmentForHospitalOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/patientrequest";
     }
 
@@ -164,5 +226,10 @@ public class AdminController {
         model.addAttribute("message","Successfully Rejected.");
         model.addAttribute("doctorRequest",
                 applyHospitalService.findApplyHospitalListOfPending(AuthorizedUser.getAdmin().getHospital().getId()));
+
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+
         return "admin/doctorrequest";
     }}

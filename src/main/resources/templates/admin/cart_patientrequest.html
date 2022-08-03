@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<!--<link th:href="@{/css/admin/patientRequest.css}" rel="stylesheet"/>-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>PATIENT || REQUEST</title>
+    <style>
+        .box{
+            border: 2px rgb(10, 118, 190) solid;
+            width: 30%;
+            background-color: #f5f6f7;
+            /*border-radius: 5px;*/
+        }
+
+        .image-side img{
+            border-radius: 60%;
+            border: 2px rgb(128, 83, 0) solid;
+            width: 120px;
+            height: 120px;
+            position: absolute;
+            margin-top:0.5%;
+            margin-left: 0.5%;
+        }
+
+        .image-side .drName{
+            margin-left: 28%;
+            padding-top: 10%;
+
+        }
+
+        .card-body-part{
+            margin-top: 15%;
+            margin-left: 8%;
+
+        }
+
+          .card-footer-part .forward{
+            text-decoration: none;
+            width: 4rem;
+               height: 4rem;
+            background-color: rgb(105, 166, 223);
+            color: wheat;
+            font-size: 20px;
+            padding: 8px 6px;
+            border-radius: 2px;
+
+        }
+          .card-footer-part .delete{
+            text-decoration: none;
+            width: 4rem;
+               height: 4rem;
+            background-color: red;
+            color: wheat;
+            font-size: 20px;
+            padding: 8px 6px;
+            border-radius: 2px;
+
+        }
+        .card-footer-part{
+            margin-left: 60%;
+            padding-bottom: 4%;
+        }
+        .main {
+            width: 90%;
+            margin: 40px auto;
+        }
+        .title-show{
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarCss"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarHome(patient_request =${patientRequestSize},doctor_request= ${doctorRequestSize})"></div>
+<div class="home">
+
+    <span class="main"  th:each=" loop : ${appointmentList}">
+    <div class="box">
+
+        <div class="image-side">
+            <img th:src="${loop.getPpPath()}">
+            <h2 class="drName">Mr Kul Paudel</h2>
+        </div>
+        <!--  -->
+        <div class="card-body-part">
+
+            <p class="title-show"><strong>Doctor's Name:</strong></p><p th:text="${loop.getDoctorName()}"></p>
+            <span class="title-show">Address:</span><p th:text="${loop.getAddress()}"></p>
+            <h3>Phone:</h3>
+            <h3>Date:</h3>
+            <h3>Time:</h3>
+        </div>
+
+        <div class="card-footer-part">
+            <a class="forward" href="#" target="_blank">Forward</a>
+            <a class="delete" href="#" target="_blank">Delete</a>
+        </div>
+    </div>
+    </span>
+</div>
+</body>
+</html>
