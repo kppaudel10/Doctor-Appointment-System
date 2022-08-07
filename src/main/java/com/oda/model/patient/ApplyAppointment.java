@@ -38,6 +38,7 @@ public class ApplyAppointment {
 
     private String reasonOrProblem;
 
+
     private String visitTime;
 
     @OneToOne

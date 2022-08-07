@@ -8,7 +8,11 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link th:href="@{/css/patient/home.css}" rel="stylesheet"/>
-
+    <style>
+        .basic-charge{
+            color: #3ac162;
+        }
+    </style>
 </head>
 <body>
 <!--<div th:replace="patient/fragement/navbar :: patientNavbarHome"></div>-->
@@ -76,6 +80,7 @@
                 </div>
                 <div class="title">
                     <h3 th:text="${loop.name}"></h3>
+                    <h5 th:text="'Charge: Rs.'+${loop.basicCharge}" class="basic-charge"></h5>
                 </div>
                 <div class="star">
                     <span class="number" th:text="${loop.getRating()}"></span>

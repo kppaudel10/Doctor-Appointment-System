@@ -101,7 +101,7 @@ public class DoctorController {
     @PostMapping("/accept-patient")
     public String getAcceptPatient(@ModelAttribute("appointment") ApplyAppointment applyAppointmentByForm, Model model) throws EmailException {
         ApplyAppointment applyAppointment = applyAppointmentService.findById(applyAppointmentByForm.getId());
-        applyAppointment.setVisitTime(applyAppointmentByForm.getVisitTime());
+        applyAppointment.setVisitTime(ApplyAppointment.getTimeWithAmPm(applyAppointmentByForm.getVisitTime()));
         applyAppointment.setApplyStatus(ApplyStatus.BOOKED);
         //update appointment status
       ApplyAppointment applyAppointment1=  applyAppointmentService.updateByDoctor(applyAppointment);
@@ -114,7 +114,7 @@ public class DoctorController {
                   "Please Visit hospital on time.\nThank you..");
           mailSendDto.setEmail(applyAppointment1.getPatient().getEmail());
           MailSend mailSend = new MailSend();
-          mailSend.sendConfirmMail(mailSendDto);
+//          mailSend.sendConfirmMail(mailSendDto);
 
           model.addAttribute("message","Request accepted successfully.");
       }else {
