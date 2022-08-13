@@ -47,6 +47,7 @@
                <th>Date</th>
                <th>Visit Time</th>
                <th>Status</th>
+<!--               <th>Action</th>-->
            </tr>
            </thead>
            <tbody>
@@ -57,6 +58,11 @@
                <td th:text="${loop.appointmentDate}"></td>
                <td th:text="${loop.visitTime}"></td>
                <td th:text="${loop.applyStatus.name()}" id="apply-status" class="apply-status"></td>
+<!--               <td> <a th:href="@{/admin/patient-view/}+${loop.id}">-->
+<!--                   <button class="report">-->
+<!--                       Report-->
+<!--                   </button>-->
+<!--               </a></td>-->
            </tr>
            </tbody>
        </table>
@@ -68,7 +74,7 @@
                 for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
                     changeRow = table.rows[r].cells[c];
                     if (table.rows[r].cells[c].innerHTML === "PENDING") {
-                        changeRow.style.color = "yellow";
+                        changeRow.style.color = "purple";
                     } else if (table.rows[r].cells[c].innerHTML === "BOOKED") {
                         changeRow.style.color = "blue";
                     } else if (table.rows[r].cells[c].innerHTML === "REJECTED") {

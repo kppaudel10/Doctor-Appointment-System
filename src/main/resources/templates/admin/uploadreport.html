@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<!--<link th:href="@{/css/admin/patientRequest.css}" rel="stylesheet"/>-->
+<!--<link th:href="@{/css/patient/furtherdetails.css}" rel="stylesheet"/>-->
+<link th:href="@{/css/doctor/applyhospital.css}" rel="stylesheet"/>
+<head>
+  <meta charset="UTF-8">
+  <title>REPORT || UPLOAD </title>
+</head>
+<body>
+<div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarCss"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarJs"></div>
+<div th:replace="admin/fragement/navbar :: adminNavbarHome(patient_request =${patientRequestSize},doctor_request= ${doctorRequestSize})"></div>
+<div class="home">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 th:text="${message}" class="message"></h2>
+      <form th:action="@{/admin/report-uploaded}" method="post" th:object="${reportUploadDto}" enctype="multipart/form-data">
+        <h1>Upload Health Report</h1>
+        <input type="hidden" th:field="*{appointmentId}">
+        <fieldset>
+          <label class="work-time">Report</label>
+          <div class="wrap">
+            <label>Time:</label>
+            <input type="file" name="report" th:field="*{multipartFileReport}" required>
+          </div>
+          <!--          <label>Upload Documents:</label>-->
+          <!--          <input type="file" id="mail" name="user_email">-->
+        </fieldset>
+        <button type="submit">Submit</button>
+      </form>
+      <!--      <h2 th:text="${message}" style="color: #04AA6D"></h2>-->
+    </div>
+  </div>
+</div>
+</body>
+</html>

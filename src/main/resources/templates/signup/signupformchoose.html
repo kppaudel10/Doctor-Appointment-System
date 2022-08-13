@@ -21,8 +21,9 @@
             display: grid;
             grid-gap: 2rem;
             grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-            margin: 10px;
+            margin: 50px;
             padding: 0;
+            align-items: center;
             box-sizing: border-box;
             font-family: 'Montserrat', sans-serif;
 
@@ -40,7 +41,7 @@
         }
         .main-container{
             margin-right: auto;
-            margin-left: 12%;
+            margin-left: 25%;
             text-align: center;
             margin-top: 150px;
             max-width: 1170px;
@@ -76,15 +77,15 @@
         <div class="main-container">
 
             <ul class="grid-wrapper">
-                <div class="header">
-                    <h3>Admin</h3>
-                   <a th:href="@{/signup/admin}">
-                       <li>
-                           <!--                        <img src="photo.jpg" alt="Photo">-->
-                           <p><b>Join as a admin</b></p>
-                       </li>
-                   </a>
-                </div>
+<!--                <div class="header">-->
+<!--                    <h3>Admin</h3>-->
+<!--                   <a th:href="@{/signup/admin}">-->
+<!--                       <li>-->
+<!--                           &lt;!&ndash;                        <img src="photo.jpg" alt="Photo">&ndash;&gt;-->
+<!--                           <p><b>Join as a admin</b></p>-->
+<!--                       </li>-->
+<!--                   </a>-->
+<!--                </div>-->
                 <div class="header">
                     <h3>Doctor</h3>
                     <a th:href="@{/signup/doctor}">

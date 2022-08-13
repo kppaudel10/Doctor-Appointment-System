@@ -48,4 +48,33 @@ public class FileStorageComponent {
         byte[] bytes = Files.readAllBytes(file.toPath());
         return "data:image/png;base64," + Base64.getEncoder().encodeToString(bytes);
     }
+
+    public static ResponseDto uploaedReport(MultipartFile multipartFile) throws IOException {
+        String fileDir = System.getProperty("user.home") + File.separator +"Desktop"+File.separator +  "oda";
+        File directoryPath = new File(fileDir);
+        if (!directoryPath.exists()) {
+            boolean mkdirs = directoryPath.mkdirs();
+        } else {
+            log.info("File already exists!");
+        }
+        String ext = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+        assert ext != null;
+//        if (ext.equalsIgnoreCase("jpg") ||
+//                ext.equalsIgnoreCase("png") ||
+//                ext.equalsIgnoreCase("jpeg")) {
+            UUID uuid = UUID.randomUUID();
+            String filePath = fileDir + File.separator +uuid+"-"+multipartFile.getOriginalFilename();
+            File newFile = new File(filePath);
+            multipartFile.transferTo(newFile);
+            return ResponseDto.builder()
+                    .status(true)
+                    .message(filePath)
+                    .build();
+//        } else {
+//            return ResponseDto.builder()
+//                    .status(false)
+//                    .message("Invalid extension")
+//                    .build();
+//        }
+    }
 }

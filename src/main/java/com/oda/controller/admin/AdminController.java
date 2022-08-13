@@ -1,15 +1,19 @@
 package com.oda.controller.admin;
 
 import com.oda.authorizeduser.AuthorizedUser;
+import com.oda.component.FileStorageComponent;
+import com.oda.dto.admin.ReportUploadDto;
 import com.oda.dto.doctor.ApplyDto;
 import com.oda.dto.doctor.DoctorDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.dto.patient.SearchDto;
+import com.oda.dto.response.ResponseDto;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
+import com.oda.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,12 +38,17 @@ public class AdminController {
 
     private final PatientServiceImpl patientService ;
 
+    private final AdminService adminService;
+
 
     @GetMapping("/home")
     public String getAdminHomePage(Model model){
-        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
-        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
-
+        if (AuthorizedUser.getAdmin() != null){
+            model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+            model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+        }else {
+            return "redirect:/login";
+        }
         return "admin/adminhomepage";
     }
 
@@ -232,4 +241,34 @@ public class AdminController {
         model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
 
         return "admin/doctorrequest";
-    }}
+    }
+
+    @GetMapping("/upload-reports/{id}")
+    public String uploadReport(@PathVariable("id") Integer id, Model model){
+        ReportUploadDto reportUploadDto = new ReportUploadDto();
+        reportUploadDto.setAppointmentId(id);
+        model.addAttribute("reportUploadDto",reportUploadDto);
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+        return "admin/uploadreport";
+    }
+
+    @PostMapping("/report-uploaded")
+    public String uploaded(@ModelAttribute("reportUploadDto") ReportUploadDto reportUploadDto,Model model) throws IOException {
+        model.addAttribute("reportUploadDto",reportUploadDto);
+
+        ResponseDto responseDto = FileStorageComponent.uploaedReport(reportUploadDto.getMultipartFileReport());
+        reportUploadDto.setReportUrl(responseDto.getMessage());
+       ReportUploadDto reportUploadDto1 = adminService.uploadedReport(reportUploadDto);
+        if (reportUploadDto1.getId() != null){
+            model.addAttribute("message","Report uploaded successfully");
+        }else {
+            model.addAttribute("message","Unable to upload report");
+        }
+        // doctor and patient request count
+        model.addAttribute("patientRequestSize",applyAppointmentService.getTodayAppointmentSize());
+        model.addAttribute("doctorRequestSize",applyHospitalService.getTodayDoctorApply());
+        return "admin/uploadreport";
+    }
+}

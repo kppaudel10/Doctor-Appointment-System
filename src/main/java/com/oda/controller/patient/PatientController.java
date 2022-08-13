@@ -49,10 +49,14 @@ public class PatientController {
     @GetMapping("/home")
     public String getPatientHomePage(Model model){
       //if sort value is not low or high
-        model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
         model.addAttribute("doctorSortDto",new DoctorSortDto());
         model.addAttribute("searchDto",new SearchDto());
-        model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+        if (AuthorizedUser.getPatient() != null) {
+            model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+            model.addAttribute("doctorList",doctorService.finDoctorByAddressByDefault());
+        }else {
+            return "redirect:/login";
+        }
         return "patient/patienthomepage";
     }
 

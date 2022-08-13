@@ -37,11 +37,15 @@ public class DoctorController {
 
     @GetMapping("/home")
     public String getDoctorHomePage(Model model){
-        model.addAttribute("ppPath",
-                AuthorizedUser.getDoctor().getProfilePhotoPath());
-        model.addAttribute("appointmentList",applyAppointmentService.getListOfToDayPatient());
-        //patient booking request count
-        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
+       if (AuthorizedUser.getDoctor() != null){
+           model.addAttribute("ppPath",
+                   AuthorizedUser.getDoctor().getProfilePhotoPath());
+           model.addAttribute("appointmentList",applyAppointmentService.getListOfToDayPatient());
+           //patient booking request count
+           model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
+       }else {
+           return "redirect:/login";
+       }
         return "doctor/home";
     }
     
@@ -114,7 +118,7 @@ public class DoctorController {
                   "Please Visit hospital on time.\nThank you..");
           mailSendDto.setEmail(applyAppointment1.getPatient().getEmail());
           MailSend mailSend = new MailSend();
-//          mailSend.sendConfirmMail(mailSendDto);
+          mailSend.sendConfirmMail(mailSendDto);
 
           model.addAttribute("message","Request accepted successfully.");
       }else {

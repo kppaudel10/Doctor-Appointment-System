@@ -6,7 +6,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>FEEDBACK TO DOCTOR</title>
-    <link th:href="@{/css/patient/feedback.css}" rel="stylesheet"/>
+    <!--    <link th:href="@{/css/patient/feedback.css}" rel="stylesheet"/>-->
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
+
+        .main-header {
+            width: 45%;
+            margin: 30px auto;
+        }
+
+        .main-header .feedbackhome {
+            background-color: rgb(238, 242, 240);
+            padding: 15px;
+            border-radius: 8px;
+            width: auto;
+            height: auto;
+        }
+
+        .title h3 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            padding: 15px;
+            font-size: 3rem;
+        }
+
+        /* star desig start */
+
+        .rate {
+            height: 20px;
+            margin-bottom: 30px;
+        }
+
+        .rate:not(:checked) > input {
+            position: absolute;
+            top: -9999px;
+            left: 4%;
+        }
+
+        .rate:not(:checked) > label {
+            float: right;
+            width: 1em;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+
+        .rate > input:checked ~ label {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;
+        }
+
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+
+        .wrapper {
+            margin-right: 45%;
+            padding: auto;
+        }
+
+        /* star desig end */
+
+        .Comments {
+            font-size: 1.9rem;
+            margin-left: 3rem;
+            color: rgb(0, 0, 0);
+            align-items: center;
+        }
+
+        .main-header .feedbackhome textarea {
+            font-size: 18px;
+            margin-left: 3rem;
+            width: 75%;
+            border-radius: 6px;
+            outline-style: none;
+            outline: none;
+
+        }
+
+        .main-header .feedbackhome textarea:hover {
+            border: 2px solid rgb(147, 184, 185);
+
+        }
+
+        ::placeholder {
+            font-size: 20px;
+            padding: 3px;
+        }
+
+        .main-header .feedbackhome button {
+            font-size: 1.4rem;
+            padding: 8px 16px;
+            background-color: #ccc;
+            outline: none;
+            color: rgb(23, 28, 28);
+            margin-left: 14rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 100;
+        }
+
+        .main-header .feedbackhome button:hover {
+            color: whitesmoke;
+            background-color: rgba(50, 238, 5, 0.94);
+        }
+
+        .footer-form {
+            margin-left: 45px;
+        }
+
+        .doctor-details {
+            font-size: 22px;
+            margin-left: 65px;
+        }
+
+        .title {
+            width: 100%;
+            height: 100%;
+        }
+
+        .doctor-name {
+            font-size: 20px;
+            margin-left: 70px;
+            margin-bottom: 30px;
+            color: #000000;
+        }
+
+        .image img {
+            width: 20%;
+            border-radius: 30%;
+            text-align: center;
+            border: 2px solid rgb(116, 116, 162);
+            margin-top: 5px;
+            padding: 6px;
+            margin-left: auto;
+            position: absolute;
+            margin-right: 80%;
+        }
+
+        .doctor_basic {
+            margin-top: 21%;
+            color: rgba(9, 9, 16, 0.94);
+            margin-left: 24px;
+            font-size: 18px;
+            position: absolute;
+        }
+        #star1 #star2 #star3 #star4 #star5 {
+            size: 40px;
+            margin-right: 10px;
+        }
+        input{
+            size: 40px;
+            margin-right: 10px;
+        }
+
+        .msg {
+            color: red;
+        }
+
+        .msg-display {
+            margin-right: 30%;
+            position: absolute;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="patient/fragement/navbar :: patientNabarLink"></div>
@@ -21,7 +202,7 @@
         <nav class="navbar">
             <ul>
                 <!--              <a href="#home">Home</a>-->
-<!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
+                <!--                <a th:href="@{/patient/feedback}">Feedback</a>-->
                 <a th:href="@{/patient/view/status}">View Status</a>
                 <a th:href="@{/patient/home}">Home</a>
             </ul>
@@ -48,38 +229,38 @@
     </div>
     <main class="main-header" style="height: 70vh">
         <div class="feedbackhome">
-<!--            <div class="title">-->
-<!--                <h3>Give feedback to your doctor</h3>-->
-<!--            </div>-->
+            <!--            <div class="title">-->
+            <!--                <h3>Give feedback to your doctor</h3>-->
+            <!--            </div>-->
             <br>
             <form th:action="@{/patient/feedback}" th:method="post" th:object="${feedbackDto}">
                 <input type="hidden" th:field="*{doctorId}">
                 <div class="doctor-details">
-                    <h4 class="doctor-name"><i>Rate Your Doctor out Five</i></h4>
+                    <h4 class="doctor-name"><i>Rate Your Doctor out of Five</i></h4>
                 </div>
                 <div class="wrapper">
+                    <div class="rate">
+                        <input type="radio" id="star1" value="1" th:field="*{star_one}" checked/>
+                        <label for="star1"></label>
 
-                        <input type="checkbox" id="st1" value="1"th:field="*{star_one}" checked />
-                        <label for="st1"></label>
+                        <input type="radio" id="star2" value="1" th:field="*{star_two}"/>
+                        <label for="star2"></label>
 
+                        <input type="radio" id="star3" value="1" th:field="*{star_three}"/>
+                        <label for="star3"></label>
 
-                        <input type="checkbox" id="st2" value="1" th:field="*{star_two}" />
-                        <label for="st2"></label>
+                        <input type="radio" id="star4" value="1" th:field="*{star_four}"/>
+                        <label for="star3"></label>
 
-                        <input type="checkbox" id="st3" value="1" th:field="*{star_three}" />
-                        <label for="st3"></label>
+                        <input type="radio" id="star5" value="1" th:field="*{star_five}"/>
+                        <label for="star5"></label>
 
-                        <input type="checkbox" id="st4" value="1" th:field="*{star_four}"/>
-                        <label for="st4"></label>
-
-                        <input type="checkbox" id="st5" value="1" th:field="*{star_five}" />
-                        <label for="st5"></label>
-
+                    </div>
                 </div>
                 <br>
                 <div class="footer-form">
-                    <label class="Comments" >Comment:</label><br/>
-                    <textarea rows="7"  placeholder="Write Your feedback here" th:field="*{comment}" ></textarea>
+                    <label class="Comments">Comment:</label><br/>
+                    <textarea rows="7" placeholder="Write Your feedback here" th:field="*{comment}"></textarea>
                     <br><br>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

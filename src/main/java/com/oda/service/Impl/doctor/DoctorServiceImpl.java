@@ -195,9 +195,10 @@ public class DoctorServiceImpl implements DoctorService {
        }).collect(Collectors.toList());
     }
     public List<DoctorDto> findDoctorByANS(String userInput){
+        String modifiedString = userInput.concat("%");
 
        return doctorRepo.
-               findDoctorByNameAndAddressAndSpecialization(userInput.toLowerCase()).stream().map(doctor -> {
+               findDoctorByNameAndAddressAndSpecialization(modifiedString.toLowerCase()).stream().map(doctor -> {
                    try {
                        return DoctorDto.builder()
                                .id(doctor.getId())

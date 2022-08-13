@@ -74,3 +74,11 @@ table{
     margin:auto;
     width: 100%;
 }
+.report{
+    color: white;
+    background-color: #ea55f5;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.6rem;
+}
