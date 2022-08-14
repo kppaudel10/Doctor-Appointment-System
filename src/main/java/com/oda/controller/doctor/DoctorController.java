@@ -6,6 +6,7 @@ import com.oda.dto.MailSendDto;
 import com.oda.dto.patient.PatientDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
+import com.oda.repo.doctor.DoctorRepo;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
@@ -32,6 +33,8 @@ public class DoctorController {
     private final ApplyAppointmentServiceImpl applyAppointmentService;
 
     private final PatientServiceImpl patientService;
+
+    private final DoctorRepo doctorRepo;
 
 
 
@@ -89,6 +92,7 @@ public class DoctorController {
     public String getViewProfile(Model model){
         model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
         model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
+        model.addAttribute("hospitalList",doctorRepo.getHospitalByDoctorId(AuthorizedUser.getDoctor().getId()));
         //patient booking request count
         model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/profileview";

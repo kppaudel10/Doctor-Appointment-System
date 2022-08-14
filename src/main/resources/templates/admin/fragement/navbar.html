@@ -14,10 +14,10 @@
 
         <nav class="navbar">
             <ul>
-                <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req<sup th:text="'('+${doctor_request}+')'" class="sup-display" id="doctor-sup"></sup></a>
-                <a class="a1" th:href="@{/admin/patient-request}">Patients Req<sup th:text="'('+${patient_request}+')'" class="sup-display" id="patient-sup"></sup></a>
-                <a class="a1" th:href="@{/admin/doctor-view}">View Doctor<sup class="sup-display"></sup></a>
-                <a class="a1" th:href="@{/admin/patient-view}">View Patient<sup class="sup-display"></sup></a>
+                <a class="a1" th:href="@{/admin/doctor-request}">Doctors Req<sup th:if="${doctor_request > 0}"> <sup th:text="'('+${doctor_request}+')'" class="sup-display" id="doctor-sup"></sup></sup></a>
+                <a class="a1" th:href="@{/admin/patient-request}">Patients Req<sup th:if="${patient_request > 0}"><sup th:text="'('+${patient_request}+')'" class="sup-display" id="patient-sup"></sup></sup></a>
+                <a class="a1" th:href="@{/admin/doctor-view}">View Doctor<sup th:if="${doctor_request > 0 or patient_request > 0}"><sup class="sup-display"></sup></sup></a>
+                <a class="a1" th:href="@{/admin/patient-view}">View Patient<sup th:if="${doctor_request > 0 or patient_request > 0}"><sup class="sup-display"></sup></sup></a>
             </ul>
         </nav>
         <div class="dropdown">

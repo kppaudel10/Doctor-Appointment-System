@@ -75,6 +75,7 @@ table{
     border: none;
     border-radius: 6px;
     font-size: 1.3rem;
+    text-decoration: none;
 }
 .view{
     background-color: #04AA6D;

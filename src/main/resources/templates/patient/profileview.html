@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YOUR || PROFILE </title>
     <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
+    <style>
+        .name-display{
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 <!--<div th:replace="patient/fragement/navbar :: patientNavbarHome"></div>-->
@@ -44,11 +49,11 @@
         </div>
         <span class="basic-details">
             <h1><u></u><i>Basic Details</i></u></h1>
-            <h2 th:text="'Name --> '+${patientDetails.name}"></h2>
-            <h2 th:text="'Address --> '+${patientDetails.address}"></h2>
-            <h2 th:text="'Contact --> '+${patientDetails.mobileNumber}"></h2>
-            <h2 th:text="'Email --> '+${patientDetails.email}">Text:</h2>
-            <h2 th:text="'Date Of Birth -->'+${patientDetails.birthDate}"></h2>
+            <span class="name-display" th:text="'Name --> '+${patientDetails.name}"></span><br><br>
+            <span class="name-display" th:text="'Address --> '+${patientDetails.address}"></span><br><br>
+            <span class="name-display" th:text="'Contact --> '+${patientDetails.mobileNumber}"></span><br><br>
+            <span class="name-display" th:text="'Email --> '+${patientDetails.email}"></span><br><br>
+            <span class="name-display" th:text="'Date Of Birth -->'+${patientDetails.birthDate}"></span><br><br>
             <br>
 <!--             <h1><u></u><i>Further Details</i></u></h1>-->
 <!--            <h2>Text</h2>-->

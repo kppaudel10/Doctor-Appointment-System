@@ -17,11 +17,14 @@
 
     <nav class="navbar">
         <ul>
-            <a th:href="@{/doctor-hospital/apply}">Apply<sup class="sub-display"></sup></a>
-            <a th:href="@{/doctor/feedback}">Feedback<sup class="sub-display"></sup></a>
-            <a th:href="@{/doctor/patient-booking-request}">Booking Request<sup th:text="'('+${patientrequest_count}+')'" class="sub-display"></sup></a>
-            <a th:href="@{/doctor/home}">Home<sup class="sub-display"></sup></a>
-            <!--                <a href="#doctors">doctors</a>-->
+            <a th:href="@{/doctor-hospital/apply}">Apply<sup th:if="${patientrequest_count > 0}">
+                <sup class="sub-display"></sup></sup></a>
+            <a th:href="@{/doctor/feedback}">Feedback<sup th:if="${patientrequest_count > 0}">
+                <sup class="sub-display"></sup></sup></a>
+            <a th:href="@{/doctor/patient-booking-request}">Booking Request<sup th:if="${patientrequest_count > 0}">
+                <sup th:text="'('+${patientrequest_count}+')'" class="sub-display"></sup></sup></a>
+            <a th:href="@{/doctor/home}">Home<sup th:if="${patientrequest_count > 0}"><sup class="sub-display"></sup></sup></a>
+            <!--              <a href="#doctors">doctors</a>-->
         </ul>
     </nav>
     <div class="dropdown">

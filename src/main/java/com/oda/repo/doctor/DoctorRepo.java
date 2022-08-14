@@ -61,4 +61,11 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
     @Query(value = "update oda_update set password = ?1 where id = ?2", nativeQuery = true)
     void updatePassword(String password, Integer adminId);
 
+
+    @Query(value = "select oh.name\n" +
+            "from oda_hospital_apply oa\n" +
+            "         inner join oda_hospital oh on oa.hospital_id = oh.id\n" +
+            "         inner join oda_doctor od on oa.doctor_id = od.id\n" +
+            "where od.id = ?1",nativeQuery = true)
+    List<String> getHospitalByDoctorId(Integer doctorId);
 }

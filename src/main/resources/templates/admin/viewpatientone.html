@@ -8,10 +8,11 @@
   <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
     <style>
         .problem{
-            color: red;
+           font-size: 20px;
         }
         .problem-des{
             margin-right: 30%;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -28,16 +29,16 @@
     </div>
     <span class="basic-details">
             <h1><u></u><i>Basic Details</i></u></h1>
-            <h2 th:text="'Name --> '+${patientDetails.name}"></h2>
-            <h2 th:text="'Address --> '+${patientDetails.address}"></h2>
-            <h2 th:text="'Contact --> '+${patientDetails.mobileNumber}"></h2>
-            <h2 th:text="'Email --> '+${patientDetails.email}">Text:</h2>
-            <h2 th:text="'Date Of Birth -->'+${patientDetails.birthDate}"></h2>
+            <span class="problem" th:text="'Name --> '+${patientDetails.name}"></span><br><br>
+            <span class="problem" th:text="'Address --> '+${patientDetails.address}"></span><br><br>
+            <span class="problem" th:text="'Contact --> '+${patientDetails.mobileNumber}"></span><br><br>
+            <span class="problem" th:text="'Email --> '+${patientDetails.email}">Text:</span><br><br>
+            <span class="problem" th:text="'Date Of Birth -->'+${patientDetails.birthDate}"></span><br><br>
             <h1><u></u><i>Appointment Details</i></u></h1>
-           <h2><span>Appointment Date --></span><span th:text="${appointmentDetails.appointmentDate}"></span></h2>
-           <h2><span>Doctor Name --></span><span th:text="${appointmentDetails.doctor.name}"></span></h2>
+           <span class="problem" ><span>Appointment Date --></span><span th:text="${appointmentDetails.appointmentDate}"></span></span><br><br>
+           <span class="problem" ><span>Doctor Name --></span><span th:text="${appointmentDetails.doctor.name}"></span></span><br><br>
             <h1 style="color: red"><u></u><i>Problem Description</i></u></h1>
-        <h2 class="problem-des"><span>--></span><span th:text="${appointmentDetails.reasonOrProblem}"></span></h2>
+        <span class="problem-des"><span>--></span><span th:text="${appointmentDetails.reasonOrProblem}"></span></span><br><br>
 
         </span>
       <div class="btn>">

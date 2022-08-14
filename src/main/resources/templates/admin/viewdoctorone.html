@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YOUR || PROFILE </title>
     <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
+    <style>
+        .details-display{
+            font-size: 20px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="admin/fragement/navbar :: adminNabarLink"></div>
@@ -20,20 +25,19 @@
         </div>
         <span class="basic-details">
             <h1><u></u><i>Basic Details</i></u></h1>
-            <h2 th:text="'Name --> '+${doctorDetails.name}"></h2>
-            <h2 th:text="'Address --> '+${doctorDetails.address}"></h2>
-            <h2 th:text="'Contact --> '+${doctorDetails.mobileNumber}"></h2>
-            <h2 th:text="'Email --> '+${doctorDetails.email}">Text:</h2>
-            <h2 th:text="'Specialization -->'+${doctorDetails.specialization}"></h2>
-           <h2 th:text="'Experience -->'+${doctorDetails.experience}"></h2>
-             <h2 th:text="'Gender -->'+${doctorDetails.getGenderStatus()}"></h2>
-             <h2 th:text="'Rating -->'+${doctorDetails.getRating()}"></h2>
-            <br>
-            <!--             <h1><u></u><i>Further Details</i></u></h1>-->
-            <!--            <h2>Text</h2>-->
-            <!--              <h2>Text</h2>-->
-            <!--              <h2>Text</h2>-->
-            <!--              <h2>Text</h2>-->
+            <span class="details-display" th:text="'Name --> '+${doctorDetails.name}"></span><br><br>
+            <span class="details-display" th:text="'Address --> '+${doctorDetails.address}"></span><br><br>
+                <span class="details-display"  th:text="'Contact --> '+${doctorDetails.mobileNumber}"></span><br><br>
+            <span class="details-display"  th:text="'Email --> '+${doctorDetails.email.toLowerCase()}"></span><br><br>
+            <span class="details-display"  th:text="'Specialization -->'+${doctorDetails.specialization}"></span><br><br>
+           <span class="details-display"  th:text="'Experience -->'+${doctorDetails.experience}+' Years'"></span><br><br>
+             <span class="details-display"  th:text="'Gender -->'+${doctorDetails.getGenderStatus()}"></span><br><br>
+                 <span class="details-display"  th:text="'Rating -->'+${doctorDetails.getRating()}"></span><br><br>
+                 <!--             <h1><u></u><i>Further Details</i></u></h1>-->
+                 <!--            <h2>Text</h2>-->
+                 <!--              <h2>Text</h2>-->
+                 <!--              <h2>Text</h2>-->
+                 <!--              <h2>Text</h2>-->
         </span>
         <div class="btn>">
             <a th:href="@{/admin/doctor-view}" class="next">&laquo; Back</a>
