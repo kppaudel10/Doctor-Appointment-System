@@ -290,6 +290,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorRepo.getEmailCount(email);
     }
 
+    public Integer checkMobileNumberDuplicate(String mobileNumber){
+        return doctorRepo.getMobileNumberDuplicate(mobileNumber);
+    }
+
     public Doctor findByEmail(String userName){
       return  doctorRepo.findByUserName(userName);
     }

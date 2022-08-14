@@ -29,6 +29,9 @@ public interface PatientRepo extends JpaRepository<Patient, Integer> {
     @Query(value = "select count(id) from oda_patient where email = ?1",nativeQuery = true)
     Integer getEmailCount(String email);
 
+    @Query(value = "select count(id) from oda_patient where mobile_number = ?1",nativeQuery = true)
+    Integer getMobileNumberDuplicate(String mobileNumber);
+
     @Modifying
     @Transactional
     @Query(value = "update oda_patient set password = ?1 where id = ?2", nativeQuery = true)

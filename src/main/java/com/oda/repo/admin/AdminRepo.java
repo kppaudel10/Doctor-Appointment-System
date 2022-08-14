@@ -18,6 +18,9 @@ public interface AdminRepo extends JpaRepository<Admin, Integer> {
     @Query(value = "select count (id) from oda_admin where email = ?1", nativeQuery = true)
     Integer getEmailCount(String email);
 
+    @Query(value = "select count(id) from oda_admin where mobile_number = ?1",nativeQuery = true)
+    Integer getMobileNumberDuplicate(String mobileNumber);
+
     @Modifying
     @Transactional
     @Query(value = "update oda_admin set password = ?1 where id = ?2", nativeQuery = true)

@@ -109,4 +109,9 @@ public class AdminServiceImpl implements AdminService {
       reportUploadDto.setId(savedReport.getId());
         return reportUploadDto;
     }
+
+    public Integer checkMobileNumberDuplicate(String mobileNumber){
+        return adminRepo.getMobileNumberDuplicate(mobileNumber);
+    }
+
 }

@@ -33,6 +33,9 @@ public interface ApplyHospitalRepo extends JpaRepository<ApplyHospital,Integer> 
     @Query(value = "select * from oda_hospital_apply h where h.doctor_id = ?1 ",nativeQuery = true)
     ApplyHospital findApplyHospitalDetailsByDoctorId(Integer doctorId);
 
-    @Query(value = "select * from oda_hospital_apply where apply_date = ?1 and apply_status = 0",nativeQuery = true)
-    List<ApplyHospital> getTodayDoctorApply(String date);
+    @Query(value = "select count(id) from oda_hospital_apply h where h.doctor_id = ?1 and h.hospital_id = ?2",nativeQuery = true)
+    Integer checkSameDoctorApplyThatHospitalOrNot(Integer doctorId,Integer hospitalId);
+
+    @Query(value = "select * from oda_hospital_apply where apply_date = ?1 and apply_status = 0 and hospital_id = ?2",nativeQuery = true)
+    List<ApplyHospital> getTodayDoctorApply(String date,Integer hospitalId);
 }

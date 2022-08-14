@@ -38,9 +38,8 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
     @Override
     public ApplyDto save(ApplyDto applyDto) throws ParseException {
 
-
         //check hospital that is already apply or not
-      if(applyHospitalRepo.findApplyHospitalDetailsByDoctorId(AuthorizedUser.getDoctor().getId()) == null){
+      if(applyHospitalRepo.checkSameDoctorApplyThatHospitalOrNot(AuthorizedUser.getDoctor().getId(),applyDto.getHospital().getId()) == null){
           ApplyHospital applyHospital = ApplyHospital.builder()
                   .id(applyDto.getId())
                   .hospital(applyDto.getHospital())
@@ -120,8 +119,8 @@ public class ApplyHospitalServiceImpl implements ApplyHospitalService {
         return applyHospitalRepo.findApplyHospitalDetailsByDoctorId(doctorId);
    }
 
-   public Integer getTodayDoctorApply(){
-        List<ApplyHospital> applyHospitalList = applyHospitalRepo.getTodayDoctorApply(dateStr);
+   public Integer getTodayDoctorApply(Integer hospitalId){
+        List<ApplyHospital> applyHospitalList = applyHospitalRepo.getTodayDoctorApply(dateStr,hospitalId);
 
         if(applyHospitalList !=null){
             return applyHospitalList.size();

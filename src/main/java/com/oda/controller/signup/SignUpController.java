@@ -66,43 +66,51 @@ public class SignUpController {
             if (doctorService.checkEmailDuplicate(patientDto.getEmail()) == 0 &&
                     patientService.checkEmailDuplicate(patientDto.getEmail()) == 0 &&
                     adminService.checkEmailDuplicate(patientDto.getEmail()) == 0) {
-                if (patientDto.getPassword().equals(patientDto.getReEnterPassword())) {
-                    String ext = FilenameUtils.getExtension(patientDto.getMultipartFilePP().getOriginalFilename());
-                    //if no error then send email and verify that
-                    // check multipart file size
-                    if (patientDto.getMultipartFilePP().isEmpty()) {
-                        model.addAttribute("message", "Photo must be selected");
-                        model.addAttribute("doctorDto", patientDto);
-                        return "patient/patientregisterpage";
+                // check mobile number duplication
+                if (doctorService.checkMobileNumberDuplicate(patientDto.getMobileNumber()) == 0 &&
+                        patientService.checkMobileNumberDuplicate(patientDto.getMobileNumber()) == 0 &&
+                        adminService.checkMobileNumberDuplicate(patientDto.getMobileNumber()) == 0) {
+                    if (patientDto.getPassword().equals(patientDto.getReEnterPassword())) {
+                        String ext = FilenameUtils.getExtension(patientDto.getMultipartFilePP().getOriginalFilename());
+                        //if no error then send email and verify that
+                        // check multipart file size
+                        if (patientDto.getMultipartFilePP().isEmpty()) {
+                            model.addAttribute("message", "Photo must be selected");
+                            model.addAttribute("doctorDto", patientDto);
+                            return "patient/patientregisterpage";
+                        }
+                        if (patientDto.getMultipartFilePP().getSize() > 200000) {
+                            model.addAttribute("message", "File size is too large(Max:200KB)");
+                            model.addAttribute("doctorDto", patientDto);
+                            return "patient/patientregisterpage";
+                        }
+                        if (!(ext.equalsIgnoreCase("jpg") ||
+                                ext.equalsIgnoreCase("png") ||
+                                ext.equalsIgnoreCase("jpeg"))) {
+                            model.addAttribute("message", "Invalid file type(required type:jpg,png,jpeg)");
+                            model.addAttribute("doctorDto", patientDto);
+                            return "patient/patientregisterpage";
+                        } else {
+                            //send pin verification code
+                            MailSendDto mailSendDto = new MailSendDto(patientDto.getName(), patientDto.getEmail(), "Use This pin code for verification.");
+
+                            Integer pinCode = new MailSend().sendMail(mailSendDto);
+
+                            patientDto.setCorrectPinCode(pinCode);
+
+                            ResponseDto responseDto = FileStorageComponent.storeFile(patientDto.getMultipartFilePP());
+
+                            patientDto.setProfilePhotoPath(responseDto.getMessage());
+                            //go to verification page
+                            model.addAttribute("patientDto", patientDto);
+                            return "patient/emailverification";
+                        }
+                    } else {
+                        model.addAttribute("passwordMatchMsg", "password does not match");
                     }
-                    if (patientDto.getMultipartFilePP().getSize() > 200000) {
-                        model.addAttribute("message", "File size is too large(Max:200KB)");
-                        model.addAttribute("doctorDto", patientDto);
-                        return "patient/patientregisterpage";
-                    }
-                    if (!ext.equalsIgnoreCase("jpg") ||
-                            !ext.equalsIgnoreCase("png") ||
-                            !ext.equalsIgnoreCase("jpeg")) {
-                        model.addAttribute("message","Invalid file type(required type:jpg,png,jpeg)");
-                        model.addAttribute("doctorDto", patientDto);
-                        return "patient/patientregisterpage";
-                    }else {
-                        //send pin verification code
-                        MailSendDto mailSendDto = new MailSendDto(patientDto.getName(), patientDto.getEmail(), "Use This pin code for verification.");
-
-                        Integer pinCode = new MailSend().sendMail(mailSendDto);
-
-                        patientDto.setCorrectPinCode(pinCode);
-
-                        ResponseDto responseDto = FileStorageComponent.storeFile(patientDto.getMultipartFilePP());
-
-                        patientDto.setProfilePhotoPath(responseDto.getMessage());
-                        //go to verification page
-                        model.addAttribute("patientDto", patientDto);
-                        return "patient/emailverification";
-                    }
-                } else {
-                    model.addAttribute("passwordMatchMsg", "password does not match");
+                }
+                else {
+                    model.addAttribute("message", "Mobile number already exists.");
                 }
             } else {
                 model.addAttribute("message", "Email already exists.");
@@ -147,7 +155,12 @@ public class SignUpController {
             if (doctorService.checkEmailDuplicate(doctorDto.getEmail()) == 0 &&
                     patientService.checkEmailDuplicate(doctorDto.getEmail()) == 0 &&
                     adminService.checkEmailDuplicate(doctorDto.getEmail()) == 0) {
-                if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())) {
+                // check mobile number duplication
+                if (doctorService.checkMobileNumberDuplicate(doctorDto.getMobileNumber()) == 0 &&
+                        patientService.checkMobileNumberDuplicate(doctorDto.getMobileNumber()) == 0 &&
+                        adminService.checkMobileNumberDuplicate(doctorDto.getMobileNumber()) == 0) {
+                    if (doctorDto.getPassword().equals(doctorDto.getReEnterPassword())) {
+
                     String ext = FilenameUtils.getExtension(doctorDto.getMultipartFilePhoto().getOriginalFilename());
                     //if no error then send email and verify that
                     // check multipart file size
@@ -161,10 +174,9 @@ public class SignUpController {
                         model.addAttribute("doctorDto", doctorDto);
                         return "doctor/doctorregisterpage";
                     }
-                    if (!ext.equalsIgnoreCase("jpg") ||
-                            !ext.equalsIgnoreCase("png") ||
-                            !ext.equalsIgnoreCase("jpeg")) {
-                        model.addAttribute("message","Invalid file type(required type:jpg,png,jpeg)");
+                    if (!(ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png") ||
+                            ext.equalsIgnoreCase("jpeg"))) {
+                        model.addAttribute("message", "Invalid file type(required type:jpg,png,jpeg)");
                         model.addAttribute("doctorDto", doctorDto);
                         return "doctor/doctorregisterpage";
                     } else {
@@ -183,6 +195,9 @@ public class SignUpController {
                     }
                 } else {
                     model.addAttribute("messagePassword", "Password must match.");
+                }
+            }else {
+                    model.addAttribute("message", "Mobile number already exists");
                 }
             } else {
                 model.addAttribute("message", "Email already exists");

@@ -162,8 +162,8 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
         return applyAppointmentRepo.getApplyAppointmentForToday(AuthorizedUser.getDoctor().getId(),dateStr);
     }
 
-    public Integer getTodayAppointmentSize(){
-        List<ApplyAppointment> applyAppointments = applyAppointmentRepo.getTodayAppointment(dateStr);
+    public Integer getTodayAppointmentSize(Integer hospitalId){
+        List<ApplyAppointment> applyAppointments = applyAppointmentRepo.getTodayAppointment(dateStr,hospitalId);
         if(applyAppointments !=null){
             return applyAppointments.size();
         }else {

@@ -4,6 +4,7 @@ import com.oda.dto.doctor.DoctorDto;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
+import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -56,6 +57,9 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
     @Query(value = "select count(id) from oda_doctor where email = ?1",nativeQuery = true)
     Integer getEmailCount(String email);
 
+    @Query(value = "select count(id) from oda_doctor where mobile_number = ?1",nativeQuery = true)
+    Integer getMobileNumberDuplicate(String mobileNumber);
+
     @Modifying
     @Transactional
     @Query(value = "update oda_update set password = ?1 where id = ?2", nativeQuery = true)
@@ -66,6 +70,6 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
             "from oda_hospital_apply oa\n" +
             "         inner join oda_hospital oh on oa.hospital_id = oh.id\n" +
             "         inner join oda_doctor od on oa.doctor_id = od.id\n" +
-            "where od.id = ?1",nativeQuery = true)
+            "where od.id = ?1 and apply_status =1",nativeQuery = true)
     List<String> getHospitalByDoctorId(Integer doctorId);
 }

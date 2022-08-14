@@ -11,10 +11,12 @@ import com.oda.dto.patient.SearchDto;
 import com.oda.model.doctor.ApplyHospital;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.ApplyAppointment;
+import com.oda.repo.patient.ApplyAppointmentRepo;
 import com.oda.service.Impl.doctor.ApplyHospitalServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.patient.ApplyAppointmentServiceImpl;
 import com.oda.service.Impl.patient.FeedbackServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,18 +35,15 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/patient")
+@RequiredArgsConstructor
 public class PatientController {
     private final FeedbackServiceImpl feedbackService;
     private final DoctorServiceImpl doctorService;
     private final ApplyHospitalServiceImpl applyHospitalService;
     private final ApplyAppointmentServiceImpl applyAppointmentService;
 
-    public PatientController(FeedbackServiceImpl feedbackService, DoctorServiceImpl doctorService, ApplyHospitalServiceImpl applyHospitalService, ApplyAppointmentServiceImpl applyAppointmentService) {
-        this.feedbackService = feedbackService;
-        this.doctorService = doctorService;
-        this.applyHospitalService = applyHospitalService;
-        this.applyAppointmentService = applyAppointmentService;
-    }
+    private final ApplyAppointmentRepo applyAppointmentRepo;
+
 
     @GetMapping("/home")
     public String getPatientHomePage(Model model){
@@ -100,7 +99,7 @@ public class PatientController {
         FeedbackDto feedbackDto1= feedbackService.save(feedbackDto);
         model.addAttribute("msg","Your feedback submitted successfully.");
     }else {
-        model.addAttribute("msg","Can not give feedback");
+        model.addAttribute("msg","At least one appointment is required for doctor feedback");
     }
 
         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
@@ -175,18 +174,27 @@ public class PatientController {
      if(!bindingResult.hasErrors())
      {
          ApplyDto applyHospital= applyHospitalService.findById(appointmentDto.getHospitalApplyId());
-
-         //save log
-         ApplyAppointment applyAppointment= applyAppointmentService.save(applyHospital,appointmentDto);
-         if(applyAppointment !=null){
-             model.addAttribute("msg","Submitted successfully.");
+         //check if there is already exists appointment or not
+         if (applyAppointmentRepo.countAppointmentOfDatePatient(applyHospital.getDoctor().getId(),
+                 AuthorizedUser.getPatient().getId(),applyHospital.getHospital().getId(),appointmentDto.getAppointmentDate()) == 0) {
+             //save log
+             ApplyAppointment applyAppointment = applyAppointmentService.save(applyHospital, appointmentDto);
+             if (applyAppointment != null) {
+                 model.addAttribute("msg", "Applied Successfully.");
+             } else {
+                 model.addAttribute("msg", "Already submitted.");
+             }
+             model.addAttribute("doctor", doctorService.findById(applyAppointment.getDoctor().getId()));
+             model.addAttribute("workingHospitalList", applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
+             model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+             return "patient/doctorreadmore";
          }else {
-             model.addAttribute("msg","Already submitted.");
+             model.addAttribute("msg", "Appointment already in pending");
+             model.addAttribute("doctor", doctorService.findById(applyHospital.getDoctor().getId()));
+             model.addAttribute("workingHospitalList", applyHospitalService.findApplyDetailsOfDoctor(applyHospital.getDoctor().getId()));
+             model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
+             return "patient/doctorreadmore";
          }
-         model.addAttribute("doctor",doctorService.findById(applyAppointment.getDoctor().getId()));
-         model.addAttribute("workingHospitalList",applyHospitalService.findApplyDetailsOfDoctor(applyAppointment.getDoctor().getId()));
-         model.addAttribute("ppPath", AuthorizedUser.getPatient().getProfilePhotoPath());
-         return "patient/doctorreadmore";
      }else {
          model.addAttribute("message","Maximum length is 100.");
          model.addAttribute("appointmentDto",appointmentDto);

@@ -48,8 +48,8 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and apply_status = 1 and appointment_date = ?2",nativeQuery = true)
     List<ApplyAppointment> getApplyAppointmentForToday(Integer doctorId,String date);
 
-    @Query(value = "select * from oda_appointment where apply_date = ?1 and apply_status = 0",nativeQuery = true)
-    List<ApplyAppointment> getTodayAppointment(String date);
+    @Query(value = "select * from oda_appointment where apply_date = ?1 and apply_status = 0 and hospital_id = ?2",nativeQuery = true)
+    List<ApplyAppointment> getTodayAppointment(String date,Integer hospitalId);
 
     @Query(value = "select * from oda_appointment where doctor_id = ?1 and patient_id = ?2",nativeQuery = true)
     List<ApplyAppointment> findApplyAppointmentByDoctorIdAndPatientId(Integer doctorId, Integer patientId);
@@ -69,5 +69,13 @@ public interface ApplyAppointmentRepo extends JpaRepository<ApplyAppointment,Int
             "  and apply_status = 1\n" +
             "order by oa.id DESC",nativeQuery = true)
     List<Map<String,Object>> getPatientAppointmentDetails(Integer hospitalId);
+
+    @Query(value = "select count(id)\n" +
+            "from oda_appointment\n" +
+            "where doctor_id = ?1\n" +
+            "  and patient_id = ?2\n" +
+            "  and hospital_id = ?3\n" +
+            "  and appointment_date = ?4",nativeQuery = true)
+    Integer countAppointmentOfDatePatient(Integer doctorId,Integer patientId, Integer hospitalId,String appointmentDate);
 
 }
