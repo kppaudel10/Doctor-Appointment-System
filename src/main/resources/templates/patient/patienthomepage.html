@@ -76,16 +76,16 @@
                 <!-- cards start -->
             <div class="cards">
                 <div class="image">
-                    <img th:src="${loop.getProfilePhotoPath()}">
+                    <img th:src="${loop.profilePhotoPath}">
                 </div>
                 <div class="title">
                     <h3 th:text="${loop.name}"></h3>
                     <h5 th:text="'Charge: Rs.'+${loop.basicCharge}" class="basic-charge"></h5>
                 </div>
                 <div class="star">
-                    <span class="number" th:text="${loop.getRating()}"></span>
+                    <span class="number" th:text="${loop.rating}"></span>
                     <i class="fa fa-star"></i>
-                    <p style="font-size: 18px" th:text="${loop.getSpecialization()}"></p>
+                    <p style="font-size: 18px" th:text="${loop.specialization}"></p>
 <!--                    <p style="font-size: 18px" th:text="'Charge Rs.'${loop.getBasicCharge()}"></p>-->
                 </div>
                 <div class="btn">

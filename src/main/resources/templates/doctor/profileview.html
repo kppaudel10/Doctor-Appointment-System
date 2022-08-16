@@ -7,7 +7,7 @@
     <title>YOUR || PROFILE </title>
     <link th:href="@{/css/profileCss.css}" rel="stylesheet"/>
     <style>
-        .view{
+        .view {
             color: white;
             background-color: #5572f5;
             padding: 6px 14px;
@@ -15,9 +15,27 @@
             border-radius: 6px;
             font-size: 1.6rem;
         }
-        .name-display{
+
+        .name-display {
             font-size: 20px;
             margin-bottom: 15px;
+        }
+        .ask-available{
+            font-size: 20px;
+            color: deeppink;
+        }
+        .delete{
+            background-color: red;
+            padding: 6px 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.6rem;
+        }
+        .message-display{
+            font-size: 26px;
+            color: #3ac162;
+            font-weight: bold;
+            margin-left: 65%;
         }
     </style>
 </head>
@@ -71,11 +89,26 @@
             <br>
                    <h1><u></u><i>Currently Working Hospital</i></u></h1>
                   <div th:each="loop ,i : ${hospitalList}">
-                      <span class="name-display" th:text="${i.count}+' . '+${loop}"><br>
+                      <span class="name-display" th:text="${i.count}+' . '+${loop.getName()}"></span>
+                      <span>
+                        <p class="ask-available">
+                            Are you available tomorrow ?
+                            <a th:href="@{/doctor/available-tomorrow/yes/}+${loop.getId()}">
+                                <button class="view">
+                                    Yes
+                                </button>
+                            </a>
+                               <a th:href="@{/doctor/available-tomorrow/no/}+${loop.getId()}">
+                                <button class="delete">
+                                    No
+                                </button>
+                            </a>
+                        </p>
+                      </span><br>
                   </div>
-
         </span>
     </main>
+    <h2 class="message-display" th:text="${message}"></h2>
 </div>
 </body>
 </html>

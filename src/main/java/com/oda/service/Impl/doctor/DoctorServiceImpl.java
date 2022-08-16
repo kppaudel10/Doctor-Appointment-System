@@ -3,17 +3,25 @@ package com.oda.service.Impl.doctor;
 import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.FileStorageComponent;
 import com.oda.dto.doctor.DoctorDto;
+import com.oda.dto.response.ResponseDto;
 import com.oda.model.doctor.Doctor;
+import com.oda.model.doctor.DoctorAvailable;
+import com.oda.model.hospital.Hospital;
+import com.oda.repo.doctor.DoctorAvailableRepo;
 import com.oda.repo.doctor.DoctorRepo;
+import com.oda.repo.hospital.HospitalRepo;
 import com.oda.service.doctor.DoctorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +32,9 @@ public class DoctorServiceImpl implements DoctorService {
 
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
+    private final DoctorAvailableRepo doctorAvailableRepo;
+
+    private final HospitalRepo hospitalRepo;
 
 
     @Override
@@ -296,5 +307,43 @@ public class DoctorServiceImpl implements DoctorService {
 
     public Doctor findByEmail(String userName){
       return  doctorRepo.findByUserName(userName);
+    }
+
+    @Override
+    public ResponseDto saveDoctorAvailableDetails(Boolean isAvailable,Integer hospitalId) throws ParseException {
+        DoctorAvailable doctorAvailable = new DoctorAvailable();
+        ResponseDto responseDto = new ResponseDto();
+//        Date dt = new Date();
+//        LocalDateTime date = LocalDateTime.from(dt.toInstant()).plusDays(1);
+//        String dateStr =   new SimpleDateFormat("yyyy-MM-dd").format(date);
+        LocalDate today = LocalDate.now();
+        String tomorrow = (today.plusDays(1)).format(DateTimeFormatter.ISO_DATE);
+        doctorAvailable.setDoctor(AuthorizedUser.getDoctor());
+        doctorAvailable.setDate(new SimpleDateFormat("yyyy-MM-dd").parse(tomorrow));
+        if (doctorAvailableRepo.getCountDoctorAlreadyCheckOrNot(AuthorizedUser.getDoctor().getId(), tomorrow, hospitalId) == 0) {
+            //find hospital by id
+            Optional<Hospital> optionalHospital = hospitalRepo.findById(hospitalId);
+            if (optionalHospital.isPresent()) {
+                Hospital hospital = optionalHospital.get();
+                doctorAvailable.setHospitalId(hospital);
+                doctorAvailable.setIsAvailable(isAvailable);
+                DoctorAvailable doctorAvailable1 = doctorAvailableRepo.save(doctorAvailable);
+                if (doctorAvailable1 != null) {
+                    responseDto.setStatus(true);
+                    responseDto.setMessage("Checked in successfully");
+                } else {
+                    responseDto.setStatus(false);
+                    responseDto.setMessage("Unable to checked");
+                }
+            } else {
+                responseDto.setStatus(false);
+                responseDto.setMessage("Unknown hospital");
+            }
+        } else {
+            responseDto.setStatus(false);
+            responseDto.setMessage("You already checked in");
+        }
+
+        return responseDto;
     }
 }

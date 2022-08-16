@@ -4,6 +4,7 @@ import com.oda.dto.doctor.DoctorDto;
 import com.oda.model.admin.Admin;
 import com.oda.model.doctor.Doctor;
 import com.oda.model.patient.Patient;
+import com.oda.projection.DoctorProjection;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -66,10 +67,11 @@ public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
     void updatePassword(String password, Integer adminId);
 
 
-    @Query(value = "select oh.name\n" +
+    @Query(value = "select oh.id, oh.name\n" +
             "from oda_hospital_apply oa\n" +
             "         inner join oda_hospital oh on oa.hospital_id = oh.id\n" +
             "         inner join oda_doctor od on oa.doctor_id = od.id\n" +
-            "where od.id = ?1 and apply_status =1",nativeQuery = true)
-    List<String> getHospitalByDoctorId(Integer doctorId);
+            "where od.id = ?1\n" +
+            "  and apply_status = 1",nativeQuery = true)
+    List<DoctorProjection> getHospitalByDoctorId(Integer doctorId);
 }

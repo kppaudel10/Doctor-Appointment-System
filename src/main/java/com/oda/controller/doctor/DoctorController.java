@@ -4,6 +4,7 @@ import com.oda.authorizeduser.AuthorizedUser;
 import com.oda.component.mail.MailSend;
 import com.oda.dto.MailSendDto;
 import com.oda.dto.patient.PatientDto;
+import com.oda.dto.response.ResponseDto;
 import com.oda.enums.ApplyStatus;
 import com.oda.model.patient.ApplyAppointment;
 import com.oda.repo.doctor.DoctorRepo;
@@ -18,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 /**
  * @author kulPaudel
@@ -167,6 +169,30 @@ public class DoctorController {
         //patient booking request count
         model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
         return "doctor/viewpatientone";
+    }
+
+    @GetMapping("/available-tomorrow/yes/{hospitalId}")
+    public String makeTomorrowAvailable(@PathVariable("hospitalId") Integer hospitalId, Model model) throws ParseException {
+       ResponseDto responseDto = doctorService.saveDoctorAvailableDetails(true,hospitalId);
+       model.addAttribute("message",responseDto.getMessage());
+        model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
+        model.addAttribute("hospitalList",doctorRepo.getHospitalByDoctorId(AuthorizedUser.getDoctor().getId()));
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
+        return "doctor/profileview";
+    }
+
+    @GetMapping("/available-tomorrow/no/{hospitalId}")
+    public String makeTomorrowNotAvailable(@PathVariable("hospitalId") Integer hospitalId,Model model) throws ParseException {
+        ResponseDto responseDto = doctorService.saveDoctorAvailableDetails(false,hospitalId);
+        model.addAttribute("message",responseDto.getMessage());
+        model.addAttribute("ppPath", AuthorizedUser.getDoctor().getProfilePhotoPath());
+        model.addAttribute("doctorDetails",AuthorizedUser.getDoctor());
+        model.addAttribute("hospitalList",doctorRepo.getHospitalByDoctorId(AuthorizedUser.getDoctor().getId()));
+        //patient booking request count
+        model.addAttribute("patientrequest_count",applyAppointmentService.countApplyAppointmentBookedOfDoctor(AuthorizedUser.getDoctor().getId()));
+        return "doctor/profileview";
     }
     
 }
