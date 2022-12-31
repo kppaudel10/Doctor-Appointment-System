@@ -11,6 +11,7 @@ import com.oda.repo.doctor.DoctorAvailableRepo;
 import com.oda.repo.doctor.DoctorRepo;
 import com.oda.repo.hospital.HospitalRepo;
 import com.oda.service.doctor.DoctorService;
+import com.oda.utils.PasswordEncryption;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class DoctorServiceImpl implements DoctorService {
                      .numberOfFeedback(1)
                      .basicCharge(doctorDto.getBasicCharge())
                      .feedbackList(doctorDto.getFeedbackList()).
-                     password(doctorDto.getPassword()).build();
+                     password(new PasswordEncryption().getEncryptedPassword(doctorDto.getPassword())).build();
 
              if (doctorDto.getExperience() >= 10D){
                  doctor.setRating(3.75D);
@@ -345,5 +346,15 @@ public class DoctorServiceImpl implements DoctorService {
         }
 
         return responseDto;
+    }
+
+    @Override
+    public Integer checkDoctorAvailability(Integer doctorId, String date, Integer hospitalId) {
+        LocalDate today = LocalDate.now();
+        String tomorrow = (today.plusDays(1)).format(DateTimeFormatter.ISO_DATE);
+        if (tomorrow.equals(date)){
+            return doctorAvailableRepo.checkDoctorAvailability(doctorId,date,hospitalId);
+        }
+        return 1;
     }
 }

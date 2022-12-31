@@ -18,13 +18,13 @@ public class GetRating {
 //                rating +=1;
 //            }
 //        }
-        if (valueFive == 1){
+        if (valueFive != null && valueFive == 1){
             rating = 5;
-        }else if (valueFour == 1){
+        }else if (valueFour != null && valueFour == 1){
             rating = 4;
-        } else if (valueThree == 1) {
+        } else if (valueThree !=null && valueThree == 1) {
             rating = 3;
-        } else if (valueTwo == 1) {
+        } else if (valueTwo != null && valueTwo == 1) {
             rating = 2;
         }else {
             rating = 1;

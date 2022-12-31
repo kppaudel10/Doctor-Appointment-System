@@ -120,11 +120,11 @@ public class DoctorController {
           MailSendDto mailSendDto = new MailSendDto();
           mailSendDto.setUserName(applyAppointment.getPatient().getName());
           mailSendDto.setMessage("Your request for doctor appointment has been confirmed,\nFor date "
-                  +applyAppointment1.getAppointmentDate()+" Time "+applyAppointment1.getFromTime()+" \n" +
+                  +applyAppointment1.getAppointmentDate()+" Time "+applyAppointment1.getVisitTime()+" \n" +
                   "Please Visit hospital on time.\nThank you..");
           mailSendDto.setEmail(applyAppointment1.getPatient().getEmail());
           MailSend mailSend = new MailSend();
-          mailSend.sendConfirmMail(mailSendDto);
+//          mailSend.sendConfirmMail(mailSendDto);
 
           model.addAttribute("message","Request accepted successfully.");
       }else {

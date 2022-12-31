@@ -44,7 +44,7 @@ public class PasswordEncryption {
     }
 
     public static void main(String[] args) {
-        String password = "Doctor@123";
+        String password = "Admin@123";
         PasswordEncryption passwordEncryption = new PasswordEncryption();
         System.out.println(passwordEncryption.getEncryptedPassword(password));
 //

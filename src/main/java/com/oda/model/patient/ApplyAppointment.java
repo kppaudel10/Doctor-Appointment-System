@@ -28,9 +28,9 @@ public class ApplyAppointment {
 
     private String applyDate;
 
-    private String fromTime;
-
-    private String toTime;
+//    private String fromTime;
+//
+//    private String toTime;
 
     private ApplyStatus applyStatus;
 

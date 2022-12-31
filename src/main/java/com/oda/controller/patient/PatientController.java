@@ -169,14 +169,13 @@ public class PatientController {
         //save log
         return "patient/furtherdetailsforappointment";
     }
-
     @PostMapping("/doctor-appointment")
     public String getApplyAppointMnt(@Valid @ModelAttribute("appointmentDto") AppointmentDto appointmentDto, BindingResult bindingResult, Model model) throws IOException, ParseException {
         if (!bindingResult.hasErrors()) {
             ApplyDto applyHospital = applyHospitalService.findById(appointmentDto.getHospitalApplyId());
             if (applyHospital != null) {
                 //check doctor is available or not
-                if (doctorAvailableRepo.checkDoctorAvailability(applyHospital.getDoctor().getId(), appointmentDto.getAppointmentDate(), applyHospital.getHospital().getId()) > 0) {
+                if (doctorService.checkDoctorAvailability(applyHospital.getDoctor().getId(), appointmentDto.getAppointmentDate(), applyHospital.getHospital().getId()) > 0) {
                     //check if there is already exists appointment or not
                     if (applyAppointmentRepo.countAppointmentOfDatePatient(applyHospital.getDoctor().getId(), AuthorizedUser.getPatient().getId(), applyHospital.getHospital().getId(), appointmentDto.getAppointmentDate()) == 0) {
                         //save log

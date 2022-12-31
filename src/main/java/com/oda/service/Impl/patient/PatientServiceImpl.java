@@ -5,6 +5,7 @@ import com.oda.dto.patient.PatientDto;
 import com.oda.model.patient.Patient;
 import com.oda.repo.patient.PatientRepo;
 import com.oda.service.patient.PatientService;
+import com.oda.utils.PasswordEncryption;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class PatientServiceImpl implements PatientService {
                 .birthDate(new SimpleDateFormat("yyyy-MM-dd").parse(patientDto.getBirthDate()))
                 .email(patientDto.getEmail())
                 .profilePhotoPath(patientDto.getProfilePhotoPath())
-                .password(patientDto.getPassword()).build();
+                .password(new PasswordEncryption().getEncryptedPassword(patientDto.getPassword())).build();
         //save into database
         Patient patient1 = patientRepo.save(patient);
 

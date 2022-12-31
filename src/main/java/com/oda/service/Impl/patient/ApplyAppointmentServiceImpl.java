@@ -56,13 +56,10 @@ public class ApplyAppointmentServiceImpl implements ApplyAppointmentService {
         if(applyAppointmentRepo.findApplyAppointmentByDateAndPatient(dateStr,
                 AuthorizedUser.getPatient().getId(),apply.getDoctor().getId()) == null){
         ApplyAppointment applyAppointment = ApplyAppointment.builder()
-                .id(apply.getId())
                 .patient(AuthorizedUser.getPatient())
                 .doctor(apply.getDoctor())
-                .fromTime(apply.getFormTime())
                 .applyStatus(ApplyStatus.PENDING)
                 .applyDate(dateStr)
-                .toTime(apply.getToTime())
                 .hospital(apply.getHospital())
                 .appointmentDate(appointmentDto.getAppointmentDate())
                 .reasonOrProblem(appointmentDto.getDescription()).build();
