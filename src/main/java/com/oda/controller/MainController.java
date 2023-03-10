@@ -14,6 +14,7 @@ import com.oda.service.Impl.AdminServiceImpl;
 import com.oda.service.Impl.doctor.DoctorServiceImpl;
 import com.oda.service.Impl.LoginServiceImpl;
 import com.oda.service.Impl.patient.PatientServiceImpl;
+import com.oda.utils.PasswordEncryption;
 import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,7 @@ public class MainController {
 
     @GetMapping("/")
     public String getLandingPage() {
+        System.out.println(new PasswordEncryption().getEncryptedPassword("omhospital"));
         return "homePage";
     }
 
