@@ -6,6 +6,6 @@
 -> step to Run this project
 1. Download intellija idea of ultimate version 
 2. Downlaod postgres SQL database in your pc 
-3. Create a database with name '' and update psql database password in file application.properties 
-4.  Run the SQL script that is in
+3. Create a database with name 'oda_db' and update psql database password in file application.properties 
+4.  Run the SQL script that is in oda.sql
 5. Then run the project 
